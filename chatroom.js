@@ -5,7 +5,7 @@ const usernameInput = document.getElementById("usernameInput");
 const urlParams = new URLSearchParams(window.location.search);
 const roomid = urlParams.get('roomid');
 const roomiddisplay = document.getElementById("roomIdDisplay");
-roomiddisplay.textContent = " " + roomid;
+roomiddisplay.textContent = "Room ID: " + roomid;
 
 // send message
 sendButton.addEventListener("click", () => {
@@ -24,6 +24,16 @@ sendButton.addEventListener("click", () => {
     })
     messageInput.value = "";
 })
+messageInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        sendButton.click();
+    }
+})
+
+messageInput.addEventListener("input", function() {
+    this.style.height = "auto";
+    this.style.height = this.scrollHeight + "px";
+});
 
 function fetchNewMessages() {
     fetch('/get_messages', {    

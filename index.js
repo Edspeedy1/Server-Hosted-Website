@@ -1,8 +1,8 @@
 const joinButton = document.getElementById("joinButton");
 const createButton = document.getElementById("createButton");
 const joinIdInput = document.getElementById("joinIdInput");
-const customIdInput = document.getElementById("customIdInput");
 
+// when enter is pressed, or button is clicked
 joinButton.addEventListener("click", () => {
     if (joinIdInput.value === "") {
         alert("Please enter a room ID");
@@ -11,12 +11,17 @@ joinButton.addEventListener("click", () => {
     window.location.href = `./chatRoom.html?roomid=${joinIdInput.value}`;
 });
 
+// when enter is pressed
+joinIdInput.addEventListener("keyup", (event) => {
+    joinButton.click();
+})
+
 createButton.addEventListener("click", () => {
     if (customIdInput.value === "") {
         //  make a randon 6 character string
         customIdInput.value = makeid(3) + "-" + makeid(3);
     }
-    // window.location.href = `./chatRoom.html?create=${customIdInput.value}`;
+    window.location.href = `./chatRoom.html?create=${customIdInput.value}`;
 })
 
 
