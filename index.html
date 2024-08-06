@@ -1,13 +1,22 @@
-<!-- basic website template -->
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Basic HTML Template</title>
+        <title>Eds Fancy Website</title>
+        <link rel="stylesheet" href="index.css">
     </head>
-    <body>
-        <h1>Basic HTML Template</h1>
+    <body style="display: flex;">
+        <div id="sidebar">
+            <h1>Join a room</h1>
+            <input type="text" id="joinIdInput">
+            <button id="joinButton">Join</button>
+
+            <h1>Create a room</h1>
+            <input type="text" id="customIdInput">
+            <button id="createButton">Create</button>
+        </div>
+
+        <script src="index.js"></script>
     </body>
 </html>
