@@ -4,6 +4,8 @@ const chatlog = document.getElementById("chatlog");
 const usernameInput = document.getElementById("usernameInput");
 const urlParams = new URLSearchParams(window.location.search);
 const roomid = urlParams.get('roomid');
+const roomiddisplay = document.getElementById("roomIdDisplay");
+roomiddisplay.textContent = " " + roomid;
 
 // send message
 sendButton.addEventListener("click", () => {
@@ -39,11 +41,13 @@ function fetchNewMessages() {
 }
 
 function updateChatWindow(messages) {
-    chatlog.innerHTML = '';
     messages.forEach(message => {
-        let messageElement = document.createElement('div');
-        messageElement.textContent = `${message.username}: ${message.message}`;
-        chatlog.appendChild(messageElement);
+        if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+            let messageElement = document.createElement('div');
+            messageElement.textContent = `${message.username}: ${message.message}`;
+            messageElement.timestamp = message.timestamp;
+            chatlog.appendChild(messageElement);
+        }
     });
 }
 
