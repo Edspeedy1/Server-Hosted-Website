@@ -1,4 +1,4 @@
-import RangeHTTPServer
+import http.server
 import socketserver
 import os
 import time
@@ -13,7 +13,7 @@ print("starting server")
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
-class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
+class CustomRequestHandler(http.server.BaseHTTPRequestHandler):
     def __init__(self, request, client_address, server):
         super().__init__(request, client_address, server)
 
@@ -32,9 +32,21 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
 
     def do_GET(self):
         if self.path == '/':
-            self.path = '/index.html'  # default HTML file
-            
-        return super().do_GET()
+            self.path = '/index.html'
+
+        # Set the response status code
+        self.send_response(200)
+        # Set the content type of the response
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        
+        # Write the response body
+        try:
+            with open(self.path[1:], 'r') as f:
+                self.wfile.write(f.read().encode('utf-8'))
+        except Exception as e:
+            print(e)
+            self.send_file(500, 'Error: ' + str(e))
 
 with ThreadedHTTPServer(("", PORT), CustomRequestHandler) as httpd:
     print("serving at port", PORT)
