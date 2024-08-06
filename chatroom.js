@@ -24,8 +24,9 @@ sendButton.addEventListener("click", () => {
     })
     messageInput.value = "";
 })
-messageInput.addEventListener("keydown", (event) => {
+messageInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
+        event.preventDefault();
         sendButton.click();
     }
 })

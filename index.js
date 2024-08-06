@@ -13,15 +13,13 @@ joinButton.addEventListener("click", () => {
 
 // when enter is pressed
 joinIdInput.addEventListener("keyup", (event) => {
-    joinButton.click();
+    if (event.key === "Enter") {
+        joinButton.click();
+    }
 })
 
 createButton.addEventListener("click", () => {
-    if (customIdInput.value === "") {
-        //  make a randon 6 character string
-        customIdInput.value = makeid(3) + "-" + makeid(3);
-    }
-    window.location.href = `./chatRoom.html?create=${customIdInput.value}`;
+    window.location.href = `./chatRoom.html?create=${makeid(3) + "-" + makeid(3)}`;
 })
 
 
