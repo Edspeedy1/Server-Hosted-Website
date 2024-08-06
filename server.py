@@ -8,6 +8,8 @@ import json
 
 PORT = 8026
 
+print("starting server")
+
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
