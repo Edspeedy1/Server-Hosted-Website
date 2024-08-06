@@ -8,7 +8,7 @@ joinButton.addEventListener("click", () => {
         alert("Please enter a room ID");
         return;
     }
-    window.location.href = `./chatRoom.html?join=${joinIdInput.value}`;
+    window.location.href = `./chatRoom.html?roomid=${joinIdInput.value}`;
 });
 
 createButton.addEventListener("click", () => {

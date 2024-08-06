@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Eds Fancy Website</title>
-        <link rel="stylesheet" href="chatRoom.css">
-    </head>
-    <body style="display: flex;">
-        <div id="sidebar">
-            <a href="index.html" id="home">Home</a>
-            <div id="chatbox">
-                <p>Chat Box</p>
-                <p id="chatlog"></p>
-                <input type="text">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eds Fancy Website</title>
+    <link rel="stylesheet" href="chatroom.css">
+</head>
+
+<body style="display: flex;">
+    <div id="sidebar">
+        <a href="index.html" id="home">Home</a>
+        <div id="chatbox">
+            <p>Chat Box</p>
+            <div id="chatlog"></div>
+            <div style="display: flex;">
+                <input type="text" id="messageInput">
+                <button id="sendButton">Send</button>
             </div>
         </div>
-        <h1>Basic HTML</h1>
-    </body>
+        <div style="display: flex; position: fixed; bottom: 0; align-items: center;">
+            <h3>Username:</h2>
+                <input type="text" id="usernameInput" style="height: fit-content;">
+        </div>
+    </div>
+    <script src="chatroom.js"></script>
+    <h1>Basic HTML</h1>
+</body>
+
 </html>

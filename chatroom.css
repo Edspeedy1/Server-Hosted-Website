@@ -4,6 +4,7 @@ body {
     color: #c3e3e4;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #home {
@@ -22,4 +23,24 @@ body {
     height: 100vh;
     width: 300px;
     background-color: #16171f;
+}
+
+#chatlog {
+    overflow-y: scroll;
+    height: 40vh;
+    width: 100%;
+    background-color: #c2c2c2;
+    padding: 0;
+}
+
+#chatlog * {
+    background-color: #dfdfdf;
+    border: #9b9b9b 1px solid;
+    border-radius: 5px;
+    list-style-type: none;
+    padding-left: 5px;
+    color: #0c0d16;
+    width: 96%;
+    height: fit-content;
+    margin: 2px;
 }
