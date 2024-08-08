@@ -27,7 +27,7 @@ body {
 
 #chatlog {
     overflow-y: scroll;
-    height: 40vh;
+    height: 60vh;
     width: 100%;
     background-color: #c2c2c2;
     padding: 0;
@@ -43,6 +43,8 @@ body {
     width: 96%;
     height: fit-content;
     margin: 2px;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
 }
 
 #messageInput {

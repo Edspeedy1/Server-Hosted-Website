@@ -7,13 +7,27 @@ const roomid = urlParams.get('roomid');
 const roomiddisplay = document.getElementById("roomIdDisplay");
 roomiddisplay.textContent = "Room ID: " + roomid;
 
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const socketUrl = `${protocol}//${window.location.hostname}:8765/${roomid}`;
+const socket = new WebSocket(socketUrl);
+
+socket.onmessage = function(event) {
+    const newMessage = JSON.parse(event.data);
+    updateChatWindow([newMessage]);
+};
+
 // send message
 sendButton.addEventListener("click", () => {
+    console.log(messageInput.value.replace(/\s+/g, '') == "");
+    if (messageInput.value.replace(/\s+/g, '') == "") {
+        messageInput.value = "";
+        return;
+    }
     let username = usernameInput.value
     if (usernameInput.value === "") {
         username = "Anonymous"
     }
-    console.log(messageInput.value)
+    chatlog.scrollTop = chatlog.scrollHeight;
     fetch('/upload_message', {
         method: 'POST',
         body: JSON.stringify({
@@ -22,9 +36,12 @@ sendButton.addEventListener("click", () => {
             'roomid': roomid
         })
     })
-    messageInput.value = "";
+    setTimeout(() => {
+        chatlog.scrollTop = chatlog.scrollHeight;
+        messageInput.value = "";
+    }, 100);
 })
-messageInput.addEventListener("keyup", (event) => {
+messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         event.preventDefault();
         sendButton.click();
@@ -47,11 +64,16 @@ function fetchNewMessages() {
         if (data.messages.length > 0) {
             updateChatWindow(data.messages);
         }
+        chatlog.scrollTop = chatlog.scrollHeight;
     })
     .catch(error => console.error('Error fetching messages:', error));
+
 }
 
 function updateChatWindow(messages) {
+    // if scrolled to bottom, scroll to bottom
+    let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
+        
     messages.forEach(message => {
         if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
             let messageElement = document.createElement('div');
@@ -60,7 +82,10 @@ function updateChatWindow(messages) {
             chatlog.appendChild(messageElement);
         }
     });
+
+    if (flag) {
+        chatlog.scrollTop = chatlog.scrollHeight;
+    }
 }
 
 fetchNewMessages();
-setInterval(fetchNewMessages, 1000);
