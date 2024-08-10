@@ -1,25 +1,57 @@
 const joinButton = document.getElementById("joinButton");
-const createButton = document.getElementById("createButton");
-const joinIdInput = document.getElementById("joinIdInput");
+const guestButton = document.getElementById("guestButton");
+const usernameInput = document.getElementById("usernameInput");
+const passwordShow = document.getElementById("passwordButton");
+const passwordInput = document.getElementById("passwordInput");
+
+passwordShow.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordShow.textContent = "Hide";
+    } else {
+        passwordInput.type = "password";
+        passwordShow.textContent = "Show";
+    }
+})
 
 // when enter is pressed, or button is clicked
 joinButton.addEventListener("click", () => {
-    if (joinIdInput.value === "") {
-        alert("Please enter a room ID");
+    if (usernameInput.value === "") {
+        alert("Please enter a username");
         return;
     }
-    window.location.href = `./chatRoom.html?roomid=${joinIdInput.value}`;
+    if (passwordInput.value === "") {
+        alert("Please enter a password");
+        return;
+    }
+
+    fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({
+            'username': usernameInput.value,
+            'password': passwordInput.value
+        })
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(data.session);
+            setCookie("session", data.session, 2);
+            window.location.href = `./chatRoom.html`;
+        } else {
+            alert("Incorrect username or password");
+        }
+    })
 });
 
 // when enter is pressed
-joinIdInput.addEventListener("keyup", (event) => {
+passwordInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
         joinButton.click();
     }
 })
 
-createButton.addEventListener("click", () => {
-    window.location.href = `./chatRoom.html?create=${makeid(3) + "-" + makeid(3)}`;
+guestButton.addEventListener("click", () => {
+    // login as guest
 })
 
 
@@ -33,4 +65,14 @@ function makeid(length) {
       counter += 1;
     }
     return result;
+}
+
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/; Secure;";
 }

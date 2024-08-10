@@ -1,14 +1,10 @@
 const sendButton = document.getElementById("sendButton");
 const messageInput = document.getElementById("messageInput");
 const chatlog = document.getElementById("chatlog");
-const usernameInput = document.getElementById("usernameInput");
 const urlParams = new URLSearchParams(window.location.search);
-const roomid = urlParams.get('roomid');
-const roomiddisplay = document.getElementById("roomIdDisplay");
-roomiddisplay.textContent = "Room ID: " + roomid;
 
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-const socketUrl = `${protocol}//${window.location.hostname}:8765/${roomid}`;
+const socketUrl = `${protocol}//${window.location.hostname}:8765`;
 const socket = new WebSocket(socketUrl);
 
 socket.onmessage = function(event) {
@@ -18,22 +14,17 @@ socket.onmessage = function(event) {
 
 // send message
 sendButton.addEventListener("click", () => {
-    console.log(messageInput.value.replace(/\s+/g, '') == "");
     if (messageInput.value.replace(/\s+/g, '') == "") {
         messageInput.value = "";
         return;
     }
-    let username = usernameInput.value
-    if (usernameInput.value === "") {
-        username = "Anonymous"
-    }
+
     chatlog.scrollTop = chatlog.scrollHeight;
     fetch('/upload_message', {
         method: 'POST',
         body: JSON.stringify({
-            'username': username,
+            'session': getCookie("session"),
             'text': messageInput.value,
-            'roomid': roomid
         })
     })
     setTimeout(() => {
@@ -56,9 +47,6 @@ messageInput.addEventListener("input", function() {
 function fetchNewMessages() {
     fetch('/get_messages', {    
         method: 'POST',
-        headers: {
-            roomid: roomid,
-        }
     }).then(response => response.json())
     .then(data => {
         if (data.messages.length > 0) {
@@ -86,6 +74,17 @@ function updateChatWindow(messages) {
     if (flag) {
         chatlog.scrollTop = chatlog.scrollHeight;
     }
+}
+
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 }
 
 fetchNewMessages();

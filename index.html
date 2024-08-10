@@ -8,12 +8,22 @@
     </head>
     <body style="display: flex;">
         <div id="sidebar">
-            <h1>Join a room</h1>
-            <input type="text" id="joinIdInput">
+            <h1>Login</h1>
+            <p>
+                Username:
+            </p>
+            <input type="text" id="usernameInput">
+            <p>
+                Password:
+            </p>
+            <div>
+                <input type="password" id="passwordInput"> 
+                <button id="passwordButton">Show</button>
+            </div>
             <button id="joinButton">Join</button>
 
-            <h1>Random room</h1>
-            <button id="createButton">Random</button>
+            <h1>Guest Account</h1>
+            <button id="guestButton">Guest</button>
         </div>
 
         <script src="index.js"></script>

@@ -15,3 +15,11 @@ body {
     width: 300px;
     background-color: #16171f;
 }
+
+#passwordInput {
+    width: calc(100% - 63px);
+}
+
+#passwordButton {
+    width: 50px;
+}
