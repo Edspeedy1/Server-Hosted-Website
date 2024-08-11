@@ -11,7 +11,7 @@ import websockets
 import hashlib
 
 HTTP_PORT = int(os.getenv('PORT', 8026))
-WEBSOCKET_PORT = 8765
+WEBSOCKET_PORT = int(os.getenv('PORT', 8765))
 
 print("starting server")
 
