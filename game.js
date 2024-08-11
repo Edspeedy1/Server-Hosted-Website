@@ -30,7 +30,7 @@ sendButton.addEventListener("click", () => {
     updateChatWindow([{
         'message': messageInput.value,
         'username': getCookie("username"),
-        'timestamp': Date.now()
+        'timestamp': parseInt(Date.now() / 1000)
     }]);
     setTimeout(() => {
         chatlog.scrollTop = chatlog.scrollHeight;
@@ -75,12 +75,14 @@ function updateChatWindow(messages) {
             messageElement.timestamp = message.timestamp;
             chatlog.appendChild(messageElement);
         }
-        else if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
-            console.log("not empty")
-            let messageElement = document.createElement('div');
-            messageElement.textContent = `${message.username}: ${message.message}`;
-            messageElement.timestamp = message.timestamp;
-            chatlog.appendChild(messageElement);
+        else {
+            console.log(chatlog.children[chatlog.children.length - 1].timestamp)
+            if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+                let messageElement = document.createElement('div');
+                messageElement.textContent = `${message.username}: ${message.message}`;
+                messageElement.timestamp = message.timestamp;
+                chatlog.appendChild(messageElement);
+            }
         }
     });
 

@@ -26,6 +26,8 @@ class ConnectedClient:
     
     def __str__(self):
         return f"username: {self.username}, sessionID: {self.sessionID}, lastActiveTime: {self.lastActiveTime}"
+    def __repr__(self):
+        return self.__str__()
 
     def update_last_active_time(self):
         self.lastActiveTime = time.time()
@@ -33,6 +35,7 @@ class ConnectedClient:
 # singleton database manager to help with the inactivity check thread
 class DatabaseManager:
     _instance = None
+    _lock = threading.Lock()
 
     def __new__(cls):
         if cls._instance is None:
@@ -42,11 +45,8 @@ class DatabaseManager:
 
     def initialize(self):
         self.chat_conn = sqlite3.connect('saveData/chatroom-database.db', check_same_thread=False)
-        self.chat_cursor = self.chat_conn.cursor()
         self.login_conn = sqlite3.connect('saveData/login-database.db', check_same_thread=False)
-        self.login_cursor = self.login_conn.cursor()
         self.player_data_conn = sqlite3.connect('saveData/player-data-database.db', check_same_thread=False)
-        self.player_data_cursor = self.player_data_conn.cursor()
 
     def close(self):
         self.chat_conn.close()
@@ -57,7 +57,6 @@ class DatabaseManager:
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
-
 # dictionary of active sessions
 sessions = {}
 
@@ -65,6 +64,10 @@ sessions = {}
 class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def __init__(self, request, client_address, server):
         self.db = DatabaseManager()  # Use shared database manager
+        cursor = self.db.chat_conn.cursor()
+        cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
+        self.messages = list(cursor.fetchall()[::-1])
+        cursor.close()
         super().__init__(request, client_address, server)
 
     def end_headers(self):
@@ -91,7 +94,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         if self.path == '/upload_message':
             data = json.loads(post_data)
             logger.info(data)
-            logger.info(sessions)
+            logger.info(str(sessions))
             if len(data['text']) > 1000:
                 self.send_json_response(400, {'error': 'Message too long'})
                 return
@@ -112,42 +115,52 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             self.login(data['username'], data['password'])
 
     def upload_message(self, username, text):
-        self.db.chat_cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (?, ?, ?)', (username, text, int(time.time())))
+        cursor = self.db.chat_conn.cursor()
+        cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (?, ?, ?)', (username, text, int(time.time())))
         self.db.chat_conn.commit()
+        self.messages.append((0, username, text, int(time.time())))
+        if len(self.messages) >= 100:
+            cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
+            self.messages = list(cursor.fetchall()[::-1])
+        cursor.close()
 
     def get_messages(self):
-        self.db.chat_cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
-        messages = self.db.chat_cursor.fetchall()[::-1]
-        messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in messages]
+        messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in self.messages]
         self.send_json_response(200, {'messages': messages})
 
     def login(self, username, password):
         logger.info("Logging in as " + username)
         password = hashlib.sha256((password + username).encode('utf-8')).hexdigest()
         # Check if username already exists
-        self.db.login_cursor.execute('SELECT * FROM login WHERE username = ?', (username,))
-        if self.db.login_cursor.fetchone() is not None:
-            # check if password is correct
-            self.db.login_cursor.execute('SELECT * FROM login WHERE username = ? AND password = ?', (username, password))
-            if self.db.login_cursor.fetchone() is None:
-                self.send_json_response(400, {'error': 'Incorrect password'})
-                return 
-            else: # login successful
+        cursor = self.db.login_conn.cursor()
+        try:
+            cursor.execute('SELECT * FROM login WHERE username = ?', (username,))
+            if cursor.fetchone() is not None:
+                # check if password is correct
+                cursor.execute('SELECT * FROM login WHERE username = ? AND password = ?', (username, password))
+                if cursor.fetchone() is None:
+                    self.send_json_response(400, {'error': 'Incorrect password'})
+                    return 
+                else: # login successful
+                    sessionID = hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest()
+                    sessions[str(sessionID)] = ConnectedClient(username, sessionID)
+                    self.send_json_response(200, {'success': True, "session": sessionID})
+                    return 
+            else: # new account creation
+                cursor.execute('INSERT INTO login (username, password) VALUES (?, ?)', (username, password))
+                self.db.login_conn.commit()
+                # create a new row in the player_data table
+                player_data_cursor = self.db.player_data_conn.cursor()
+                player_data_cursor.execute('INSERT INTO basicPlayerData (username) VALUES (?)', (username,))
+                player_data_cursor.close()
+                self.db.player_data_conn.commit()
+                # create a new session
                 sessionID = hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest()
                 sessions[str(sessionID)] = ConnectedClient(username, sessionID)
+                logger.info("Logged in as " + username + " with session " + sessionID + "sessions: " + str(sessions))
                 self.send_json_response(200, {'success': True, "session": sessionID})
-                return 
-        else: # new account creation
-            self.db.login_cursor.execute('INSERT INTO login (username, password) VALUES (?, ?)', (username, password))
-            self.db.login_conn.commit()
-            # create a new row in the player_data table
-            self.db.player_data_cursor.execute('INSERT INTO basicPlayerData (username) VALUES (?)', (username,))
-            self.db.player_data_conn.commit()
-            # create a new session
-            sessionID = hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest()
-            sessions[str(sessionID)] = ConnectedClient(username, sessionID)
-            logger.info("Logged in as " + username + " with session " + sessionID + "sessions: " + str(sessions))
-            self.send_json_response(200, {'success': True, "session": sessionID})
+        finally:
+            cursor.close()
 
     def send_json_response(self, status_code, data):
         self.send_response(status_code)
