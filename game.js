@@ -9,7 +9,13 @@ const socket = new WebSocket(socketUrl);
 
 socket.onmessage = function(event) {
     const newMessage = JSON.parse(event.data);
-    updateChatWindow([newMessage]);
+    if (newMessage.type === "chat") {
+        updateChatWindow([newMessage]);
+    }
+    if (newMessage.type === "remove_user" && newMessage.session === getCookie("session")) {
+        alert("You have been logged out due to inactivity.");
+        window.location = "index.html";
+    }
 };
 
 // send message
@@ -30,6 +36,7 @@ sendButton.addEventListener("click", () => {
     setTimeout(() => {
         chatlog.scrollTop = chatlog.scrollHeight;
         messageInput.value = "";
+        messageInput.style.height = "19px";
     }, 100);
 })
 messageInput.addEventListener("keydown", (event) => {

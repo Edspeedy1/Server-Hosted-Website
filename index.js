@@ -16,7 +16,7 @@ passwordShow.addEventListener("click", () => {
 
 // when enter is pressed, or button is clicked
 joinButton.addEventListener("click", () => {
-    if (usernameInput.value === "") {
+    if (usernameInput.value === "" || usernameInput.value.startsWith("Guest")) {
         alert("Please enter a username");
         return;
     }
@@ -35,8 +35,8 @@ joinButton.addEventListener("click", () => {
     .then(data => {
         if (data.success) {
             console.log(data.session);
-            setCookie("session", data.session, 2);
-            window.location.href = `./chatRoom.html`;
+            setCookie("session", data.session, 0.5);
+            window.location.href = `./game.html`;
         } else {
             alert("Incorrect username or password");
         }
@@ -51,7 +51,22 @@ passwordInput.addEventListener("keyup", (event) => {
 })
 
 guestButton.addEventListener("click", () => {
-    // login as guest
+    fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({
+            'username': "Guest" + "_" + makeid(3),
+            'password': ""
+        })
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(data.session);
+            setCookie("session", data.session, 0.5);
+            window.location.href = `./game.html`;
+        } else {
+            alert("Incorrect username or password");
+        }
+    })
 })
 
 

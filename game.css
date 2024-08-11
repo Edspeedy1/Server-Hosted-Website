@@ -49,4 +49,5 @@ body {
 
 #messageInput {
     resize: none;
+    max-height: 100px;
 }
