@@ -3,21 +3,6 @@ const messageInput = document.getElementById("messageInput");
 const chatlog = document.getElementById("chatlog");
 const urlParams = new URLSearchParams(window.location.search);
 
-const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-const socketUrl = `${protocol}//${window.location.hostname}:8765`;
-const socket = new WebSocket(socketUrl);
-
-socket.onmessage = function(event) {
-    const newMessage = JSON.parse(event.data);
-    if (newMessage.type === "chat") {
-        updateChatWindow([newMessage]);
-    }
-    if (newMessage.type === "remove_user" && newMessage.session === getCookie("session")) {
-        alert("You have been logged out due to inactivity.");
-        window.location = "index.html";
-    }
-};
-
 // send message
 sendButton.addEventListener("click", () => {
     if (messageInput.value.replace(/\s+/g, '') == "") {
@@ -33,6 +18,18 @@ sendButton.addEventListener("click", () => {
             'text': messageInput.value,
         })
     })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            alert("please Login first");
+            window.location.href = `./index.html`;
+        }
+    })
+    updateChatWindow([{
+        'message': messageInput.value,
+        'username': getCookie("username"),
+        'timestamp': Date.now()
+    }]);
     setTimeout(() => {
         chatlog.scrollTop = chatlog.scrollHeight;
         messageInput.value = "";
@@ -68,7 +65,7 @@ function fetchNewMessages() {
 function updateChatWindow(messages) {
     // if scrolled to bottom, scroll to bottom
     let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
-        
+    
     messages.forEach(message => {
         if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
             let messageElement = document.createElement('div');
@@ -95,3 +92,4 @@ function getCookie(name) {
 }
 
 fetchNewMessages();
+setInterval(fetchNewMessages, 2000);

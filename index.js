@@ -36,6 +36,7 @@ joinButton.addEventListener("click", () => {
         if (data.success) {
             console.log(data.session);
             setCookie("session", data.session, 0.5);
+            setCookie("username", usernameInput.value, 0.5);
             window.location.href = `./game.html`;
         } else {
             alert("Incorrect username or password");
@@ -60,8 +61,8 @@ guestButton.addEventListener("click", () => {
     }).then(response => response.json())
     .then(data => {
         if (data.success) {
-            console.log(data.session);
             setCookie("session", data.session, 0.5);
+            setCookie("username", "Guest" + "_" + makeid(3), 0.5);
             window.location.href = `./game.html`;
         } else {
             alert("Incorrect username or password");

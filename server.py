@@ -6,12 +6,9 @@ import threading
 import random
 import json
 import sqlite3
-import asyncio
-import websockets
 import hashlib
 
 HTTP_PORT = int(os.getenv('PORT', 8026))
-WEBSOCKET_PORT = int(os.getenv('PORT', 8765))
 
 print("starting server")
 
@@ -83,9 +80,12 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             if len(data['text']) > 1000:
                 self.send_json_response(400, {'error': 'Message too long'})
                 return
-            sessions[data['session']].update_last_active_time()
-            self.upload_message(sessions[data['session']].username, data['text'])
-            self.send_json_response(200, {'success': True})
+            try:
+                sessions[data['session']].update_last_active_time()
+                self.upload_message(sessions[data['session']].username, data['text'])
+                self.send_json_response(200, {'success': True})
+            except KeyError:
+                self.send_json_response(200, {'error': 'Invalid session'})
         elif self.path == '/get_messages':
             self.get_messages()
         elif self.path == '/login':
@@ -95,14 +95,19 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def upload_message(self, username, text):
         self.db.chat_cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (?, ?, ?)', (username, text, int(time.time())))
         self.db.chat_conn.commit()
-        # Broadcast the message to WebSocket clients
-        asyncio.run(broadcast_message({'username': username, 'message': text, 'timestamp': int(time.time()), 'type': 'chat'}))
 
     def get_messages(self):
-        self.db.chat_cursor.execute('SELECT * FROM messages ORDER BY timestamp')
-        messages = self.db.chat_cursor.fetchall()
-        messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in messages]
-        self.send_json_response(200, {'messages': messages})
+        try:
+            with sqlite3.connect('chatroom-database.db') as conn:
+                cursor = conn.cursor()
+                cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
+                messages = cursor.fetchall()[::-1]
+                # Process the messages
+                messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in messages]
+                self.send_json_response(200, {'messages': messages})
+        except sqlite3.ProgrammingError as e:
+            print(f"SQLite error: {e}")
+            self.send_json_response(500, {'error': 'Internal Server Error'})
 
     def login(self, username, password):
         password = hashlib.sha256((password + username).encode('utf-8')).hexdigest()
@@ -140,33 +145,9 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
 # WebSocket connection handler
 connected_clients = []
 
-async def websocket_handler(websocket, path):
-    connected_clients.append(websocket)
-    try:
-        async for message in websocket:
-            pass  # WebSocket clients do not send messages in this example
-    finally:
-        connected_clients.remove(websocket)
-
-async def broadcast_message(message):
-    for ws in connected_clients:
-        await ws.send(json.dumps(message))
-
 def start_inactivity_check(timeout):
     db = DatabaseManager()
     while True:
-        for _ in range(100):
-            print("Checking inactive sessions...")
-            current_time = time.time()
-            inactive_sessions = [session_id for session_id, client in sessions.items() if current_time - client.lastActiveTime > timeout]
-            
-            for session_id in inactive_sessions:
-                print(f"Session {session_id} is inactive for too long. Removing user.")
-                asyncio.run(broadcast_message({"type": "remove_user", "session": session_id, "username": sessions[session_id].username}))
-                del sessions[session_id]
-            
-            time.sleep(60)
-        
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
         placeholders = ', '.join('?' for _ in active_sessions)
 
@@ -175,23 +156,20 @@ def start_inactivity_check(timeout):
         db.player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
         db.player_data_conn.commit()
 
+        for _ in range(100):
+            print("Checking inactive sessions...")
+            current_time = time.time()
+            inactive_sessions = [session_id for session_id, client in sessions.items() if current_time - client.lastActiveTime > timeout]
+            
+            for session_id in inactive_sessions:
+                print(f"Session {session_id} is inactive for too long. Removing user.")
+                del sessions[session_id]
+            
+            time.sleep(60)
         
-
-# Starting the WebSocket server
-def start_websocket_server():
-    loop = asyncio.new_event_loop()  # Create a new event loop
-    asyncio.set_event_loop(loop)     # Set the event loop for this thread
-    server = websockets.serve(websocket_handler, "0.0.0.0", WEBSOCKET_PORT)
-    loop.run_until_complete(server)  # Start the WebSocket server
-    loop.run_forever()
 
 with ThreadedHTTPServer(("", HTTP_PORT), CustomRequestHandler) as httpd:
     print(f"HTTP server serving at port {HTTP_PORT}")
-    
-    # Start WebSocket server in a separate thread
-    websocket_thread = threading.Thread(target=start_websocket_server)
-    websocket_thread.daemon = True
-    websocket_thread.start()
     
     # Start inactivity check in a separate thread
     inactivity_thread = threading.Thread(target=start_inactivity_check, args=(3600,))
