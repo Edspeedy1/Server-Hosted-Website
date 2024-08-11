@@ -118,6 +118,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             self.send_json_response(500, {'error': 'Internal Server Error'})
 
     def login(self, username, password):
+        logger.info("Logging in as " + username)
         password = hashlib.sha256((password + username).encode('utf-8')).hexdigest()
         # Check if username already exists
         self.db.login_cursor.execute('SELECT * FROM login WHERE username = ?', (username,))
@@ -141,8 +142,8 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             random.seed(time.time())
             sessionID = hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest()
             sessions[str(sessionID)] = ConnectedClient(username, sessionID)
+            logger.info("Logged in as " + username + " with session " + sessionID + "sessions: " + str(sessions))
             self.send_json_response(200, {'success': True, "session": sessionID})
-        return True
 
     def send_json_response(self, status_code, data):
         self.send_response(status_code)
@@ -173,7 +174,7 @@ def start_inactivity_check(timeout):
             for session_id in inactive_sessions:
                 print(f"Session {session_id} is inactive for too long. Removing user.")
                 logger.info(f"Session {session_id} is inactive for too long. Removing user.")
-                del sessions[session_id]
+                # del sessions[session_id]
             
             time.sleep(60)
         
