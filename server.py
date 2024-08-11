@@ -82,6 +82,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         if self.path == '/upload_message':
             data = json.loads(post_data)
             logger.info(data)
+            logger.info(sessions)
             if len(data['text']) > 1000:
                 self.send_json_response(400, {'error': 'Message too long'})
                 return
@@ -91,7 +92,6 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 self.send_json_response(200, {'success': True})
             except KeyError as e:
                 logger.error(e)
-                logger.info(sessions)
                 logger.info(data["session"])
                 self.send_json_response(200, {'error': 'Invalid session'})
         elif self.path == '/get_messages':
@@ -166,11 +166,13 @@ def start_inactivity_check(timeout):
 
         for _ in range(100):
             print("Checking inactive sessions...")
+            logger.info("Checking inactive sessions...")
             current_time = time.time()
             inactive_sessions = [session_id for session_id, client in sessions.items() if current_time - client.lastActiveTime > timeout]
             
             for session_id in inactive_sessions:
                 print(f"Session {session_id} is inactive for too long. Removing user.")
+                logger.info(f"Session {session_id} is inactive for too long. Removing user.")
                 del sessions[session_id]
             
             time.sleep(60)
