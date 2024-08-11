@@ -157,14 +157,6 @@ connected_clients = []
 def start_inactivity_check(timeout):
     db = DatabaseManager()
     while True:
-        active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
-        placeholders = ', '.join('?' for _ in active_sessions)
-
-        db.login_cursor.execute(f'DELETE FROM login WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
-        db.login_conn.commit()
-        db.player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
-        db.player_data_conn.commit()
-
         for _ in range(100):
             print("Checking inactive sessions...")
             logger.info("Checking inactive sessions...")
@@ -177,6 +169,14 @@ def start_inactivity_check(timeout):
                 # del sessions[session_id]
             
             time.sleep(60)
+
+        active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
+        placeholders = ', '.join('?' for _ in active_sessions)
+
+        # db.login_cursor.execute(f'DELETE FROM login WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
+        # db.login_conn.commit()
+        # db.player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
+        # db.player_data_conn.commit()
         
 
 with ThreadedHTTPServer(("", HTTP_PORT), CustomRequestHandler) as httpd:
