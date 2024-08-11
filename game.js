@@ -68,7 +68,14 @@ function updateChatWindow(messages) {
     let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
     console.log(messages)
     messages.forEach(message => {
-        if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+        if (chatlog.children.length == 0) {
+            let messageElement = document.createElement('div');
+            messageElement.textContent = `${message.username}: ${message.message}`;
+            messageElement.timestamp = message.timestamp;
+            chatlog.appendChild(messageElement);
+        }
+        else if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+            console.log("not empty")
             let messageElement = document.createElement('div');
             messageElement.textContent = `${message.username}: ${message.message}`;
             messageElement.timestamp = message.timestamp;
