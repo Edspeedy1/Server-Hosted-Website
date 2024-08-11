@@ -66,7 +66,7 @@ function fetchNewMessages() {
 function updateChatWindow(messages) {
     // if scrolled to bottom, scroll to bottom
     let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
-
+    console.log(messages)
     messages.forEach(message => {
         if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
             let messageElement = document.createElement('div');

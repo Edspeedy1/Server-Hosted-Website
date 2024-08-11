@@ -21,6 +21,9 @@ class ConnectedClient:
         self.username = username
         self.sessionID = sessionID
         self.lastActiveTime = time.time()
+    
+    def __str__(self):
+        return f"username: {self.username}, sessionID: {self.sessionID}, lastActiveTime: {self.lastActiveTime}"
 
     def update_last_active_time(self):
         self.lastActiveTime = time.time()
