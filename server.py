@@ -160,6 +160,7 @@ def start_inactivity_check(timeout):
         for _ in range(100):
             print("Checking inactive sessions...")
             logger.info("Checking inactive sessions...")
+            logger.info(sessions)
             current_time = time.time()
             inactive_sessions = [session_id for session_id, client in sessions.items() if current_time - client.lastActiveTime > timeout]
             
