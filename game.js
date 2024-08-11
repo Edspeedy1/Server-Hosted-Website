@@ -20,7 +20,8 @@ sendButton.addEventListener("click", () => {
     })
     .then(response => response.json())
     .then(data => {
-        if (!data.success) {
+        console.log(data);
+        if (data.error == "Invalid session") {
             alert("please Login first");
             window.location.href = `./index.html`;
         }
@@ -65,7 +66,7 @@ function fetchNewMessages() {
 function updateChatWindow(messages) {
     // if scrolled to bottom, scroll to bottom
     let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
-    
+
     messages.forEach(message => {
         if (chatlog.children.length == 0 || message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
             let messageElement = document.createElement('div');
