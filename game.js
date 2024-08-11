@@ -67,7 +67,7 @@ function fetchNewMessages() {
 function updateChatWindow(messages) {
     // if scrolled to bottom, scroll to bottom
     let flag = chatlog.scrollTop + chatlog.offsetHeight >= chatlog.scrollHeight;
-    console.log(messages)
+
     messages.forEach(message => {
         if (chatlog.children.length == 0) {
             let messageElement = document.createElement('div');
@@ -75,14 +75,11 @@ function updateChatWindow(messages) {
             messageElement.timestamp = message.timestamp;
             chatlog.appendChild(messageElement);
         }
-        else {
-            console.log(chatlog.children[chatlog.children.length - 1].timestamp)
-            if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
-                let messageElement = document.createElement('div');
-                messageElement.textContent = `${message.username}: ${message.message}`;
-                messageElement.timestamp = message.timestamp;
-                chatlog.appendChild(messageElement);
-            }
+        else if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+            let messageElement = document.createElement('div');
+            messageElement.textContent = `${message.username}: ${message.message}`;
+            messageElement.timestamp = message.timestamp;
+            chatlog.appendChild(messageElement);
         }
     });
 
