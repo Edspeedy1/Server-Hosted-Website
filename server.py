@@ -8,6 +8,10 @@ import json
 import sqlite3
 import hashlib
 
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 HTTP_PORT = int(os.getenv('PORT', 8026))
 
 print("starting server")
@@ -77,6 +81,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         
         if self.path == '/upload_message':
             data = json.loads(post_data)
+            logger.info(data)
             if len(data['text']) > 1000:
                 self.send_json_response(400, {'error': 'Message too long'})
                 return
@@ -85,8 +90,9 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 self.upload_message(sessions[data['session']].username, data['text'])
                 self.send_json_response(200, {'success': True})
             except KeyError as e:
-                print(e)
-                print(sessions, data['session'])
+                logger.error(e)
+                logger.info(sessions)
+                logger.info(data["session"])
                 self.send_json_response(200, {'error': 'Invalid session'})
         elif self.path == '/get_messages':
             self.get_messages()
