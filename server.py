@@ -38,11 +38,11 @@ class DatabaseManager:
         return cls._instance
 
     def initialize(self):
-        self.chat_conn = sqlite3.connect('chatroom-database.db', check_same_thread=False)
+        self.chat_conn = sqlite3.connect('saveData/chatroom-database.db', check_same_thread=False)
         self.chat_cursor = self.chat_conn.cursor()
-        self.login_conn = sqlite3.connect('login-database.db', check_same_thread=False)
+        self.login_conn = sqlite3.connect('saveData/login-database.db', check_same_thread=False)
         self.login_cursor = self.login_conn.cursor()
-        self.player_data_conn = sqlite3.connect('player-data-database.db', check_same_thread=False)
+        self.player_data_conn = sqlite3.connect('saveData/player-data-database.db', check_same_thread=False)
         self.player_data_cursor = self.player_data_conn.cursor()
 
     def close(self):

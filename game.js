@@ -2,6 +2,7 @@ const sendButton = document.getElementById("sendButton");
 const messageInput = document.getElementById("messageInput");
 const chatlog = document.getElementById("chatlog");
 const urlParams = new URLSearchParams(window.location.search);
+const currentZone = urlParams.get('zone'); 
 
 // send message
 sendButton.addEventListener("click", () => {
