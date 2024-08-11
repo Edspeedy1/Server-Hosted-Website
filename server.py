@@ -84,7 +84,9 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 sessions[data['session']].update_last_active_time()
                 self.upload_message(sessions[data['session']].username, data['text'])
                 self.send_json_response(200, {'success': True})
-            except KeyError:
+            except KeyError as e:
+                print(e)
+                print(sessions, data['session'])
                 self.send_json_response(200, {'error': 'Invalid session'})
         elif self.path == '/get_messages':
             self.get_messages()
