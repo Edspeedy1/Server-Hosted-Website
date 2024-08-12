@@ -35,7 +35,7 @@ DB_CONN = pymssql.connect(
 
 cursor = DB_CONN.cursor()
 cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
-print(cursor.fetchall())
+tempMessages = cursor.fetchall()
 cursor.close()
 
 # class for keeping track of active sessions
@@ -63,10 +63,6 @@ sessions = {}
 # the meat and potatoes of the server
 class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def __init__(self, request, client_address, server):
-        cursor = DB_CONN.cursor()
-        cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC') # here is the error
-        self.messages = list(cursor.fetchall()[::-1])
-        cursor.close()
         super().__init__(request, client_address, server)
 
     def end_headers(self):
@@ -117,14 +113,14 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         cursor = DB_CONN.cursor()
         cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (%s, %s, %s)', (username, text, int(time.time())))
         DB_CONN.commit()
-        self.messages.append((0, username, text, int(time.time())))
-        if len(self.messages) >= 100:
-            cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
-            self.messages = list(cursor.fetchall()[::-1])
         cursor.close()
 
     def get_messages(self):
-        messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in self.messages]
+        cursor = DB_CONN.cursor()
+        cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
+        tempMessages = cursor.fetchall()[::-1]
+        cursor.close()
+        messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in tempMessages]
         self.send_json_response(200, {'messages': messages})
 
     def login(self, username, password):
@@ -137,7 +133,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             usernamePass = cursor.fetchone()
             if usernamePass is not None:
                 # check if password is correct
-                if not bcrypt.checkpw(password.encode('utf-8'), usernamePass[1]): 
+                if not bcrypt.checkpw(password.encode('utf-8'), usernamePass[1].encode('utf-8')): 
                     self.send_json_response(400, {'error': 'Incorrect password'})
                     return 
                 else: # login successful
