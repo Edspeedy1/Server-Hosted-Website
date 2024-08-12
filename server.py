@@ -7,15 +7,36 @@ import random
 import json
 import sqlite3
 import bcrypt
-
+import pymssql
+from dotenv import load_dotenv
 # logging for debug messages on server console
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
+load_dotenv()
 HTTP_PORT = int(os.getenv('PORT', 8026))
 
 print("starting server")
+
+server = os.getenv('DB_SERVER')
+user = os.getenv('DB_USERNAME')
+password = os.getenv('DB_PASSWORD')
+database = os.getenv('DB_DATABASE')
+
+# Establishing the connection
+DB_CONN = pymssql.connect(
+    server=server,
+    user=user,
+    password=password,
+    database=database
+)
+
+cursor = DB_CONN.cursor()
+cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
+print(cursor.fetchall())
+cursor.close()
 
 # class for keeping track of active sessions
 class ConnectedClient:
@@ -32,11 +53,6 @@ class ConnectedClient:
     def update_last_active_time(self):
         self.lastActiveTime = time.time()
 
-
-CHAT_CONN = sqlite3.connect('saveData/chatroom-database.db', check_same_thread=False)
-LOGIN_CONN = sqlite3.connect('saveData/login-database.db', check_same_thread=False)
-PLAYER_DATA_CONN = sqlite3.connect('saveData/player-data-database.db', check_same_thread=False)
-
 # legacy code, was necessary but IDK anymore and i'm too scared to touch it
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
@@ -47,8 +63,8 @@ sessions = {}
 # the meat and potatoes of the server
 class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def __init__(self, request, client_address, server):
-        cursor = CHAT_CONN.cursor()
-        cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
+        cursor = DB_CONN.cursor()
+        cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC') # here is the error
         self.messages = list(cursor.fetchall()[::-1])
         cursor.close()
         super().__init__(request, client_address, server)
@@ -98,12 +114,12 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             self.login(data['username'], data['password'])
 
     def upload_message(self, username, text):
-        cursor = CHAT_CONN.cursor()
-        cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (?, ?, ?)', (username, text, int(time.time())))
-        CHAT_CONN.commit()
+        cursor = DB_CONN.cursor()
+        cursor.execute('INSERT INTO messages (username, message, timestamp) VALUES (%s, %s, %s)', (username, text, int(time.time())))
+        DB_CONN.commit()
         self.messages.append((0, username, text, int(time.time())))
         if len(self.messages) >= 100:
-            cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50')
+            cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
             self.messages = list(cursor.fetchall()[::-1])
         cursor.close()
 
@@ -115,9 +131,9 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         logger.info("Logging in as " + username)
         hashedPassword = bcrypt.hashpw((password).encode('utf-8'), bcrypt.gensalt())
         # Check if username already exists
-        cursor = LOGIN_CONN.cursor()
+        cursor = DB_CONN.cursor()
         try:
-            cursor.execute('SELECT * FROM login WHERE username = ?', (username,))
+            cursor.execute('SELECT * FROM loginInfo WHERE username = %s', (username,))
             usernamePass = cursor.fetchone()
             if usernamePass is not None:
                 # check if password is correct
@@ -130,13 +146,13 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                     self.send_json_response(200, {'success': True, "session": sessionID})
                     return 
             else: # new account creation
-                cursor.execute('INSERT INTO login (username, password) VALUES (?, ?)', (username, hashedPassword))
-                LOGIN_CONN.commit()
+                cursor.execute('INSERT INTO loginInfo (username, password) VALUES (%s, %s)', (username, hashedPassword))
+                DB_CONN.commit()
                 # create a new row in the player_data table
-                player_data_cursor = PLAYER_DATA_CONN.cursor()
-                player_data_cursor.execute('INSERT INTO basicPlayerData (username) VALUES (?)', (username,))
+                player_data_cursor = DB_CONN.cursor()
+                player_data_cursor.execute('INSERT INTO basicPlayerData (username) VALUES (%s)', (username,))
                 player_data_cursor.close()
-                PLAYER_DATA_CONN.commit()
+                DB_CONN.commit()
                 # create a new session
                 sessionID = random.randbytes(32).hex()
                 sessions[str(sessionID)] = ConnectedClient(username, sessionID)
@@ -169,14 +185,14 @@ def start_inactivity_check(timeout):
 
         # only once an hour check and delete guest accounts
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
-        placeholders = ', '.join('?' for _ in active_sessions)
-        login_cursor = LOGIN_CONN.cursor()
+        placeholders = ', '.join('%s' for _ in active_sessions)
+        login_cursor = DB_CONN.cursor()
         login_cursor.execute(f'DELETE FROM login WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
-        LOGIN_CONN.commit()
+        DB_CONN.commit()
 
-        player_data_cursor = PLAYER_DATA_CONN.cursor()
+        player_data_cursor = DB_CONN.cursor()
         player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
-        PLAYER_DATA_CONN.commit()
+        DB_CONN.commit()
     
 
 with ThreadedHTTPServer(("", HTTP_PORT), CustomRequestHandler) as httpd:

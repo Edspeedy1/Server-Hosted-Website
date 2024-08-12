@@ -2,3 +2,4 @@ chatroom-database.db
 /plan
 sqlite-editor.py
 /saveData
+.env
