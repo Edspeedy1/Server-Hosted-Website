@@ -107,7 +107,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         
         elif self.path == '/set_held_crystals':
             data = json.loads(post_data)
-            self.set_held_crystals(data['heldCrystals'], data['session'])
+            self.set_held_crystals(str(data['heldCrystals']), data['session'])
             self.send_json_response(200, {'success': True})
 
     def get_basic_user_data(self, username):
@@ -115,7 +115,8 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         cursor.execute('SELECT * FROM basicPlayerData where username = %s', (username,))
         tempPlayerData = cursor.fetchone()
         cursor.close()
-        playerData = {'username':tempPlayerData[0], 'level':tempPlayerData[1]}
+        playerData = {'username':tempPlayerData[0], 'level':tempPlayerData[1], 'gold':tempPlayerData[2], 'heldCrystals':json.loads(tempPlayerData[3])}
+        print(playerData)
         self.send_json_response(200, playerData)
 
     def upload_message(self, username, text):
@@ -155,7 +156,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 DB_CONN.commit()
                 # create a new row in the player_data table
                 player_data_cursor = DB_CONN.cursor()
-                player_data_cursor.execute('INSERT INTO basicPlayerData (username, level) VALUES (%s, 1)', (username,))
+                player_data_cursor.execute('INSERT INTO basicPlayerData (username, level, gold, held_crystals) VALUES (%s, 1, 0, %s)', (username, str([0,0,0])))
                 player_data_cursor.close()
                 DB_CONN.commit()
                 # create a new session
@@ -197,7 +198,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
 
 def start_inactivity_check(timeout):
     while True:
-        for _ in range(5):
+        for _ in range(100):
             # every minute check for inactive sessions
             logger.info("Checking inactive sessions...")
             logger.info(sessions)
@@ -214,11 +215,11 @@ def start_inactivity_check(timeout):
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
         placeholders = ', '.join('%s' for _ in active_sessions)
         login_cursor = DB_CONN.cursor()
-        login_cursor.execute(f'DELETE FROM loginInfo WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
+        login_cursor.execute(f'DELETE FROM loginInfo WHERE username LIKE \'Guest%\' AND username NOT IN ({placeholders})', active_sessions)
         DB_CONN.commit()
 
         player_data_cursor = DB_CONN.cursor()
-        player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
+        player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE \'Guest%\' AND username NOT IN ({placeholders})', active_sessions)
         DB_CONN.commit()
     
 

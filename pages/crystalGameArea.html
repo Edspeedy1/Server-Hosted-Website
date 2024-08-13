@@ -110,7 +110,9 @@
             fetch('/assets/crystals.json', { method: 'GET' }).then(response => response.json()).then(data => {
                 crystalData = data;
             });
+
             fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+                console.log(data);
                 let crystalLevelSelect = document.getElementById("crystalLevelSelect");
                 let heldCrystals = document.getElementById("heldCrystals");
                 for (let i = 0; i <= data.level/5; i++) {
@@ -142,7 +144,11 @@
                     plus.classList.add("crystalButton");
                     minus.classList.add("crystalButton");
                     heldCrystalText.textContent = crystalNames[i] + " Crystal";
-                    crystalCount.textContent = 0;
+                    if (data.heldCrystals[i] !== undefined) {
+                        crystalCount.textContent = data.heldCrystals[i];
+                    } else {
+                        crystalCount.textContent = 0;
+                    }
                     crystalCount.classList.add("crystalCountP");
                     crystalDiv.appendChild(crystalCount);
                     crystaldetailsLeft.appendChild(plus);
@@ -178,7 +184,7 @@
                 }
             }
 
-            setInterval(syncHeldCrystals, 5000);
+            setInterval(syncHeldCrystals, 2000);
 
             function checkCrystalCount() {
                 let crystalArray = Array.from(document.getElementsByClassName("crystalInput"));
