@@ -3,6 +3,7 @@ const guestButton = document.getElementById("guestButton");
 const usernameInput = document.getElementById("usernameInput");
 const passwordShow = document.getElementById("passwordButton");
 const passwordInput = document.getElementById("passwordInput");
+const themeSelect = document.getElementById("themeSelect");
 
 passwordShow.addEventListener("click", () => {
     if (passwordInput.type === "password") {
@@ -37,7 +38,7 @@ joinButton.addEventListener("click", () => {
             console.log(data.session);
             setCookie("session", data.session, 0.5);
             setCookie("username", usernameInput.value, 0.5);
-            window.location.href = `./game.html`;
+            window.location.href = `./game?theme=${themeSelect.value}`;
         } else {
             alert("Incorrect username or password");
         }
@@ -63,7 +64,7 @@ guestButton.addEventListener("click", () => {
         if (data.success) {
             setCookie("session", data.session, 0.5);
             setCookie("username", "Guest" + "_" + makeid(3), 0.5);
-            window.location.href = `./game.html`;
+            window.location.href = `./game?theme=${themeSelect.value}`;
         } else {
             alert("Incorrect username or password");
         }

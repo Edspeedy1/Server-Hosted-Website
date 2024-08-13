@@ -1,0 +1,131 @@
+/* define 4 colr variables */
+:root {
+    --textColor : #000000;
+    --col1: #ffffff;
+    --col2: #000000;
+    --col3: #c3c3c3;
+    --col4: #7f7f7f;
+}
+
+body {
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--col1);
+    color: var(--textColor);
+    margin: 0;
+    padding: 0;
+}
+
+#home {
+    text-decoration: none;
+    color: var(--textColor);
+    font-size: 60px;
+    font-weight: bold;
+    margin-top: -20px;
+}
+
+#sidebar {
+    border: var(--col2) 3px solid;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 50px);
+    width: 300px;
+    background-color: var(--col1);
+}
+
+#menus {
+    margin: 10px 0 0 -3px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 25vh - 100px);
+    width: 100%;
+    background-color: var(--col3);
+    padding: 0;
+    border: var(--col2) 3px solid;
+    justify-content: space-evenly;
+    overflow-y: scroll;
+}
+
+#menus::-webkit-scrollbar{
+    width: 0;
+}
+
+#menus button {
+    transition: 0.1s;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    background-color: var(--col3);
+    border: var(--col2) 1px solid;
+    list-style-type: none;
+    padding-left: 5px;
+    color: var(--textColor);
+}
+
+#menus button:hover {
+    background: color-mix(in srgb, var(--col1), var(--col3));
+}
+
+#chatbox {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 340px;
+    border: var(--col2) 3px solid;
+    margin-top: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    height: 25vh + 50px;
+}
+
+#chatlog {
+    overflow-y: scroll;
+    width: 100%;
+    height: 25vh;
+    background-color: var(--col1);
+    padding: 0;
+}
+
+#chatlog * {
+    background-color: var(--col3);
+    /* border: var(--col2) 1px solid; */
+    border-radius: 5px;
+    list-style-type: none;
+    padding-left: 5px;
+    color: var(--textColor);
+    width: 96%;
+    height: fit-content;
+    margin: 4px 0 0 4px;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
+/* chat log scroll bar */
+#chatlog::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chatlog::-webkit-scrollbar-track {
+    background-color: var(--col3);
+}
+
+#chatlog::-webkit-scrollbar-thumb {
+    background-color: var(--col4);
+    border-radius: 5px;
+}
+
+#messageInput {
+    position: relative;
+    resize: none;
+    max-height: 100px;
+    width: 100%;
+}
+
+#gameArea {
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+}

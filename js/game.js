@@ -2,7 +2,25 @@ const sendButton = document.getElementById("sendButton");
 const messageInput = document.getElementById("messageInput");
 const chatlog = document.getElementById("chatlog");
 const urlParams = new URLSearchParams(window.location.search);
-const currentZone = urlParams.get('zone'); 
+const colorTheme = urlParams.get('theme');
+
+
+if (colorTheme) {
+    if (colorTheme == "dark") {
+        document.documentElement.style.setProperty('--textColor', '#ffffff');
+        document.documentElement.style.setProperty('--col1', '#111213');
+        document.documentElement.style.setProperty('--col2', '#000000');
+        document.documentElement.style.setProperty('--col3', '#595959');
+        document.documentElement.style.setProperty('--col4', '#b7b7b8');
+    }
+    if (colorTheme == "inverse") {
+        document.documentElement.style.setProperty('--textColor', '#ffffff');
+        document.documentElement.style.setProperty('--col1', '#000000');
+        document.documentElement.style.setProperty('--col2', '#ffffff');
+        document.documentElement.style.setProperty('--col3', '#7f7f7f');
+        document.documentElement.style.setProperty('--col4', '#c3c3c3');
+    }
+}
 
 // send message
 sendButton.addEventListener("click", () => {
@@ -30,7 +48,8 @@ sendButton.addEventListener("click", () => {
     updateChatWindow([{
         'message': messageInput.value,
         'username': getCookie("username"),
-        'timestamp': parseInt(Date.now() / 1000)
+        'timestamp': parseInt(Date.now() / 1000 - 1),
+        'temp': true
     }]);
     setTimeout(() => {
         chatlog.scrollTop = chatlog.scrollHeight;
@@ -42,6 +61,7 @@ messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         event.preventDefault();
         sendButton.click();
+        chatlog.scrollTop = chatlog.scrollHeight;
     }
 })
 
@@ -58,7 +78,6 @@ function fetchNewMessages() {
         if (data.messages.length > 0) {
             updateChatWindow(data.messages);
         }
-        chatlog.scrollTop = chatlog.scrollHeight;
     })
     .catch(error => console.error('Error fetching messages:', error));
 
@@ -76,15 +95,22 @@ function updateChatWindow(messages) {
             chatlog.appendChild(messageElement);
         }
         else if (message.timestamp > chatlog.children[chatlog.children.length - 1].timestamp) {
+            if (chatlog.children[chatlog.children.length - 1].temp) {
+                chatlog.children[chatlog.children.length - 1].remove();
+            }
             let messageElement = document.createElement('div');
             messageElement.textContent = `${message.username}: ${message.message}`;
             messageElement.timestamp = message.timestamp;
+            if (message.temp) {
+                messageElement.temp = true;
+            }
             chatlog.appendChild(messageElement);
         }
     });
 
     if (flag) {
         chatlog.scrollTop = chatlog.scrollHeight;
+        flag = false;
     }
 }
 

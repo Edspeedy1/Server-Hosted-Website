@@ -1,0 +1,61 @@
+{
+    "unlocks": [3, 7, 9, 11],
+    "crystals": [
+        {
+            "name": "Fire",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Water",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Nature",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Earth",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Air",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Light",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Dark",
+            "weakness": {},
+            "strength": {}
+        },
+        {   
+            "name": "Storm",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Void",
+            "weakness": {},
+            "strength": {}
+        },
+        {   
+            "name": "Chaos",
+            "weakness": {},
+            "strength": {}
+        },
+        {
+            "name": "Tranquility",
+            "weakness": {},
+            "strength": {}
+        }
+
+    ]
+}

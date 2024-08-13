@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eds Fancy Website</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+
+<body>
+    <div id="sidebar">
+        <a href="home" id="home">Home</a>
+        <div id="menus">
+            <button id="crystalButton">Crystals</button>
+            <button id="inventoryButton">Inventory</button>
+            <button id="skillsButton">Skills</button>
+            <button id="farmButton">Farm</button>
+            <button id="craftingButton">Crafting</button>
+            <button id="blacksmithButton">Blacksmith</button>
+            <button id="dungeonButton">Dungeon</button>
+            <button id="tradingButton">Trading</button>
+        </div>
+        <div id="chatbox">
+            <div id="chatlog"></div>
+            <div style="display: flex; height: max-content;">
+                <textarea type="text" id="messageInput" rows="1"></textarea>
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+    <iframe src="" frameborder="0" id="gameArea"></iframe>
+    <div id="persistantData" style="display: none;"></div>
+    <script src="js/game.js"></script>
+    <script src="js/gameMenuButtons.js"></script>
+</body>
+
+</html>

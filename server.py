@@ -38,6 +38,8 @@ cursor.execute('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC')
 tempMessages = cursor.fetchall()
 cursor.close()
 
+print("connected to database")
+
 # class for keeping track of active sessions
 class ConnectedClient:
     def __init__(self, username, sessionID):
@@ -78,8 +80,10 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         self.wfile.write(content.encode())
 
     def do_GET(self):
-        if self.path == '/':
-            self.path = '/index.html'
+        if self.path == '/' or self.path == '/index.html' or self.path == '/home':
+            self.path = '/pages/index.html'
+        elif self.path.startswith('/game'):
+            self.path = self.path.replace('/game', '/pages/game.html')
         super().do_GET()
     
     def do_POST(self):
@@ -87,20 +91,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         post_data = self.rfile.read(content_length)
         
         if self.path == '/upload_message':
-            data = json.loads(post_data)
-            logger.info(data)
-            logger.info(str(sessions))
-            if len(data['text']) > 1000:
-                self.send_json_response(400, {'error': 'Message too long'})
-                return
-            try:
-                sessions[data['session']].update_last_active_time()
-                self.upload_message(sessions[data['session']].username, data['text'])
-                self.send_json_response(200, {'success': True})
-            except KeyError as e:
-                logger.error(e)
-                logger.info(data["session"])
-                self.send_json_response(200, {'error': 'Invalid session'})
+            self.handle_upload_message(post_data)
 
         elif self.path == '/get_messages':
             self.get_messages()
@@ -108,6 +99,24 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         elif self.path == '/login':
             data = json.loads(post_data)
             self.login(data['username'], data['password'])
+        
+        elif self.path == '/get_basic_user_data':
+            data = json.loads(post_data)
+            username = sessions[data['session']].username
+            self.get_basic_user_data(username)
+        
+        elif self.path == '/set_held_crystals':
+            data = json.loads(post_data)
+            self.set_held_crystals(data['heldCrystals'], data['session'])
+            self.send_json_response(200, {'success': True})
+
+    def get_basic_user_data(self, username):
+        cursor = DB_CONN.cursor()
+        cursor.execute('SELECT * FROM basicPlayerData where username = %s', (username,))
+        tempPlayerData = cursor.fetchone()
+        cursor.close()
+        playerData = {'username':tempPlayerData[0], 'level':tempPlayerData[1]}
+        self.send_json_response(200, playerData)
 
     def upload_message(self, username, text):
         cursor = DB_CONN.cursor()
@@ -146,7 +155,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 DB_CONN.commit()
                 # create a new row in the player_data table
                 player_data_cursor = DB_CONN.cursor()
-                player_data_cursor.execute('INSERT INTO basicPlayerData (username) VALUES (%s)', (username,))
+                player_data_cursor.execute('INSERT INTO basicPlayerData (username, level) VALUES (%s, 1)', (username,))
                 player_data_cursor.close()
                 DB_CONN.commit()
                 # create a new session
@@ -157,6 +166,28 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         finally:
             cursor.close()
 
+    def handle_upload_message(self, post_data):
+            data = json.loads(post_data)
+            logger.info(data)
+            logger.info(str(sessions))
+            if len(data['text']) > 1000:
+                self.send_json_response(400, {'error': 'Message too long'})
+                return
+            try:
+                sessions[data['session']].update_last_active_time()
+                self.upload_message(sessions[data['session']].username, data['text'])
+                self.send_json_response(200, {'success': True})
+            except KeyError as e:
+                logger.error(e)
+                logger.info(data["session"])
+                self.send_json_response(200, {'error': 'Invalid session'})
+
+    def set_held_crystals(self, held_crystals, session):
+        cursor = DB_CONN.cursor()
+        cursor.execute('UPDATE basicPlayerData SET held_crystals = %s WHERE username = %s', (held_crystals, sessions[session].username))
+        DB_CONN.commit()
+        cursor.close()
+
     def send_json_response(self, status_code, data):
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json')
@@ -166,7 +197,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
 
 def start_inactivity_check(timeout):
     while True:
-        for _ in range(100):
+        for _ in range(5):
             # every minute check for inactive sessions
             logger.info("Checking inactive sessions...")
             logger.info(sessions)
@@ -183,7 +214,7 @@ def start_inactivity_check(timeout):
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
         placeholders = ', '.join('%s' for _ in active_sessions)
         login_cursor = DB_CONN.cursor()
-        login_cursor.execute(f'DELETE FROM login WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
+        login_cursor.execute(f'DELETE FROM loginInfo WHERE username LIKE "Guest%" AND username NOT IN ({placeholders})', active_sessions)
         DB_CONN.commit()
 
         player_data_cursor = DB_CONN.cursor()

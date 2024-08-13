@@ -3,3 +3,4 @@ chatroom-database.db
 sqlite-editor.py
 /saveData
 .env
+.venv
