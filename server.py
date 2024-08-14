@@ -5,7 +5,6 @@ import time
 import threading
 import random
 import json
-import sqlite3
 import bcrypt
 import pymssql
 from dotenv import load_dotenv
@@ -109,6 +108,11 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             data = json.loads(post_data)
             self.set_held_crystals(str(data['heldCrystals']), data['session'])
             self.send_json_response(200, {'success': True})
+        
+        elif self.path == '/craft_crystals':
+            data = json.loads(post_data)
+            self.handle_crystal_craft(data)
+
 
     def get_basic_user_data(self, username):
         cursor = DB_CONN.cursor()
@@ -189,6 +193,17 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         DB_CONN.commit()
         cursor.close()
 
+    def handle_crystal_craft(self, data):
+        crystalSeed = random.randint(0, 2**32 - 1)
+        total_crystal_count = sum(data['crystalCounts'].values())
+        crystalPercents = {k: v / total_crystal_count for k, v in data['crystalCounts'].items() if v > 0}
+        dungeonString = str({"crystalPercents": crystalPercents, "crystalSeed": crystalSeed})
+        print(dungeonString)
+        cursor = DB_CONN.cursor()
+        cursor.execute('UPDATE basicPlayerData SET current_dungeon = %s WHERE username = %s', (dungeonString, sessions[data['session']].username))
+        DB_CONN.commit()
+        cursor.close()
+
     def send_json_response(self, status_code, data):
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json')
@@ -215,11 +230,11 @@ def start_inactivity_check(timeout):
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
         placeholders = ', '.join('%s' for _ in active_sessions)
         login_cursor = DB_CONN.cursor()
-        login_cursor.execute(f'DELETE FROM loginInfo WHERE username LIKE \'Guest%\' AND username NOT IN ({placeholders})', active_sessions)
+        login_cursor.execute(f"DELETE FROM loginInfo WHERE username LIKE 'Guest%' AND username NOT IN ({placeholders})", active_sessions)
         DB_CONN.commit()
 
         player_data_cursor = DB_CONN.cursor()
-        player_data_cursor.execute(f'DELETE FROM basicPlayerData WHERE username LIKE \'Guest%\' AND username NOT IN ({placeholders})', active_sessions)
+        player_data_cursor.execute(f"DELETE FROM basicPlayerData WHERE username LIKE 'Guest%' AND username NOT IN ({placeholders})", active_sessions)
         DB_CONN.commit()
     
 

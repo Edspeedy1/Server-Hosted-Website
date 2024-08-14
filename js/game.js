@@ -7,18 +7,18 @@ const colorTheme = urlParams.get('theme');
 
 if (colorTheme) {
     if (colorTheme == "dark") {
-        document.documentElement.style.setProperty('--textColor', '#ffffff');
-        document.documentElement.style.setProperty('--col1', '#111213');
-        document.documentElement.style.setProperty('--col2', '#000000');
-        document.documentElement.style.setProperty('--col3', '#595959');
-        document.documentElement.style.setProperty('--col4', '#b7b7b8');
+        document.documentElement.style.setProperty('--textColor', '#ffffff'); // text
+        document.documentElement.style.setProperty('--col1', '#111213'); // background
+        document.documentElement.style.setProperty('--col2', '#000000'); // border
+        document.documentElement.style.setProperty('--col3', '#595959'); // mid background
+        document.documentElement.style.setProperty('--col4', '#979798'); // top background
     }
     if (colorTheme == "inverse") {
         document.documentElement.style.setProperty('--textColor', '#ffffff');
         document.documentElement.style.setProperty('--col1', '#000000');
         document.documentElement.style.setProperty('--col2', '#ffffff');
-        document.documentElement.style.setProperty('--col3', '#7f7f7f');
-        document.documentElement.style.setProperty('--col4', '#c3c3c3');
+        document.documentElement.style.setProperty('--col3', '#5f5f5f');
+        document.documentElement.style.setProperty('--col4', '#a3a3a3');
     }
 }
 
@@ -90,6 +90,9 @@ function updateChatWindow(messages) {
     messages.forEach(message => {
         if (chatlog.children.length == 0) {
             let messageElement = document.createElement('div');
+            if (message.temp) {
+                messageElement.temp = true;
+            }
             messageElement.textContent = `${message.username}: ${message.message}`;
             messageElement.timestamp = message.timestamp;
             chatlog.appendChild(messageElement);

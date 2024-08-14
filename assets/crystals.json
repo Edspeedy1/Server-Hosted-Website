@@ -1,61 +1,130 @@
 {
-    "unlocks": [3, 7, 9, 11],
+    "unlocks": [3, 5, 8, 12],
     "crystals": [
         {
             "name": "Fire",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Water", "Light", "Chaos", "Storm", "Void"],
+            "strength": ["Nature", "Air", "Dark", "Mind"],
+            "monsters": {
+                "tier1": {"skeleton":2, "imp": 1},
+                "tier2": {"demon": 1, "salamander": 1},
+                "tier3": {"phoenix": 1}
+            },
+            "monsters2": {
+                "tier1": {"skeleton": 7, "imp": 5, "ghoul": 4, "goblin": 6, "ogre": 2, "orc": 3, "ant": 4, "piranha": 1, "snake":2},
+                "tier2": {"demon": 4, "salamander": 3, "chimera": 2, "fire elemental": 2, "hellhound": 3, "minotor": 3, "giant scorpion": 2, "kitsune": 1},
+                "tier3": {"phoenix": 3, "fire dragon": 8, "gold dragon": 1, "manticore": 4, "titan": 4, "t-rex": 2, "spinosaurus": 2}
+            }
         },
         {
             "name": "Water",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Storm", "Nature", "Dark", "Void", "Chaos"],
+            "strength": ["Fire", "Earth", "Light", "Spirit"],
+            "monsters":{
+                "tier1": {"piranha": 3, "merfolk": 2, "water spirit": 5, "mimic": 1, "jellyfish": 4, "whale": 1, "snapping turtle": 2, "crab": 3, "snake": 3, "stingray": 1},
+                "tier2": {"sea serpent": 3, "sea dragon": 4, "water elemental": 3, "salamander": 1, "giant squid": 2, "giant shrimp": 2},
+                "tier3": {"kraken": 3, "laviathan":3, "ice dragon": 1, "hydra": 2, "naga": 1, "megalodon": 2}
+            }
         },
         {
             "name": "Nature",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Fire", "Mind", "Dark", "Chaos", "Void"],
+            "strength": ["Water", "Earth", "Light", "Air"],
+            "monsters":{
+                "tier1": {"centaur": 1, "goblin": 5, "pixie": 4, "bear": 4, "spider": 3, "ant": 3, "skeleton": 1, "ogre": 2, "orc": 1, "snapping turtle": 1},
+                "tier2": {"ent": 5, "giant scorpion": 4, "chimera": 1, "nature elemental": 3, "triceritops": 1, "dryad": 2, "kitsune": 1},
+                "tier3": {"naga":5, "gold dragon": 1, "troll": 4, "stone golem": 3, "t-rex": 2, "spinosaurus": 2, "griffin": 3}
+            }
         },
         {
             "name": "Earth",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Nature", "Water", "Air", "Storm"],
+            "strength": ["Mind", "Spirit", "Chaos", "Dark"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {
             "name": "Air",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Fire", "Nature", "Spirit"],
+            "strength": ["Earth", "Light", "Mind"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {
             "name": "Light",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Nature", "Water", "Air"],
+            "strength": ["Fire", "Dark", "Storm"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {
             "name": "Dark",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Light", "Fire", "Earth"],
+            "strength": ["Water", "Nature", "Storm"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {   
             "name": "Storm",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Spirit", "Light", "Dark"],
+            "strength": ["Fire", "Water", "Earth"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {
             "name": "Void",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Spirit", "Chaos", "Mind"],
+            "strength": ["Fire", "Water", "Nature", "Chaos"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {   
             "name": "Chaos",
-            "weakness": {},
-            "strength": {}
+            "weakness": ["Earth", "Spirit", "Void"],
+            "strength": ["Fire", "Water", "Nature", "Void"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         },
         {
-            "name": "Tranquility",
-            "weakness": {},
-            "strength": {}
+            "name": "Mind",
+            "weakness": ["Chaos", "Fire", "Earth"],
+            "strength": ["Nature", "Air", "Void"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
+        },
+        {
+            "name": "Spirit",
+            "weakness": ["Water", "Earth"],
+            "strength": ["Air", "Void", "Chaos", "Storm"],
+            "monsters":{
+                "tier1": {},
+                "tier2": {},
+                "tier3": {}
+            }
         }
-
     ]
 }

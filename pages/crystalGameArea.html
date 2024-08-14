@@ -14,7 +14,6 @@
         #crystalTop {
             width: 100%;
             height: 70vh;
-            /* Change from percentage to viewport height or specific value */
             color: var(--textColor);
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -55,17 +54,46 @@
             background-color: var(--col3);
         }
 
+        #crystalLevelSelect {
+            width: fit-content;
+            height: 30px;
+            color: var(--textColor);
+            background-color: var(--col3);
+        }
+
+        #crystalLevelSelect:focus {
+            outline: none;
+        }
+
+        #crystalCraftButton {
+            overflow: hidden;
+            width: 200px;
+            height: 50px;
+            color: var(--textColor);
+            background-color: var(--col3);
+            font-size: 20px;
+            position: absolute;
+            top: 10px;
+            left: 18%;
+            transition: 0.1s;
+        }
+
         .crystalButton {
             width: 30px;
             height: 30px;
+            color: var(--textColor);
+            background-color: var(--col4);
         }
 
         .crystalInput {
+            color: var(--textColor);
+            background-color: var(--col1);
             width: 60px;
             height: 30px;
         }
 
         .crystalLabel {
+            border: 1px solid var(--col4);
             align-items: center;
             height: 40px;
             padding-left: 10px;
@@ -73,15 +101,45 @@
             flex-direction: row;
             justify-content: space-between;
         }
+
         .crystalMine {
-            width: 200px;
-            height: 200px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 25px;
+            border: 2px solid var(--col2);
+            width: 160px;
+            height: 160px;
+            color: var(--textColor);
+            background-color: var(--col4);
+            transition: 0.1s;
+        }
+
+        .crystalMine:active {
+            border: 3px solid var(--col2);
+            background: color-mix(in srgb, var(--col3) 40%, var(--col4) 60%);
         }
 
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
+
+        #moveLabelLeft {
+            padding-right: 20px;
+        }
+
+        #crystalCraftText {
+            margin-top: 10px;
+        }
+        #crystalCraftButtonLoading {
+            margin-top: -60px;
+            margin-left: -7px;
+            background-color: color-mix(in srgb, var(--col3) 40%, var(--col2) 60%);
+            width: 0;
+            height: 120%;
+            transition: width 0.1s linear;
+        }
+
     </style>
 </head>
 
@@ -92,10 +150,14 @@
                 <select id="crystalLevelSelect">
                     <option value="0">Level 1</option>
                 </select>
+                <button id="crystalCraftButton">
+                    <p id="crystalCraftText">Craft</p>
+                    <div id="crystalCraftButtonLoading"></div>
+                </button>
                 <p id="crystalCraftAmount">0/0 crystals</p>
                 <div style="display: flex; justify-content: space-between;">
                     <label for="heldCrystals">Held Crystals</label>
-                    <label for="heldCrystals">Used To Craft</label>
+                    <label for="heldCrystals" id="moveLabelLeft">Used To Craft</label>
                 </div>
                 <div id="heldCrystals">
                 </div>
@@ -112,10 +174,9 @@
             });
 
             fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
-                console.log(data);
                 let crystalLevelSelect = document.getElementById("crystalLevelSelect");
                 let heldCrystals = document.getElementById("heldCrystals");
-                for (let i = 0; i <= data.level/5; i++) {
+                for (let i = 0; i <= data.level / 5; i++) {
                     crystalLevelSelect.options[i] = new Option("Level " + (i + 1), i);
                 }
                 let crystalNames = crystalData.crystals.map(crystal => crystal.name);
@@ -132,14 +193,14 @@
                     textInput.value = 0;
                     textInput.min = 0;
                     textInput.classList.add("crystalInput");
-                    textInput.onchange = checkCrystalCount;
+                    textInput.onchange = checkCrystalCount; // also check if over max or needed
                     crystalDiv.classList.add("crystalLabel");
                     plus.textContent = "+";
                     let crystalIncreaseInterval;
-                    plus.addEventListener("mousedown", function () {clearInterval(crystalIncreaseInterval); crystalIncreaseInterval = setInterval(plusCrystalCurry(textInput, crystalCount), 8);});
-                    plus.addEventListener("mouseup", function () {clearInterval(crystalIncreaseInterval);});
-                    minus.addEventListener("mousedown", function () {clearInterval(crystalIncreaseInterval); crystalIncreaseInterval = setInterval(plusCrystalCurry(textInput, crystalCount, true), 8);});
-                    minus.addEventListener("mouseup", function () {clearInterval(crystalIncreaseInterval);});
+                    plus.addEventListener("mousedown", function () { clearInterval(crystalIncreaseInterval); crystalIncreaseInterval = setInterval(plusCrystalCurry(textInput, crystalCount), 8); });
+                    plus.addEventListener("mouseup", function () { clearInterval(crystalIncreaseInterval); });
+                    minus.addEventListener("mousedown", function () { clearInterval(crystalIncreaseInterval); crystalIncreaseInterval = setInterval(plusCrystalCurry(textInput, crystalCount, true), 8); });
+                    minus.addEventListener("mouseup", function () { clearInterval(crystalIncreaseInterval); });
                     minus.textContent = "-";
                     plus.classList.add("crystalButton");
                     minus.classList.add("crystalButton");
@@ -164,7 +225,7 @@
                     crystalMineButton.classList.add("crystalMine");
                     crystalMineButton.textContent = crystalNames[i] + " Mine";
                     crystalMineButton.addEventListener("mousedown", function (e) {
-                        crystalCount.textContent = parseInt(crystalCount.textContent)+1;
+                        crystalCount.textContent = parseInt(crystalCount.textContent) + 1;
                     });
                     crystalMineButton.addEventListener("contextmenu", function (e) {
                         e.preventDefault();
@@ -173,9 +234,9 @@
                 };
                 checkCrystalCount();
             });
-                function arraysEqual(arr1, arr2) {
-                    return JSON.stringify(arr1) === JSON.stringify(arr2);
-                }
+            function arraysEqual(arr1, arr2) {
+                return JSON.stringify(arr1) === JSON.stringify(arr2);
+            }
             function syncHeldCrystals() {
                 let crystalArray = Array.from(document.getElementsByClassName("crystalCountP"));
                 if (!arraysEqual(heldAmountArray, crystalArray.map(element => parseInt(element.textContent)))) {
@@ -193,8 +254,14 @@
                     count += parseInt(element.value);
                 });
                 let amountNeeded = parseInt(document.getElementById("crystalLevelSelect").value);
-                amountNeeded = 100 * (2**amountNeeded);
+                amountNeeded = 100 * (4 ** amountNeeded);
                 document.getElementById("crystalCraftAmount").textContent = count + "/" + amountNeeded + " crystals";
+
+                if (count >= amountNeeded) {
+                    document.getElementById("crystalCraftButton").style.opacity = 1;
+                } else {
+                    document.getElementById("crystalCraftButton").style.opacity = 0.4;
+                }
             }
 
             function getCookie(name) {
@@ -208,7 +275,7 @@
                 return null;
             }
 
-            function plusCrystalCurry(element, capElement, negative=false) {
+            function plusCrystalCurry(element, capElement, negative = false) {
                 return () => {
                     let crystalCount = parseInt(element.value);
                     let max = parseInt(capElement.textContent);
@@ -224,6 +291,48 @@
                     checkCrystalCount();
                 }
             }
+
+            let craftButton = document.getElementById("crystalCraftButton");
+            let craftButtonLoading = document.getElementById("crystalCraftButtonLoading");
+            let postTimeout = Date.now();
+            let holdTimeout;
+            craftButton.addEventListener("mouseup", function () { clearTimeout(holdTimeout); craftButtonLoading.style.width = "0"; craftButtonLoading.style.transitionDuration = "0.2s";});
+            craftButton.addEventListener("mouseleave", function () { clearTimeout(holdTimeout); craftButtonLoading.style.width = "0"; craftButtonLoading.style.transitionDuration = "0.2s";});
+            craftButton.addEventListener("mousedown", function () {
+                clearTimeout(holdTimeout);
+                craftButtonLoading.style.width = "0";
+                craftButtonLoading.style.transitionDuration = "0s";
+                if (craftButton.style.opacity === "1") {
+                    craftButtonLoading.style.width = "calc(100% + 15px)";
+                    craftButtonLoading.style.transitionDuration = "1s";
+                    holdTimeout = setTimeout(function () {
+                        if (Date.now() - postTimeout < 1000) {
+                            return;
+                        }
+                        let crystalArray = Array.from(document.getElementsByClassName("crystalInput"));
+                        let count = 0;
+                        crystalArray.forEach(element => {
+                            count += parseInt(element.value);
+                        });
+                        let amountNeeded = parseInt(document.getElementById("crystalLevelSelect").value);
+                        amountNeeded = 100 * (4 ** amountNeeded);
+                        if (count >= amountNeeded) {
+                            let names = crystalData.crystals.map(crystal => crystal.name);
+                            let object = {};
+                            for (let i = 0; i < crystalArray.length; i++) {
+                                object[names[i]] = parseInt(crystalArray[i].value);
+                            }
+                            postTimeout = Date.now();
+                            fetch('/craft_crystals', { method: 'POST', body: JSON.stringify({ 'crystalCounts': object, 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+                                if (data.success) {
+                                    let iframe = window.parent.document.getElementById("gameArea");
+                                    iframe.src = "/pages/dungeonGameArea.html";
+                                }
+                            });
+                        }
+                    }, 1000);
+                }
+            });
         </script>
     </div>
 
