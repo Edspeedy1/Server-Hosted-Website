@@ -1,0 +1,1071 @@
+{
+    "skeleton": {
+        "name": "Skeleton",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 35,
+            "defense": 22,
+            "speed": 30
+        },
+        "abilities": {},
+        "lootTier": 1,
+        "specialDrops": {
+            "bone": {"chance": 50, "min": 1, "max": 3},
+            "broken sword": {"chance": 10, "min": 1, "max": 1}
+        }
+    },
+    "imp": {
+        "name": "Imp",
+        "type": [
+            "Fire",
+            "Dark"
+        ],
+        "stats": {
+            "health": 38,
+            "attack": 14,
+            "defense": 12,
+            "speed": 125
+        },
+        "abilities": {
+            "fireball": {
+                "damage": 60,
+                "cooldown": 15
+            },
+            "sneak attack": {
+                "damageMultiplier": 1.4,
+                "cooldown": "once"
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "imp horn": {"chance": 8, "min": 1, "max": 1},
+            "flame organ": {"chance": 2, "min": 1, "max": 1}
+        }
+    },
+    "ghoul": {
+        "name": "Ghoul",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 12,
+            "attack": 2,
+            "defense": 3,
+            "speed": 1
+        },
+        "abilities": {},
+        "lootTier": 1,
+        "specialDrops": {}
+    },
+    "goblin": {
+        "name": "Goblin",
+        "type": [
+            "Earth",
+            "Fire"
+        ],
+        "stats": {
+            "health": 9,
+            "attack": 3,
+            "defense": 2,
+            "speed": 4
+        },
+        "abilities": {
+            "sneak attack": {
+                "damageMultiplier": 2,
+                "cooldown": "once"
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "goblin dagger": 1
+        }
+    },
+    "ogre": {
+        "name": "Ogre",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 20,
+            "attack": 5,
+            "defense": 4,
+            "speed": 2
+        },
+        "abilities": {
+            "smash": {
+                "damage": 8,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "ogre club": 2,
+            "ogre tooth": 5
+        }
+    },
+    "orc": {
+        "name": "Orc",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 15,
+            "attack": 4,
+            "defense": 3,
+            "speed": 3
+        },
+        "abilities": {
+            "war cry": {
+                "buff": "attack",
+                "amount": 2,
+                "duration": 3
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "orc axe": 1,
+            "orc tusk": 3
+        }
+    },
+    "ant": {
+        "name": "Ant",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 5,
+            "attack": 1,
+            "defense": 1,
+            "speed": 6
+        },
+        "abilities": {
+            "swarm": {
+                "damage": 2,
+                "cooldown": 1
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "ant mandible": 3
+        }
+    },
+    "piranha": {
+        "name": "Piranha",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 6,
+            "attack": 3,
+            "defense": 1,
+            "speed": 4
+        },
+        "abilities": {
+            "bite": {
+                "damage": 4,
+                "cooldown": 1
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "piranha tooth": 4
+        }
+    },
+    "snake": {
+        "name": "Snake",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 7,
+            "attack": 2,
+            "defense": 1,
+            "speed": 5
+        },
+        "abilities": {
+            "venomous bite": {
+                "damage": 3,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "snake venom": 2
+        }
+    },
+    "demon": {
+        "name": "Demon",
+        "type": [
+            "Fire",
+            "Dark"
+        ],
+        "stats": {
+            "health": 325,
+            "attack": 105,
+            "defense": 55,
+            "speed": 37
+        },
+        "abilities": {
+            "inferno": {
+                "damage": 7,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "demon horn": {"chance": 7, "min": 1, "max": 2},
+            "demon wing": {"chance": 3, "min": 1, "max": 2},
+            "flame organ": {"chance": 30, "min": 1, "max": 2}
+        }
+    },
+    "salamander": {
+        "name": "Salamander",
+        "type": [
+            "Fire"
+        ],
+        "stats": {
+            "health": 285,
+            "attack": 77,
+            "defense": 26,
+            "speed": 75
+        },
+        "abilities": {
+            "heal": {
+                "effect": "heal",
+                "healAmount": 2,
+                "cooldown": 0.3
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "salamander scale": {"chance": 15, "min": 1, "max": 5, "rolls": 2},
+            "flame organ": {"chance": 20, "min": 1, "max": 3, "rolls": 2}
+        }
+    },
+    "chimera": {
+        "name": "Chimera",
+        "type": [
+            "Fire",
+            "Nature"
+        ],
+        "stats": {
+            "health": 25,
+            "attack": 8,
+            "defense": 5,
+            "speed": 3
+        },
+        "abilities": {
+            "fireball": {
+                "damage": 6,
+                "cooldown": 3
+            },
+            "claw swipe": {
+                "damage": 5,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "chimera horn": 2,
+            "chimera fur": 4
+        }
+    },
+    "fire elemental": {
+        "name": "Fire Elemental",
+        "type": [
+            "Fire"
+        ],
+        "stats": {
+            "health": 20,
+            "attack": 5,
+            "defense": 3,
+            "speed": 3
+        },
+        "abilities": {
+            "flame wave": {
+                "damage": 7,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "elemental core": 2
+        }
+    },
+    "hellhound": {
+        "name": "Hellhound",
+        "type": [
+            "Fire",
+            "Dark"
+        ],
+        "stats": {
+            "health": 15,
+            "attack": 5,
+            "defense": 2,
+            "speed": 4
+        },
+        "abilities": {
+            "hellfire": {
+                "damage": 6,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "hellhound fang": 3
+        }
+    },
+    "minotaur": {
+        "name": "Minotaur",
+        "type": [
+            "Fire",
+            "Earth"
+        ],
+        "stats": {
+            "health": 22,
+            "attack": 7,
+            "defense": 4,
+            "speed": 2
+        },
+        "abilities": {
+            "bull charge": {
+                "damage": 8,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "minotaur horn": 2,
+            "minotaur hide": 3
+        }
+    },
+    "giant scorpion": {
+        "name": "Giant Scorpion",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 18,
+            "attack": 6,
+            "defense": 3,
+            "speed": 3
+        },
+        "abilities": {
+            "sting": {
+                "damage": 5,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "scorpion venom": 3
+        }
+    },
+    "kitsune": {
+        "name": "Kitsune",
+        "type": [
+            "Fire",
+            "Nature"
+        ],
+        "stats": {
+            "health": 10,
+            "attack": 4,
+            "defense": 2,
+            "speed": 6
+        },
+        "abilities": {
+            "illusion": {
+                "buff": "evasion",
+                "amount": 50,
+                "duration": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "kitsune fur": 5
+        }
+    },
+    "phoenix": {
+        "name": "Phoenix",
+        "type": [
+            "Fire",
+            "Air"
+        ],
+        "stats": {
+            "health": 30,
+            "attack": 7,
+            "defense": 5,
+            "speed": 4
+        },
+        "abilities": {
+            "rebirth": {
+                "effect": "resurrect",
+                "cooldown": "once"
+            },
+            "flame aura": {
+                "damage": 1.5,
+                "cooldown": 0.1
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "phoenix feather": {"chance": 15, "min": 1, "max": 2, "rolls": 12},
+            "flame organ": {"chance": 20, "min": 1, "max": 1, "rolls": 2}
+        }
+    },
+    "fire dragon": {
+        "name": "Fire Dragon",
+        "type": [
+            "Fire"
+        ],
+        "stats": {
+            "health": 50,
+            "attack": 10,
+            "defense": 7,
+            "speed": 3
+        },
+        "abilities": {
+            "dragon breath": {
+                "damage": 12,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "dragon scale": 5,
+            "dragon claw": 2
+        }
+    },
+    "gold dragon": {
+        "name": "Gold Dragon",
+        "type": [
+            "Fire",
+            "Earth"
+        ],
+        "stats": {
+            "health": 60,
+            "attack": 12,
+            "defense": 8,
+            "speed": 3
+        },
+        "abilities": {
+            "golden breath": {
+                "damage": 15,
+                "cooldown": 6
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "golden scale": 3,
+            "dragon's gold": 1
+        }
+    },
+    "manticore": {
+        "name": "Manticore",
+        "type": [
+            "Fire",
+            "Dark",
+            "Earth"
+        ],
+        "stats": {
+            "health": 25,
+            "attack": 7,
+            "defense": 5,
+            "speed": 4
+        },
+        "abilities": {
+            "tail sting": {
+                "damage": 8,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "manticore tail": 2
+        }
+    },
+    "titan": {
+        "name": "Titan",
+        "type": [
+            "Fire",
+            "Earth"
+        ],
+        "stats": {
+            "health": 40,
+            "attack": 9,
+            "defense": 8,
+            "speed": 2
+        },
+        "abilities": {
+            "earthquake": {
+                "damage": 10,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "titan's hammer": 1,
+            "titan's essence": 2
+        }
+    },
+    "t-rex": {
+        "name": "T-Rex",
+        "type": [
+            "Fire",
+            "Earth"
+        ],
+        "stats": {
+            "health": 35,
+            "attack": 8,
+            "defense": 6,
+            "speed": 3
+        },
+        "abilities": {
+            "bite": {
+                "damage": 9,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "dinosaur tooth": 3,
+            "dinosaur bone": 4
+        }
+    },
+    "spinosaurus": {
+        "name": "Spinosaurus",
+        "type": [
+            "Fire",
+            "Water"
+        ],
+        "stats": {
+            "health": 30,
+            "attack": 7,
+            "defense": 6,
+            "speed": 3
+        },
+        "abilities": {
+            "water bite": {
+                "damage": 8,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "spinosaurus tooth": 3
+        }
+    },
+    "merfolk": {
+        "name": "Merfolk",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 12,
+            "attack": 5,
+            "defense": 2,
+            "speed": 4
+        },
+        "abilities": {
+            "water lance": {
+                "damage": 5,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "merfolk scale": 3
+        }
+    },
+    "water spirit": {
+        "name": "Water Spirit",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 10,
+            "attack": 4,
+            "defense": 3,
+            "speed": 5
+        },
+        "abilities": {
+            "water whip": {
+                "damage": 6,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "spirit essence": 5
+        }
+    },
+    "mimic": {
+        "name": "Mimic",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 8,
+            "attack": 3,
+            "defense": 4,
+            "speed": 2
+        },
+        "abilities": {
+            "deception": {
+                "effect": "confuse",
+                "duration": 3
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "mimic key": 2
+        }
+    },
+    "jellyfish": {
+        "name": "Jellyfish",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 7,
+            "attack": 2,
+            "defense": 1,
+            "speed": 5
+        },
+        "abilities": {
+            "sting": {
+                "damage": 3,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "jellyfish stinger": 3
+        }
+    },
+    "whale": {
+        "name": "Whale",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 30,
+            "attack": 6,
+            "defense": 5,
+            "speed": 2
+        },
+        "abilities": {
+            "whale song": {
+                "effect": "stun",
+                "duration": 2
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "whale bone": 3
+        }
+    },
+    "snapping turtle": {
+        "name": "Snapping Turtle",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 12,
+            "attack": 4,
+            "defense": 3,
+            "speed": 3
+        },
+        "abilities": {
+            "snap": {
+                "damage": 5,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "turtle shell": 3
+        }
+    },
+    "crab": {
+        "name": "Crab",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 10,
+            "attack": 3,
+            "defense": 4,
+            "speed": 2
+        },
+        "abilities": {
+            "claw crush": {
+                "damage": 4,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "crab claw": 2
+        }
+    },
+    "stingray": {
+        "name": "Stingray",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 8,
+            "attack": 3,
+            "defense": 2,
+            "speed": 5
+        },
+        "abilities": {
+            "sting": {
+                "damage": 4,
+                "cooldown": 1
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "stingray barb": 3
+        }
+    },
+    "sea serpent": {
+        "name": "Sea Serpent",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 20,
+            "attack": 6,
+            "defense": 3,
+            "speed": 4
+        },
+        "abilities": {
+            "water coil": {
+                "damage": 7,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "serpent scale": 3
+        }
+    },
+    "sea dragon": {
+        "name": "Sea Dragon",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 25,
+            "attack": 8,
+            "defense": 4,
+            "speed": 3
+        },
+        "abilities": {
+            "tsunami": {
+                "damage": 10,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "dragon scale": 4,
+            "dragon tooth": 2
+        }
+    },
+    "water elemental": {
+        "name": "Water Elemental",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 18,
+            "attack": 5,
+            "defense": 4,
+            "speed": 3
+        },
+        "abilities": {
+            "water surge": {
+                "damage": 6,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "elemental core": 2
+        }
+    },
+    "giant squid": {
+        "name": "Giant Squid",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 20,
+            "attack": 6,
+            "defense": 3,
+            "speed": 2
+        },
+        "abilities": {
+            "ink cloud": {
+                "effect": "blind",
+                "duration": 3
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "squid ink": 4
+        }
+    },
+    "giant shrimp": {
+        "name": "Giant Shrimp",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 10,
+            "attack": 4,
+            "defense": 2,
+            "speed": 4
+        },
+        "abilities": {
+            "crush": {
+                "damage": 5,
+                "cooldown": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "shrimp claw": 3
+        }
+    },
+    "kraken": {
+        "name": "Kraken",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 35,
+            "attack": 8,
+            "defense": 5,
+            "speed": 2
+        },
+        "abilities": {
+            "tentacle slam": {
+                "damage": 10,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "kraken tentacle": 3
+        }
+    },
+    "leviathan": {
+        "name": "Leviathan",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 40,
+            "attack": 9,
+            "defense": 6,
+            "speed": 2
+        },
+        "abilities": {
+            "tidal wave": {
+                "damage": 12,
+                "cooldown": 6
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "leviathan scale": 3
+        }
+    },
+    "ice dragon": {
+        "name": "Ice Dragon",
+        "type": [
+            "Water",
+            "Ice"
+        ],
+        "stats": {
+            "health": 45,
+            "attack": 10,
+            "defense": 7,
+            "speed": 2
+        },
+        "abilities": {
+            "frost breath": {
+                "damage": 14,
+                "cooldown": 5
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "dragon scale": 4,
+            "ice shard": 2
+        }
+    },
+    "hydra": {
+        "name": "Hydra",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 30,
+            "attack": 8,
+            "defense": 5,
+            "speed": 3
+        },
+        "abilities": {
+            "multi-bite": {
+                "damage": 7,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "hydra scale": 3
+        }
+    },
+    "naga": {
+        "name": "Naga",
+        "type": [
+            "Water",
+            "Nature"
+        ],
+        "stats": {
+            "health": 20,
+            "attack": 6,
+            "defense": 4,
+            "speed": 4
+        },
+        "abilities": {
+            "serpent strike": {
+                "damage": 6,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "naga scale": 4
+        }
+    },
+    "megalodon": {
+        "name": "Megalodon",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 35,
+            "attack": 9,
+            "defense": 6,
+            "speed": 3
+        },
+        "abilities": {
+            "shark bite": {
+                "damage": 8,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "shark tooth": 5
+        }
+    },
+    "centaur": {
+        "name": "Centaur",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 14,
+            "attack": 5,
+            "defense": 4,
+            "speed": 4
+        },
+        "abilities": {
+            "charge": {
+                "damage": 6,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "centaur horn": 3
+        }
+    },
+    "pixie": {
+        "name": "Pixie",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 8,
+            "attack": 3,
+            "defense": 1,
+            "speed": 6
+        },
+        "abilities": {
+            "enchant": {
+                "effect": "charm",
+                "duration": 2
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "pixie dust": 5
+        }
+    },
+    "treant": {
+        "name": "Treant",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 30,
+            "attack": 7,
+            "defense": 7,
+            "speed": 2
+        },
+        "abilities": {
+            "root strike": {
+                "damage": 8,
+                "cooldown": 4
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "treant bark": 3
+        }
+    },
+    "giant spider": {
+        "name": "Giant Spider",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 18,
+            "attack": 6,
+            "defense": 4,
+            "speed": 3
+        },
+        "abilities": {
+            "web shot": {
+                "damage": 5,
+                "cooldown": 3
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "spider silk": 4
+        }
+    }
+}

@@ -1,130 +1,118 @@
 {
     "unlocks": [3, 5, 8, 12],
-    "crystals": [
-        {
-            "name": "Fire",
+    "crystals": {
+        "Fire": {
             "weakness": ["Water", "Light", "Chaos", "Storm", "Void"],
             "strength": ["Nature", "Air", "Dark", "Mind"],
-            "monsters": {
+            "monsters2": {
                 "tier1": {"skeleton":2, "imp": 1},
                 "tier2": {"demon": 1, "salamander": 1},
                 "tier3": {"phoenix": 1}
             },
-            "monsters2": {
-                "tier1": {"skeleton": 7, "imp": 5, "ghoul": 4, "goblin": 6, "ogre": 2, "orc": 3, "ant": 4, "piranha": 1, "snake":2},
-                "tier2": {"demon": 4, "salamander": 3, "chimera": 2, "fire elemental": 2, "hellhound": 3, "minotor": 3, "giant scorpion": 2, "kitsune": 1},
-                "tier3": {"phoenix": 3, "fire dragon": 8, "gold dragon": 1, "manticore": 4, "titan": 4, "t-rex": 2, "spinosaurus": 2}
+            "monsters": {
+                "tier1": {"skeleton": 7, "imp": 5, "ghoul": 4, "goblin": 6, "ogre": 2, "orc": 3, "ant": 4, "piranha": 1, "snake":2, "mummy": 2, "nightmare": 1},
+                "tier2": {"demon": 4, "chupacabra": 2, "salamander": 3, "chimera": 2, "fire elemental": 2, "hellhound": 3, "minotor": 3, "giant scorpion": 2, "kitsune": 1, "sphinx": 2, "iron golem": 2},
+                "tier3": {"phoenix": 3, "fire dragon": 8, "gold dragon": 1, "manticore": 4, "titan": 4, "t-rex": 2, "spinosaurus": 1}
             }
         },
-        {
-            "name": "Water",
+        "Water": {
             "weakness": ["Storm", "Nature", "Dark", "Void", "Chaos"],
             "strength": ["Fire", "Earth", "Light", "Spirit"],
             "monsters":{
-                "tier1": {"piranha": 3, "merfolk": 2, "water spirit": 5, "mimic": 1, "jellyfish": 4, "whale": 1, "snapping turtle": 2, "crab": 3, "snake": 3, "stingray": 1},
-                "tier2": {"sea serpent": 3, "sea dragon": 4, "water elemental": 3, "salamander": 1, "giant squid": 2, "giant shrimp": 2},
+                "tier1": {"crocodile": 2,"piranha": 3, "electric eel": 2, "merfolk": 2, "water spirit": 5, "mimic": 1, "jellyfish": 4, "whale": 1, "snapping turtle": 2, "crab": 3, "snake": 3, "stingray": 1, "angler fish": 2},
+                "tier2": {"sea serpent": 3, "sea dragon": 4, "water elemental": 3, "salamander": 1, "giant squid": 2, "giant shrimp": 2, "yeti": 1, "siren": 2},
                 "tier3": {"kraken": 3, "laviathan":3, "ice dragon": 1, "hydra": 2, "naga": 1, "megalodon": 2}
             }
         },
-        {
-            "name": "Nature",
+        "Nature": {
             "weakness": ["Fire", "Mind", "Dark", "Chaos", "Void"],
             "strength": ["Water", "Earth", "Light", "Air"],
             "monsters":{
-                "tier1": {"centaur": 1, "goblin": 5, "pixie": 4, "bear": 4, "spider": 3, "ant": 3, "skeleton": 1, "ogre": 2, "orc": 1, "snapping turtle": 1},
-                "tier2": {"ent": 5, "giant scorpion": 4, "chimera": 1, "nature elemental": 3, "triceritops": 1, "dryad": 2, "kitsune": 1},
-                "tier3": {"naga":5, "gold dragon": 1, "troll": 4, "stone golem": 3, "t-rex": 2, "spinosaurus": 2, "griffin": 3}
+                "tier1": {"rat": 2,"centaur": 1, "goblin": 5, "pixie": 4, "bear": 4, "spider": 3, "ant": 3, "skeleton": 1, "ogre": 2, "orc": 1, "snapping turtle": 1, "gas fungus": 1, "wolf": 3, "armadillo": 1, "living roots": 1},
+                "tier2": {"ent": 5, "giant scorpion": 4, "chimera": 1, "nature elemental": 3, "triceritops": 1, "dryad": 2, "kitsune": 1, "troll": 4},
+                "tier3": {"naga":5, "gold dragon": 1, "stone golem": 3, "t-rex": 2, "spinosaurus": 1, "griffin": 3}
             }
         },
-        {
-            "name": "Earth",
+        "Earth": {
             "weakness": ["Nature", "Water", "Air", "Storm"],
             "strength": ["Mind", "Spirit", "Chaos", "Dark"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"ant": 3, "skeleton": 1, "armadillo":2, "living roots": 3, "centipede": 2, "mimic":1, "snake": 3, "rock": 1, "giant goat": 2, "animated armour": 2, "gas fungus": 1, "mummy": 1},
+                "tier2": {"troll": 4, "cyclops":2, "giant scorpion":3, "earth elemental":2, "drake":4, "beetle": 2, "sphinx": 2, "sand shark": 3, "antlion": 3, "gargoyle": 2, "iron golem": 1},
+                "tier3": {"stone golem": 3, "wurm":2, "djinn": 3, "basilisk": 2, "gorgon": 1, "titan": 3, "cockatrice": 1}
             }
         },
-        {
-            "name": "Air",
+        "Air": {
             "weakness": ["Fire", "Nature", "Spirit"],
             "strength": ["Earth", "Light", "Mind"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"giant moth": 3, "flying snake": 1, "psudodragon": 2, "ghost": 3, "harpy": 2, "hippogriff": 1, "steampunk": 2, "vampire bat": 2, "pegasus": 1, "pixie": 2},
+                "tier2": {"air elemental":4, "couatl": 1, "gargoyle": 3, "sphinx":2, "wyvern": 2, "chimera": 1, "vampire": 1, "specter": 1, "pterodactyl": 1, "storm hawk": 2},
+                "tier3": {"griffin": 6, "fire dragon": 1, "solar dragon": 1, "ice dragon": 1, "storm dragon": 1, "cockatrice": 4, "dracolich": 1, "manticore": 4, "seraphim": 1}
             }
         },
-        {
-            "name": "Light",
+        "Light": {
             "weakness": ["Nature", "Water", "Air"],
             "strength": ["Fire", "Dark", "Storm"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"lightning bug": 4,"pixie": 4, "angler fish": 2, "flying sword": 2, "gelatinous cube": 2, "mimic": 2, "will o wisp": 3, "spirit": 1, "water spirit": 1, "crystal skeleton": 2},
+                "tier2": {"unicorn": 3, "specter": 2, "crystal beetle": 3, "crystal golem": 2, "couatl": 1, "kitsune": 2, "siren": 1, "crystal wolf": 2, "crystal snake": 2},
+                "tier3": {"solar dragon": 3, "solar angel":6, "celestial gaurdian": 9, "seraphim": 6, "crystal dragon": 6, "crystal mimic": 1, "crystal phoenix": 1}
             }
         },
-        {
-            "name": "Dark",
+        "Dark": {
             "weakness": ["Light", "Fire", "Earth"],
             "strength": ["Water", "Nature", "Storm"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"lightning bug": 1,"rat": 2,"skeleton": 4, "gelatinous cube": 2, "imp": 2, "angler fish": 1, "spider": 3, "wolf": 3, "mimic": 2, "spirit": 2, "vampire bat": 3, "giant moth": 1, "mummy": 2, "cultist": 2, "ghost": 3},
+                "tier2": {"werewolf": 4, "medusa": 2,"chimera": 3, "specter": 3, "shadow": 2, "banshee": 2, "witch": 2, "wraith": 3, "giant squid": 1, "demon": 2, "necromancer": 1, "vampire": 3, "black ooze": 1},
+                "tier3": {"abyssal demon": 3, "death knight": 2, "dracolich": 1, "lich": 2, "wurm": 1, "beholder": 2, "basilisk": 2, "manticore": 1}
             }
         },
-        {   
-            "name": "Storm",
+        "Storm": {   
             "weakness": ["Spirit", "Light", "Dark"],
             "strength": ["Fire", "Water", "Earth"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"thunder imp": 2, "electric eel": 3, "harpy": 2,"steampunk": 1, "stingray": 1, "rat": 1, "lightning bug": 3, "will o wisp": 2, "psudodragon":1, "jellyfish":2},
+                "tier2": {"storm hawk": 4, "storm elemental": 3, "thunder drake": 2, "couatl": 1, "crystal wolf": 1, "storm giant": 2, "iron golem": 1, "thunder mage": 1},
+                "tier3": {"storm dragon": 7, "cockatrice": 3, "laviathan": 5, "t-rex": 1, "griffin":3, "beholder": 2}
             }
         },
-        {
-            "name": "Void",
+        "Void": {
             "weakness": ["Spirit", "Chaos", "Mind"],
             "strength": ["Fire", "Water", "Nature", "Chaos"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"ghoul": 4,"centipede": 3, "crab": 1, "skeleton": 1},
+                "tier2": {"dodomeki": 2, "abomination": 1, "cyclops": 2, "drake": 3, "gargoyle": 3, "giant scorpion": 2},
+                "tier3": {"basilisk": 3,"beholder": 1}
             }
         },
-        {   
-            "name": "Chaos",
+        "Chaos": {   
             "weakness": ["Earth", "Spirit", "Void"],
             "strength": ["Fire", "Water", "Nature", "Void"],
             "monsters":{
-                "tier1": {},
-                "tier2": {},
+                "tier1": {"crawling horror": 1},
+                "tier2": {"dodomeki": 1, "chupacabra": 2, "flesh mound": 1, "black ooze": 2,"necromancer": 1},
                 "tier3": {}
             }
         },
-        {
-            "name": "Mind",
+        "Mind": {
             "weakness": ["Chaos", "Fire", "Earth"],
             "strength": ["Nature", "Air", "Void"],
             "monsters":{
-                "tier1": {},
+                "tier1": {"goblin": 1},
                 "tier2": {},
                 "tier3": {}
             }
         },
-        {
-            "name": "Spirit",
+        "Spirit": {
             "weakness": ["Water", "Earth"],
             "strength": ["Air", "Void", "Chaos", "Storm"],
             "monsters":{
-                "tier1": {},
+                "tier1": {"mummy":3,"ghost": 4},
                 "tier2": {},
                 "tier3": {}
             }
         }
-    ]
+    }
 }

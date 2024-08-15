@@ -2,19 +2,37 @@
     "skeleton": {
         "name": "Skeleton",
         "type": [
+            "Fire",
+            "Nature",
+            "Earth",
             "Dark"
         ],
         "stats": {
             "health": 100,
-            "attack": 35,
-            "defense": 22,
-            "speed": 30
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
-        "abilities": {},
+        "spawnPattern": [
+            {
+                "name": "skeleton",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
         "lootTier": 1,
         "specialDrops": {
-            "bone": {"chance": 50, "min": 1, "max": 3},
-            "broken sword": {"chance": 10, "min": 1, "max": 1}
+            "skeleton": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "imp": {
@@ -24,176 +42,346 @@
             "Dark"
         ],
         "stats": {
-            "health": 38,
-            "attack": 14,
-            "defense": 12,
-            "speed": 125
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
-        "abilities": {
-            "fireball": {
-                "damage": 60,
-                "cooldown": 15
+        "spawnPattern": [
+            {
+                "name": "imp",
+                "chance": 100
             },
-            "sneak attack": {
-                "damageMultiplier": 1.4,
-                "cooldown": "once"
+            {
+                "name": "imp",
+                "chance": 70
+            },
+            {
+                "name": "imp",
+                "chance": 20
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "imp horn": {"chance": 8, "min": 1, "max": 1},
-            "flame organ": {"chance": 2, "min": 1, "max": 1}
+            "imp": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "ghoul": {
         "name": "Ghoul",
         "type": [
-            "Dark"
-        ],
-        "stats": {
-            "health": 12,
-            "attack": 2,
-            "defense": 3,
-            "speed": 1
-        },
-        "abilities": {},
-        "lootTier": 1,
-        "specialDrops": {}
-    },
-    "goblin": {
-        "name": "Goblin",
-        "type": [
-            "Earth",
             "Fire"
         ],
         "stats": {
-            "health": 9,
-            "attack": 3,
-            "defense": 2,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "ghoul",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "sneak attack": {
-                "damageMultiplier": 2,
-                "cooldown": "once"
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "goblin dagger": 1
+            "ghoul": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "goblin": {
+        "name": "Goblin",
+        "type": [
+            "Fire",
+            "Nature"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "goblin",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "goblin": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "ogre": {
         "name": "Ogre",
         "type": [
-            "Earth"
+            "Fire",
+            "Nature"
         ],
         "stats": {
-            "health": 20,
-            "attack": 5,
-            "defense": 4,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "ogre",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "smash": {
-                "damage": 8,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 1,
         "specialDrops": {
-            "ogre club": 2,
-            "ogre tooth": 5
+            "ogre": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "orc": {
         "name": "Orc",
         "type": [
-            "Earth"
+            "Fire",
+            "Nature"
         ],
         "stats": {
-            "health": 15,
-            "attack": 4,
-            "defense": 3,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "orc",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "war cry": {
-                "buff": "attack",
-                "amount": 2,
-                "duration": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "orc axe": 1,
-            "orc tusk": 3
+            "orc": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "ant": {
         "name": "Ant",
         "type": [
-            "Nature"
+            "Fire",
+            "Nature",
+            "Earth"
         ],
         "stats": {
-            "health": 5,
-            "attack": 1,
-            "defense": 1,
-            "speed": 6
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "ant",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "swarm": {
-                "damage": 2,
-                "cooldown": 1
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "ant mandible": 3
+            "ant": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "piranha": {
         "name": "Piranha",
         "type": [
+            "Fire",
             "Water"
         ],
         "stats": {
-            "health": 6,
-            "attack": 3,
-            "defense": 1,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "piranha",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "bite": {
-                "damage": 4,
-                "cooldown": 1
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "piranha tooth": 4
+            "piranha": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "snake": {
         "name": "Snake",
         "type": [
-            "Nature"
+            "Fire",
+            "Water",
+            "Earth"
         ],
         "stats": {
-            "health": 7,
-            "attack": 2,
-            "defense": 1,
-            "speed": 5
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "snake",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "venomous bite": {
-                "damage": 3,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "snake venom": 2
+            "snake": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "mummy": {
+        "name": "Mummy",
+        "type": [
+            "Fire",
+            "Earth",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "mummy",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "mummy": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "nightmare": {
+        "name": "Nightmare",
+        "type": [
+            "Fire"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "nightmare",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "nightmare": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "demon": {
@@ -203,74 +391,101 @@
             "Dark"
         ],
         "stats": {
-            "health": 325,
-            "attack": 105,
-            "defense": 55,
-            "speed": 37
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "demon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "inferno": {
-                "damage": 7,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "demon horn": {"chance": 7, "min": 1, "max": 2},
-            "demon wing": {"chance": 3, "min": 1, "max": 2},
-            "flame organ": {"chance": 30, "min": 1, "max": 2}
+            "demon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "salamander": {
         "name": "Salamander",
         "type": [
-            "Fire"
+            "Fire",
+            "Water"
         ],
         "stats": {
-            "health": 285,
-            "attack": 77,
-            "defense": 26,
-            "speed": 75
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "salamander",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "heal": {
-                "effect": "heal",
-                "healAmount": 2,
-                "cooldown": 0.3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 1,
+        "lootTier": 2,
         "specialDrops": {
-            "salamander scale": {"chance": 15, "min": 1, "max": 5, "rolls": 2},
-            "flame organ": {"chance": 20, "min": 1, "max": 3, "rolls": 2}
+            "salamander": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "chimera": {
         "name": "Chimera",
         "type": [
             "Fire",
-            "Nature"
+            "Nature",
+            "Air",
+            "Dark"
         ],
         "stats": {
-            "health": 25,
-            "attack": 8,
-            "defense": 5,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "chimera",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "fireball": {
-                "damage": 6,
-                "cooldown": 3
-            },
-            "claw swipe": {
-                "damage": 5,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 3,
+        "lootTier": 2,
         "specialDrops": {
-            "chimera horn": 2,
-            "chimera fur": 4
+            "chimera": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "fire elemental": {
@@ -279,212 +494,373 @@
             "Fire"
         ],
         "stats": {
-            "health": 20,
-            "attack": 5,
-            "defense": 3,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "fire elemental",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "flame wave": {
-                "damage": 7,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "elemental core": 2
+            "fire elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "hellhound": {
         "name": "Hellhound",
         "type": [
-            "Fire",
-            "Dark"
+            "Fire"
         ],
         "stats": {
-            "health": 15,
-            "attack": 5,
-            "defense": 2,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "hellhound",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "hellfire": {
-                "damage": 6,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "hellhound fang": 3
+            "hellhound": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
-    "minotaur": {
-        "name": "Minotaur",
+    "minotor": {
+        "name": "Minotor",
         "type": [
-            "Fire",
-            "Earth"
+            "Fire"
         ],
         "stats": {
-            "health": 22,
-            "attack": 7,
-            "defense": 4,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "minotor",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "bull charge": {
-                "damage": 8,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 3,
+        "lootTier": 2,
         "specialDrops": {
-            "minotaur horn": 2,
-            "minotaur hide": 3
+            "minotor": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "giant scorpion": {
         "name": "Giant Scorpion",
         "type": [
-            "Nature"
+            "Fire",
+            "Nature",
+            "Earth"
         ],
         "stats": {
-            "health": 18,
-            "attack": 6,
-            "defense": 3,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "giant scorpion",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "sting": {
-                "damage": 5,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "scorpion venom": 3
+            "giant scorpion": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "kitsune": {
         "name": "Kitsune",
         "type": [
             "Fire",
-            "Nature"
+            "Nature",
+            "Light"
         ],
         "stats": {
-            "health": 10,
-            "attack": 4,
-            "defense": 2,
-            "speed": 6
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "kitsune",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "illusion": {
-                "buff": "evasion",
-                "amount": 50,
-                "duration": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 1,
+        "lootTier": 2,
         "specialDrops": {
-            "kitsune fur": 5
+            "kitsune": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "sphinx": {
+        "name": "Sphinx",
+        "type": [
+            "Fire",
+            "Earth",
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "sphinx",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "sphinx": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "iron golem": {
+        "name": "Iron Golem",
+        "type": [
+            "Fire",
+            "Earth",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "iron golem",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "iron golem": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "phoenix": {
         "name": "Phoenix",
         "type": [
-            "Fire",
-            "Air"
+            "Fire"
         ],
         "stats": {
-            "health": 30,
-            "attack": 7,
-            "defense": 5,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "phoenix",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "rebirth": {
-                "effect": "resurrect",
-                "cooldown": "once"
-            },
-            "flame aura": {
-                "damage": 1.5,
-                "cooldown": 0.1
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "phoenix feather": {"chance": 15, "min": 1, "max": 2, "rolls": 12},
-            "flame organ": {"chance": 20, "min": 1, "max": 1, "rolls": 2}
+            "phoenix": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "fire dragon": {
         "name": "Fire Dragon",
         "type": [
-            "Fire"
+            "Fire",
+            "Air"
         ],
         "stats": {
-            "health": 50,
-            "attack": 10,
-            "defense": 7,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "fire dragon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "dragon breath": {
-                "damage": 12,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "dragon scale": 5,
-            "dragon claw": 2
+            "fire dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "gold dragon": {
         "name": "Gold Dragon",
         "type": [
             "Fire",
-            "Earth"
+            "Nature"
         ],
         "stats": {
-            "health": 60,
-            "attack": 12,
-            "defense": 8,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "gold dragon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "golden breath": {
-                "damage": 15,
-                "cooldown": 6
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "golden scale": 3,
-            "dragon's gold": 1
+            "gold dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "manticore": {
         "name": "Manticore",
         "type": [
             "Fire",
-            "Dark",
-            "Earth"
+            "Air",
+            "Dark"
         ],
         "stats": {
-            "health": 25,
-            "attack": 7,
-            "defense": 5,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "manticore",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "tail sting": {
-                "damage": 8,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 3,
         "specialDrops": {
-            "manticore tail": 2
+            "manticore": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "titan": {
@@ -494,68 +870,167 @@
             "Earth"
         ],
         "stats": {
-            "health": 40,
-            "attack": 9,
-            "defense": 8,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "titan",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "earthquake": {
-                "damage": 10,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "titan's hammer": 1,
-            "titan's essence": 2
+            "titan": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "t-rex": {
         "name": "T-Rex",
         "type": [
             "Fire",
-            "Earth"
+            "Nature",
+            "Storm"
         ],
         "stats": {
-            "health": 35,
-            "attack": 8,
-            "defense": 6,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "t-rex",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "bite": {
-                "damage": 9,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 3,
         "specialDrops": {
-            "dinosaur tooth": 3,
-            "dinosaur bone": 4
+            "t-rex": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "spinosaurus": {
         "name": "Spinosaurus",
         "type": [
             "Fire",
+            "Nature"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "spinosaurus",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "spinosaurus": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crocodile": {
+        "name": "Crocodile",
+        "type": [
             "Water"
         ],
         "stats": {
-            "health": 30,
-            "attack": 7,
-            "defense": 6,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "crocodile",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "water bite": {
-                "damage": 8,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 1,
         "specialDrops": {
-            "spinosaurus tooth": 3
+            "crocodile": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "electric eel": {
+        "name": "Electric Eel",
+        "type": [
+            "Water",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "electric eel",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "electric eel": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "merfolk": {
@@ -564,86 +1039,135 @@
             "Water"
         ],
         "stats": {
-            "health": 12,
-            "attack": 5,
-            "defense": 2,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "merfolk",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "water lance": {
-                "damage": 5,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "merfolk scale": 3
+            "merfolk": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "water spirit": {
         "name": "Water Spirit",
         "type": [
-            "Water"
+            "Water",
+            "Light"
         ],
         "stats": {
-            "health": 10,
-            "attack": 4,
-            "defense": 3,
-            "speed": 5
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "water spirit",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "water whip": {
-                "damage": 6,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "spirit essence": 5
+            "water spirit": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "mimic": {
         "name": "Mimic",
         "type": [
-            "Water"
+            "Water",
+            "Earth",
+            "Light",
+            "Dark"
         ],
         "stats": {
-            "health": 8,
-            "attack": 3,
-            "defense": 4,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "mimic",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "deception": {
-                "effect": "confuse",
-                "duration": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "mimic key": 2
+            "mimic": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "jellyfish": {
         "name": "Jellyfish",
         "type": [
-            "Water"
+            "Water",
+            "Storm"
         ],
         "stats": {
-            "health": 7,
-            "attack": 2,
-            "defense": 1,
-            "speed": 5
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "jellyfish",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "sting": {
-                "damage": 3,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "jellyfish stinger": 3
+            "jellyfish": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "whale": {
@@ -652,42 +1176,65 @@
             "Water"
         ],
         "stats": {
-            "health": 30,
-            "attack": 6,
-            "defense": 5,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "whale",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "whale song": {
-                "effect": "stun",
-                "duration": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 1,
         "specialDrops": {
-            "whale bone": 3
+            "whale": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "snapping turtle": {
         "name": "Snapping Turtle",
         "type": [
-            "Water"
+            "Water",
+            "Nature"
         ],
         "stats": {
-            "health": 12,
-            "attack": 4,
-            "defense": 3,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "snapping turtle",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "snap": {
-                "damage": 5,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "turtle shell": 3
+            "snapping turtle": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "crab": {
@@ -696,42 +1243,100 @@
             "Water"
         ],
         "stats": {
-            "health": 10,
-            "attack": 3,
-            "defense": 4,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "crab",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "claw crush": {
-                "damage": 4,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "crab claw": 2
+            "crab": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "stingray": {
         "name": "Stingray",
         "type": [
-            "Water"
+            "Water",
+            "Storm"
         ],
         "stats": {
-            "health": 8,
-            "attack": 3,
-            "defense": 2,
-            "speed": 5
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "stingray",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "sting": {
-                "damage": 4,
-                "cooldown": 1
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "stingray barb": 3
+            "stingray": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "angler fish": {
+        "name": "Angler Fish",
+        "type": [
+            "Water",
+            "Light",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "angler fish",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "angler fish": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "sea serpent": {
@@ -740,20 +1345,31 @@
             "Water"
         ],
         "stats": {
-            "health": 20,
-            "attack": 6,
-            "defense": 3,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "sea serpent",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "water coil": {
-                "damage": 7,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "serpent scale": 3
+            "sea serpent": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "sea dragon": {
@@ -762,21 +1378,31 @@
             "Water"
         ],
         "stats": {
-            "health": 25,
-            "attack": 8,
-            "defense": 4,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "sea dragon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "tsunami": {
-                "damage": 10,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 3,
+        "lootTier": 2,
         "specialDrops": {
-            "dragon scale": 4,
-            "dragon tooth": 2
+            "sea dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "water elemental": {
@@ -785,42 +1411,65 @@
             "Water"
         ],
         "stats": {
-            "health": 18,
-            "attack": 5,
-            "defense": 4,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "water elemental",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "water surge": {
-                "damage": 6,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "elemental core": 2
+            "water elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "giant squid": {
         "name": "Giant Squid",
         "type": [
-            "Water"
+            "Water",
+            "Dark"
         ],
         "stats": {
-            "health": 20,
-            "attack": 6,
-            "defense": 3,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "giant squid",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "ink cloud": {
-                "effect": "blind",
-                "duration": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "squid ink": 4
+            "giant squid": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "giant shrimp": {
@@ -829,20 +1478,98 @@
             "Water"
         ],
         "stats": {
-            "health": 10,
-            "attack": 4,
-            "defense": 2,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "giant shrimp",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "crush": {
-                "damage": 5,
-                "cooldown": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 1,
+        "lootTier": 2,
         "specialDrops": {
-            "shrimp claw": 3
+            "giant shrimp": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "yeti": {
+        "name": "Yeti",
+        "type": [
+            "Water"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "yeti",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "yeti": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "siren": {
+        "name": "Siren",
+        "type": [
+            "Water",
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "siren",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "siren": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "kraken": {
@@ -851,66 +1578,99 @@
             "Water"
         ],
         "stats": {
-            "health": 35,
-            "attack": 8,
-            "defense": 5,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "kraken",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "tentacle slam": {
-                "damage": 10,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "kraken tentacle": 3
+            "kraken": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
-    "leviathan": {
-        "name": "Leviathan",
+    "laviathan": {
+        "name": "Laviathan",
         "type": [
-            "Water"
+            "Water",
+            "Storm"
         ],
         "stats": {
-            "health": 40,
-            "attack": 9,
-            "defense": 6,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "laviathan",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "tidal wave": {
-                "damage": 12,
-                "cooldown": 6
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "leviathan scale": 3
+            "laviathan": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "ice dragon": {
         "name": "Ice Dragon",
         "type": [
             "Water",
-            "Ice"
+            "Air"
         ],
         "stats": {
-            "health": 45,
-            "attack": 10,
-            "defense": 7,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "ice dragon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "frost breath": {
-                "damage": 14,
-                "cooldown": 5
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "dragon scale": 4,
-            "ice shard": 2
+            "ice dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "hydra": {
@@ -919,20 +1679,31 @@
             "Water"
         ],
         "stats": {
-            "health": 30,
-            "attack": 8,
-            "defense": 5,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "hydra",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "multi-bite": {
-                "damage": 7,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 3,
         "specialDrops": {
-            "hydra scale": 3
+            "hydra": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "naga": {
@@ -942,20 +1713,31 @@
             "Nature"
         ],
         "stats": {
-            "health": 20,
-            "attack": 6,
-            "defense": 4,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "naga",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "serpent strike": {
-                "damage": 6,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 3,
         "specialDrops": {
-            "naga scale": 4
+            "naga": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "megalodon": {
@@ -964,20 +1746,66 @@
             "Water"
         ],
         "stats": {
-            "health": 35,
-            "attack": 9,
-            "defense": 6,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "megalodon",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "shark bite": {
-                "damage": 8,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 3,
         "specialDrops": {
-            "shark tooth": 5
+            "megalodon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "rat": {
+        "name": "Rat",
+        "type": [
+            "Nature",
+            "Dark",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "rat",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "rat": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "centaur": {
@@ -986,86 +1814,2908 @@
             "Nature"
         ],
         "stats": {
-            "health": 14,
-            "attack": 5,
-            "defense": 4,
-            "speed": 4
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "centaur",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "charge": {
-                "damage": 6,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "centaur horn": 3
+            "centaur": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
     "pixie": {
         "name": "Pixie",
         "type": [
-            "Nature"
+            "Nature",
+            "Air",
+            "Light"
         ],
         "stats": {
-            "health": 8,
-            "attack": 3,
-            "defense": 1,
-            "speed": 6
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "pixie",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "enchant": {
-                "effect": "charm",
-                "duration": 2
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 1,
         "specialDrops": {
-            "pixie dust": 5
+            "pixie": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
-    "treant": {
-        "name": "Treant",
+    "bear": {
+        "name": "Bear",
         "type": [
             "Nature"
         ],
         "stats": {
-            "health": 30,
-            "attack": 7,
-            "defense": 7,
-            "speed": 2
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "bear",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "root strike": {
-                "damage": 8,
-                "cooldown": 4
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
-        "lootTier": 2,
+        "lootTier": 1,
         "specialDrops": {
-            "treant bark": 3
+            "bear": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     },
-    "giant spider": {
-        "name": "Giant Spider",
+    "spider": {
+        "name": "Spider",
+        "type": [
+            "Nature",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "spider",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "spider": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "gas fungus": {
+        "name": "Gas Fungus",
+        "type": [
+            "Nature",
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "gas fungus",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "gas fungus": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "wolf": {
+        "name": "Wolf",
+        "type": [
+            "Nature",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "wolf",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "wolf": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "armadillo": {
+        "name": "Armadillo",
+        "type": [
+            "Nature",
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "armadillo",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "armadillo": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "living roots": {
+        "name": "Living Roots",
+        "type": [
+            "Nature",
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "living roots",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "living roots": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "ent": {
+        "name": "Ent",
         "type": [
             "Nature"
         ],
         "stats": {
-            "health": 18,
-            "attack": 6,
-            "defense": 4,
-            "speed": 3
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
         },
+        "spawnPattern": [
+            {
+                "name": "ent",
+                "chance": 100
+            }
+        ],
         "abilities": {
-            "web shot": {
-                "damage": 5,
-                "cooldown": 3
+            "": {
+                "damage": 50,
+                "cooldown": 10
             }
         },
         "lootTier": 2,
         "specialDrops": {
-            "spider silk": 4
+            "ent": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "nature elemental": {
+        "name": "Nature Elemental",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "nature elemental",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "nature elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "triceritops": {
+        "name": "Triceritops",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "triceritops",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "triceritops": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "dryad": {
+        "name": "Dryad",
+        "type": [
+            "Nature"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "dryad",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "dryad": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "troll": {
+        "name": "Troll",
+        "type": [
+            "Nature",
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "troll",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "troll": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "stone golem": {
+        "name": "Stone Golem",
+        "type": [
+            "Nature",
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "stone golem",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "stone golem": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "griffin": {
+        "name": "Griffin",
+        "type": [
+            "Nature",
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "griffin",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "griffin": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "centipede": {
+        "name": "Centipede",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "centipede",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "centipede": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "rock": {
+        "name": "Rock",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "rock",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "rock": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "giant goat": {
+        "name": "Giant Goat",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "giant goat",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "giant goat": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "animated armour": {
+        "name": "Animated Armour",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "animated armour",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "animated armour": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "cyclops": {
+        "name": "Cyclops",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "cyclops",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "cyclops": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "earth elemental": {
+        "name": "Earth Elemental",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "earth elemental",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "earth elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "drake": {
+        "name": "Drake",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "drake",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "drake": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "beetle": {
+        "name": "Beetle",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "beetle",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "beetle": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "sand shark": {
+        "name": "Sand Shark",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "sand shark",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "sand shark": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "antlion": {
+        "name": "Antlion",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "antlion",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "antlion": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "gargoyle": {
+        "name": "Gargoyle",
+        "type": [
+            "Earth",
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "gargoyle",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "gargoyle": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "wurm": {
+        "name": "Wurm",
+        "type": [
+            "Earth",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "wurm",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "wurm": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "djinn": {
+        "name": "Djinn",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "djinn",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "djinn": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "basilisk": {
+        "name": "Basilisk",
+        "type": [
+            "Earth",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "basilisk",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "basilisk": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "gorgon": {
+        "name": "Gorgon",
+        "type": [
+            "Earth"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "gorgon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "gorgon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "cockatrice": {
+        "name": "Cockatrice",
+        "type": [
+            "Earth",
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "cockatrice",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "cockatrice": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "giant moth": {
+        "name": "Giant Moth",
+        "type": [
+            "Air",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "giant moth",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "giant moth": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "flying snake": {
+        "name": "Flying Snake",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "flying snake",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "flying snake": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "psudodragon": {
+        "name": "Psudodragon",
+        "type": [
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "psudodragon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "psudodragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "ghost": {
+        "name": "Ghost",
+        "type": [
+            "Air",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "ghost",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "ghost": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "harpy": {
+        "name": "Harpy",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "harpy",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "harpy": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "hippogriff": {
+        "name": "Hippogriff",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "hippogriff",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "hippogriff": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "steampunk": {
+        "name": "Steampunk",
+        "type": [
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "steampunk",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "steampunk": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "vampire bat": {
+        "name": "Vampire Bat",
+        "type": [
+            "Air",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "vampire bat",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "vampire bat": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "pegasus": {
+        "name": "Pegasus",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "pegasus",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "pegasus": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "air elemental": {
+        "name": "Air Elemental",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "air elemental",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "air elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "couatl": {
+        "name": "Couatl",
+        "type": [
+            "Air",
+            "Light",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "couatl",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "couatl": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "wyvern": {
+        "name": "Wyvern",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "wyvern",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "wyvern": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "vampire": {
+        "name": "Vampire",
+        "type": [
+            "Air",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "vampire",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "vampire": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "specter": {
+        "name": "Specter",
+        "type": [
+            "Air",
+            "Light",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "specter",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "specter": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "pterodactyl": {
+        "name": "Pterodactyl",
+        "type": [
+            "Air"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "pterodactyl",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "pterodactyl": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "storm hawk": {
+        "name": "Storm Hawk",
+        "type": [
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "storm hawk",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "storm hawk": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "solar dragon": {
+        "name": "Solar Dragon",
+        "type": [
+            "Air",
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "solar dragon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "solar dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "storm dragon": {
+        "name": "Storm Dragon",
+        "type": [
+            "Air",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "storm dragon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "storm dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "dracolich": {
+        "name": "Dracolich",
+        "type": [
+            "Air",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "dracolich",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "dracolich": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "seraphim": {
+        "name": "Seraphim",
+        "type": [
+            "Air",
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "seraphim",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "seraphim": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "lightning bug": {
+        "name": "Lightning Bug",
+        "type": [
+            "Light",
+            "Dark",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "lightning bug",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "lightning bug": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "flying sword": {
+        "name": "Flying Sword",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "flying sword",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "flying sword": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "gelatinous cube": {
+        "name": "Gelatinous Cube",
+        "type": [
+            "Light",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "gelatinous cube",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "gelatinous cube": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "will o wisp": {
+        "name": "Will O Wisp",
+        "type": [
+            "Light",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "will o wisp",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "will o wisp": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "spirit": {
+        "name": "Spirit",
+        "type": [
+            "Light",
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "spirit",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "spirit": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal skeleton": {
+        "name": "Crystal Skeleton",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal skeleton",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "crystal skeleton": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "unicorn": {
+        "name": "Unicorn",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "unicorn",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "unicorn": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal beetle": {
+        "name": "Crystal Beetle",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal beetle",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "crystal beetle": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal golem": {
+        "name": "Crystal Golem",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal golem",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "crystal golem": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal wolf": {
+        "name": "Crystal Wolf",
+        "type": [
+            "Light",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal wolf",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "crystal wolf": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal snake": {
+        "name": "Crystal Snake",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal snake",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "crystal snake": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "solar angel": {
+        "name": "Solar Angel",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "solar angel",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "solar angel": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "celestial gaurdian": {
+        "name": "Celestial Gaurdian",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "celestial gaurdian",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "celestial gaurdian": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal dragon": {
+        "name": "Crystal Dragon",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal dragon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "crystal dragon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal mimic": {
+        "name": "Crystal Mimic",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal mimic",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "crystal mimic": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crystal phoenix": {
+        "name": "Crystal Phoenix",
+        "type": [
+            "Light"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crystal phoenix",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "crystal phoenix": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "cultist": {
+        "name": "Cultist",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "cultist",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "cultist": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "werewolf": {
+        "name": "Werewolf",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "werewolf",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "werewolf": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "medusa": {
+        "name": "Medusa",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "medusa",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "medusa": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "shadow": {
+        "name": "Shadow",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "shadow",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "shadow": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "banshee": {
+        "name": "Banshee",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "banshee",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "banshee": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "witch": {
+        "name": "Witch",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "witch",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "witch": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "wraith": {
+        "name": "Wraith",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "wraith",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "wraith": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "necromancer": {
+        "name": "Necromancer",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "necromancer",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "necromancer": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "black ooze": {
+        "name": "Black Ooze",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "black ooze",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "black ooze": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "abyssal demon": {
+        "name": "Abyssal Demon",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "abyssal demon",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "abyssal demon": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "death knight": {
+        "name": "Death Knight",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "death knight",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "death knight": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "lich": {
+        "name": "Lich",
+        "type": [
+            "Dark"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "lich",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "lich": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "beholder": {
+        "name": "Beholder",
+        "type": [
+            "Dark",
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "beholder",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 3,
+        "specialDrops": {
+            "beholder": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "thunder imp": {
+        "name": "Thunder Imp",
+        "type": [
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "thunder imp",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "thunder imp": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "storm elemental": {
+        "name": "Storm Elemental",
+        "type": [
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "storm elemental",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "storm elemental": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "thunder drake": {
+        "name": "Thunder Drake",
+        "type": [
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "thunder drake",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "thunder drake": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "storm giant": {
+        "name": "Storm Giant",
+        "type": [
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "storm giant",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "storm giant": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "thunder mage": {
+        "name": "Thunder Mage",
+        "type": [
+            "Storm"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "thunder mage",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "thunder mage": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "dodomeki": {
+        "name": "Dodomeki",
+        "type": [
+            "Void",
+            "Chaos"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "dodomeki",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 2,
+        "specialDrops": {
+            "dodomeki": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
+        }
+    },
+    "crawling horror": {
+        "name": "Crawling Horror",
+        "type": [
+            "Chaos"
+        ],
+        "stats": {
+            "health": 100,
+            "attack": 50,
+            "defense": 20,
+            "speed": 50
+        },
+        "spawnPattern": [
+            {
+                "name": "crawling horror",
+                "chance": 100
+            }
+        ],
+        "abilities": {
+            "": {
+                "damage": 50,
+                "cooldown": 10
+            }
+        },
+        "lootTier": 1,
+        "specialDrops": {
+            "crawling horror": {
+                "chance": 15,
+                "min": 1,
+                "max": 3,
+                "rolls": 1
+            }
         }
     }
 }

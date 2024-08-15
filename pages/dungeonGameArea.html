@@ -1,7 +1,198 @@
 <head>
+    <style>
+        :root {
+            --textColor: #000000;
+            --col1: #ffffff;
+            --col2: #000000;
+            --col3: #c3c3c3;
+            --col4: #7f7f7f;
+        }
 
+        #dungeonMain {
+            display: grid;
+            grid-template-rows: 5fr 2fr 5fr;
+            grid-gap: 20px;
+            width: 99%;
+            height: 100%;
+            color: var(--textColor);
+        }
+
+        #dungeonTop {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 4fr 1fr 4fr;
+            align-items: center;
+            justify-items: center;
+        }
+
+        #vsImg {
+            width: 100px;
+            height: 100px;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            width: auto;
+            object-fit: contain;
+        }
+
+        label {
+            position: relative;
+            left: 5px;
+            font-size: 20px;
+        }
+
+        #yourParty,
+        #enemyParty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: var(--textColor);
+            border: var(--col2) 3px solid;
+            background-color: var(--col3);
+        }
+
+        #abilities {
+            width: 100%;
+            height: 100%;
+            color: var(--textColor);
+            border: var(--col2) 3px solid;
+            background-color: var(--col3);
+        }
+
+        #dungeonTop *>label {
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+
+        #inventory {
+            width: 100%;
+            height: 98%;
+            color: var(--textColor);
+            border: var(--col2) 3px solid;
+            background-color: var(--col3);
+        }
+
+        .player, .enemy {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            align-items: center;
+            border-radius: 20px;
+            width: 85%;
+            height: 60px;
+            color: var(--textColor);
+            border: var(--col2) 3px solid;
+            background-color: var(--col3);
+            overflow: hidden;
+        }
+        .enemy {
+            width: calc(85% - 60px);
+            margin-left: 60px;
+        }
+
+        .player div, .enemy div {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #healthBar {
+            background-color: #c90000a8;
+            width: 100%;
+        }
+
+        #attackBar {
+            background-color: var(--col4);
+            width: 0;
+        }
+
+        .playerLabel{
+            margin: 0;
+            margin-top: -58px;
+            margin-bottom: 58px;
+            padding: 0;
+        }
+        
+        .enemyLabel {
+            margin: 0;
+            padding: 0;
+            margin-left: 60px;
+            transform: translateY(-58px);
+        }
+
+        .enemyPic {
+            align-self:baseline;
+            margin-top: -80px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            padding: 0;
+            width: 60px;
+            height: 60px;
+        }
+        #exampleMonster {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="dungeonMain">
+        <div id="dungeonTop">
+            <div id="yourParty">
+                <label for="yourParty">Your Party</label>
+                <div class="player">
+                    <div id="healthBar"></div>
+                    <div id="attackBar"></div>
+                </div>
+                <p class="playerLabel">Player 1</p>
+                <div class="player">
+                    <div id="healthBar"></div>
+                    <div id="attackBar"></div>
+                </div>
+                <p class="playerLabel">Player 1</p>
+            </div>
+            <div id="vsImg">
+                <img src="../assets/pictures/vsIcon.png" alt="">
+            </div>
+            <div id="enemyParty">
+                <label for="enemyParty">Enemy Party</label>
+                <div class="enemy">
+                    <div id="healthBar"></div>
+                    <div id="attackBar"></div>
+                </div>
+                <p class="enemyLabel">skeleton</p>
+                <img class="enemyPic" src="../assets/pictures/ghoul.png"></img>
+                <div class="enemy">
+                    <div id="healthBar"></div>
+                    <div id="attackBar"></div>
+                </div>
+                <p class="enemyLabel">imp</p>
+                <img class="enemyPic" src="../assets/pictures/salamander.png"></img>
+            </div>
+        </div>
+        <div id="abilities">
+            <label for="abilities"> Abilities</label>
+        </div>
+        <div id="inventory">
+            <label for="inventory"> Inventory</label>
+        </div>
+    </div>
+    <div id="exampleMonster">
+        <label for="enemyParty">Enemy Party</label>
+        <div class="enemy">
+            <div id="healthBar"></div>
+            <div id="attackBar"></div>
+        </div>
+        <p class="enemyLabel">Enemy 1</p>
+        <img class="enemyPic" src="../assets/vsIcon.png"></img>
+    </div>
+    <script>
 
+    </SCript>
 </body>

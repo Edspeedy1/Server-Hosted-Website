@@ -54,6 +54,70 @@ class ConnectedClient:
     def update_last_active_time(self):
         self.lastActiveTime = time.time()
 
+class Dungeon:
+    def __init__(self, owner, level, seed, crystal):
+        self.owner = owner
+        self.level = level
+        self.seed = seed
+        self.crystal = crystal
+
+        self.roomLayout = self.makeRoomLayout(seed, level, crystal)
+
+    def __str__(self):
+        return f"owner: {self.owner}, level: {self.level}, seed: {self.seed}, crystal: {str(self.crystal)}"
+    def __repr__(self):
+        return self.__str__()
+
+    def tierRoll(tier, extraDifficulty=0):
+        if extraDifficulty > 0:
+            return max([random.choices([0, 1, 2], weights=tier)[0] for _ in range(extraDifficulty)])
+        return random.choices([0, 1, 2], weights=tier)[0]
+    
+    def levelToTier(level):
+        if level < 5: return (int(200/level), level, 0)
+        return (int(200/level), level, int((level-1)/2))
+    
+    def makeRoomLayout(self, seed, level, crystal):
+        rooms = [{"dungeonLevel": level, "type": "dungeonStart"}]
+        random.seed(seed)
+        tier = Dungeon.levelToTier(level)
+
+        with open('assets/crystals.json') as f:
+            crystalMonsters = json.load(f)["crystals"]
+        with open('assets/monsters.json') as f:
+            monsterJson = json.load(f)
+        for i in range(random.randint(4,6 + level//5) + level//3):
+            encounterType = random.choices(["puzzle", "fight", "trap", "hardFight"], weights=[1, 4, 1, 2])[0]
+            tierRoll = Dungeon.tierRoll(tier)
+            if encounterType == "puzzle" or encounterType == "trap":
+                rooms.append({"type": encounterType, "difficulty": tierRoll})
+            else:
+                if encounterType == "hardFight":
+                    tierRoll = Dungeon.tierRoll(tier, 3)
+                monsterType = random.choices(list(crystal.keys()), weights=list(crystal.values()))[0]
+                p = list(crystalMonsters[monsterType]["monsters"][["tier1", "tier2", "tier3"][tierRoll]].keys())
+                w = list(crystalMonsters[monsterType]["monsters"][["tier1", "tier2", "tier3"][tierRoll]].values())
+                monster = random.choices(p, weights=w)[0]
+                monsters = []
+                for m in monsterJson[monster]["spawnPattern"]:
+                    if random.randint(1, 100) <= m["chance"]:
+                        mAppend = monsterJson[m["name"]].copy()
+                        del mAppend["spawnPattern"]
+                        monsters.append(mAppend)
+
+                rooms.append({"type": "fight", "difficulty": tierRoll, "monster": monsters})
+
+            
+        return rooms
+    
+d = Dungeon("test", 1, 2, {"Fire": 10, "Nature": 3})
+
+
+print(d.roomLayout)
+
+raise
+
+
 # legacy code, was necessary but IDK anymore and i'm too scared to touch it
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
@@ -67,10 +131,10 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         super().__init__(request, client_address, server)
 
     def end_headers(self):
-        self.send_header('Access-Control-Allow-Origin', '*')  # Add CORS header
+        self.send_header('Access-Control-Allow-Origin', '*') 
         super().end_headers()
 
-    def send_file(self, status_code, content): # unused
+    def send_file(self, status_code, content):
         self.send_response(status_code)
         self.send_header('Content-Type', 'text/plain')
         self.send_header('Content-Length', str(len(content)))
@@ -112,6 +176,10 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         elif self.path == '/craft_crystals':
             data = json.loads(post_data)
             self.handle_crystal_craft(data)
+        
+        elif self.path == '/get_dungeon':
+            data = json.loads(post_data)
+            self.get_dungeon(data)
 
 
     def get_basic_user_data(self, username):
@@ -196,13 +264,24 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def handle_crystal_craft(self, data):
         crystalSeed = random.randint(0, 2**32 - 1)
         total_crystal_count = sum(data['crystalCounts'].values())
-        crystalPercents = {k: v / total_crystal_count for k, v in data['crystalCounts'].items() if v > 0}
+        crystalPercents = {k: 100*round(v/total_crystal_count, 2) for k, v in data['crystalCounts'].items() if v > 0}
         dungeonString = str({"crystalPercents": crystalPercents, "crystalSeed": crystalSeed})
         print(dungeonString)
         cursor = DB_CONN.cursor()
         cursor.execute('UPDATE basicPlayerData SET current_dungeon = %s WHERE username = %s', (dungeonString, sessions[data['session']].username))
         DB_CONN.commit()
         cursor.close()
+
+    def get_dungeon(self, data):
+
+        username = sessions[data['session']].username
+        cursor = DB_CONN.cursor()
+        cursor.execute('SELECT current_dungeon FROM basicPlayerData WHERE username = %s', (username,))
+        tempPlayerData = cursor.fetchone()
+        cursor.close()
+        dungeon = Dungeon(username, tempPlayerData[0]['level'], tempPlayerData[0]['crystalSeed'], tempPlayerData[0]['crystalPercents'])
+        print(dungeon.roomLayout)
+        self.send_json_response(200, dungeon.roomLayout)
 
     def send_json_response(self, status_code, data):
         self.send_response(status_code)

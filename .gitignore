@@ -4,3 +4,4 @@ sqlite-editor.py
 /saveData
 .env
 .venv
+/tests
