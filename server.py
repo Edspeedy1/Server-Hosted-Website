@@ -109,14 +109,6 @@ class Dungeon:
 
             
         return rooms
-    
-d = Dungeon("test", 1, 2, {"Fire": 10, "Nature": 3})
-
-
-print(d.roomLayout)
-
-raise
-
 
 # legacy code, was necessary but IDK anymore and i'm too scared to touch it
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
