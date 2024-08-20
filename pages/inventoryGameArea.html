@@ -1,0 +1,246 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" lang="en">
+    <style>
+        :root {
+            --textColor: #000000;
+            --col1: #ffffff;
+            --col2: #000000;
+            --col3: #c3c3c3;
+            --col4: #7f7f7f;
+        }
+
+        #inventoryMain {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            grid-gap: 20px;
+            width: 100%;
+            height: 100%;
+            color: var(--textColor);
+        }
+
+        #inventoryLeft {
+            align-items: center;
+            justify-items: center;
+            display: grid;
+            grid-template-rows: 2fr 1fr;
+            width: 100%;
+            height: 100%;
+        }
+
+        #inventoryRight {
+            align-items: center;
+            justify-items: center;
+            display: grid;
+            grid-template-rows: 0.1fr 2fr 1fr;
+            width: 100%;
+            height: 100%;
+        }
+
+        #equipmentTop {
+            flex-direction: row;
+            justify-content: center;
+            border: var(--col2) 3px solid;
+            width: 95%;
+            height: 95%;
+        }
+        
+        #statsBottom {
+            border: var(--col2) 3px solid;
+            width: 95%;
+            height: 95%;
+        }
+        
+        .equipment-item {
+            margin: 10px;
+            width: 110px;
+            height: 110px;
+        }
+
+        #inventoryTop {
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: var(--col2) 3px solid;
+            width: 95%;
+            height: 100%;
+        }
+
+        #inventoryBottom {
+            margin-top: -6px;
+            border: var(--col2) 3px solid;
+            width: 95%;
+            height: 95%;
+        }
+
+        .grid-container {
+            justify-items: center;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+        }
+
+        .grid-item {
+            image-rendering: pixelated;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: var(--col3);
+            border: 4px solid var(--col2);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            width: 120px;
+        }
+        .grid-item .equipment-item {
+            width: 120px;
+            height: 120px;
+            margin: 0;
+        }
+        .equipmentColumn3 {
+            grid-template-rows: 1fr 1fr 1fr;
+        }
+        .equipmentColumn4 {
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+        }
+        .equipmentColumn4, .equipmentColumn3 {
+            padding: -10px;
+            display: grid;
+            align-items: center;
+            justify-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        #navBar {
+            width: 95%;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: none;">
+        this page is in english
+    </div>
+    <div id="inventoryMain">
+        <div id="inventoryLeft">
+            <div id="equipmentTop">
+                <div class="grid-container">
+                    <div id="equipmentColumn1" class="equipmentColumn3">
+                        <div class="grid-item receptacle" data-itemType="Amulet">Amulet</div>
+                        <div class="grid-item receptacle" data-itemType="Hand">LHand</div>
+                        <div class="grid-item receptacle" data-itemType="Ring">LRing</div>
+                    </div>
+                    <div id="equipmentColumn2" class="equipmentColumn4">
+                        <div class="grid-item receptacle" data-itemType="Helmet" style="background-image: url('../assets/defaults/helmet.png');"></div>
+                        <div class="grid-item receptacle" data-itemType="Chest" style="background-image: url('../assets/defaults/chestplate.png');"></div>
+                        <div class="grid-item receptacle" data-itemType="Waist" style="background-image: url('../assets/defaults/waist.png');"></div>
+                        <div class="grid-item receptacle" data-itemType="Boots" style="background-image: url('../assets/defaults/boots.png');"></div>
+                    </div>
+                    <div id="equipmentColumn3" class="equipmentColumn3">
+                        <div class="grid-item receptacle" data-itemType="Gloves" style="background-image: url('../assets/defaults/gloves.png');"></div>
+                        <div class="grid-item receptacle" data-itemType="Hand" style="background-image: url('../assets/defaults/sword.png');"></div>
+                        <div class="grid-item receptacle" data-itemType="Ring">RRing</div>
+                    </div>
+                </div>
+            </div>
+            <div id="statsBottom"></div>
+        </div>
+        <div id="inventoryRight">
+            <div id="navBar">
+                <!-- add selector -->
+            </div>
+            <div id="inventoryTop" class="container">
+                <div id="1" class="equipment-item" draggable="true" data-itemType="Helmet" style="background-color: red;">item</div>
+                <div id="3" class="equipment-item" draggable="true" data-itemType="Hand" style="background-color: green;">item</div>
+                <div id="2" class="equipment-item" draggable="true" data-itemType="Chest" style="background-color: blue;">item</div>
+                
+            </div>
+            <div id="inventoryBottom"></div>
+        </div>
+    </div>
+    <script>
+        const blocks = document.querySelectorAll('.equipment-item');
+        const receptacles = document.querySelectorAll('.receptacle');
+        const container = document.querySelector('.container');
+
+        blocks.forEach(block => {
+            block.addEventListener('dragstart', dragStart);
+            block.addEventListener('dragend', dragEnd);
+        });
+
+        receptacles.forEach(receptacle => {
+            receptacle.addEventListener('dragover', dragOver);
+            receptacle.addEventListener('dragenter', dragEnter);
+            receptacle.addEventListener('dragleave', dragLeave);
+            receptacle.addEventListener('drop', drop);
+        });
+
+        container.addEventListener('dragover', dragOver);
+        container.addEventListener('drop', dropToContainer);
+
+        let originalParent = null;
+
+        function dragStart(e) {
+            e.dataTransfer.setData('block-id', e.target.id);
+            originalParent = e.target.parentNode;
+        }
+
+        function dragEnd(e) {
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+        }
+
+        function dragLeave(e) {
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            let target = e.target;
+            // If the drop target is a block inside a receptacle, set the target to the receptacle
+            if (target.classList.contains('block')) {
+                target = target.parentNode;
+            }
+            const blockId = e.dataTransfer.getData('block-id');
+            const block = document.getElementById(blockId);
+            const currentBlockInReceptacle = target.querySelector('.block');
+
+            console.log(target.classList,e.target.dataset, block.dataset );
+
+            if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype)) {
+                if (currentBlockInReceptacle && currentBlockInReceptacle !== block) {
+                    originalParent.appendChild(currentBlockInReceptacle);
+                }
+                target.appendChild(block);
+            } else {
+                originalParent.appendChild(block);
+            }
+        }
+
+        function dropToContainer(e) {
+            e.preventDefault();
+            const blockId = e.dataTransfer.getData('block-id');
+            const block = document.getElementById(blockId);
+
+            // Check if the block was originally in a receptacle
+            if (originalParent.classList.contains('receptacle')) {
+                originalParent.innerHTML = ''; // Empty the receptacle
+            }
+
+            container.appendChild(block);
+        }
+
+    </script>
+</body>
+
+</html>

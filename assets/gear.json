@@ -1,0 +1,102 @@
+{
+    "names": {
+        "prefixes": ["sturdy","strong","powerful","shiny","glowing","sparkling","silk","worn","fine","brass","metallic","black","white","red","green","blue","purple","crimson","golden","corrupted","blessed","enchanted"],
+        "suffixes": ["striking","glowing","sparkling","silk","nightfall","shielding","brass","corruption","blessing","enchanting","dusk","dawn","slashing","crushing"],
+        "mid": ["spiked", "winged", "flaming", "silver", "gold", "iron", "flesh", "blood", "steel", "mithril", "sapphire", "darkenss", "frozen"],
+        "typeNames": {
+            "axes": "axe", 
+            "bows": "bow", 
+            "daggers": "dagger",
+            "maces": "mace",
+            "shields": "shield", 
+            "staffs": "staff",
+            "swords": "sword", 
+            "helmets": "helmet", 
+            "gloves": "gloves", 
+            "waists": "waist",
+            "chestplates": "chestplate", 
+            "boots": "boots", 
+            "rings": "ring", 
+            "amulets": "amulet"
+            }
+    },
+    "helmets": {
+        "statPoints":{
+            "health": 1.5,
+            "attack": 0,
+            "defense": 1.15,
+            "speed": 0.3,
+            "intellect": 0.5,
+            "wisdom": 0.5
+        },
+        "baseStat": [
+            {"defense":1}
+        ]
+    },
+    "gloves": {
+        "health": 0.1,
+        "attack": 1.4,
+        "defense": 0.4,
+        "speed": 2
+    },
+    "waists": {
+        "attack": 0
+    },
+    "chestplates": {
+        "statPoints": {
+            "health": 1.3,
+            "attack": 0.15,
+            "defense": 1.8,
+            "speed": 0
+        },
+        "baseStat": [
+            {"defense":1.5},
+            {"health":1}
+        ]
+    },
+    "boots": {
+        "health": 0.9,
+        "attack": 0.4,
+        "defense": 0.7,
+        "speed": 1.8
+    },
+    "swords": {
+        "statPoints": {
+            "attack": 1.3,
+            "swingSpeed": 0.6
+        },
+        "baseStat": [
+            {"attack": 1},
+            {"swingSpeed": 1}
+        ]
+    },
+    "axes": {
+        "statPoints": {
+            "attack": 1.3,
+            "swingSpeed": 0.6
+        },
+        "baseStat": [
+            {"attack": 1},
+            {"swingSpeed": 1}
+        ]
+    },
+    "bows": {
+        "statPoints": {
+            "attack": 1.3,
+            "swingSpeed": 0.6
+        },
+        "baseStat": [
+            {"attack": 1},
+            {"swingSpeed": 1}
+        ]
+    },
+    "shields": {
+        "defense": 0
+    },
+    "rings": {
+        "attack": 0
+    },
+    "amulets": {
+        "attack": 0
+    }
+}

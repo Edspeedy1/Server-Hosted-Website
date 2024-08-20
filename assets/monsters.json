@@ -17,6 +17,14 @@
             {
                 "name": "skeleton",
                 "chance": 100
+            },
+            {
+                "name": "skeleton",
+                "chance": 100
+            },
+            {
+                "name": "imp",
+                "chance": 100
             }
         ],
         "abilities": {
@@ -45,7 +53,7 @@
             "health": 100,
             "attack": 50,
             "defense": 20,
-            "speed": 50
+            "speed": 120
         },
         "spawnPattern": [
             {

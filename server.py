@@ -54,6 +54,19 @@ class ConnectedClient:
     def update_last_active_time(self):
         self.lastActiveTime = time.time()
 
+# go through all the images in the gear folder and keep a count of how many are in each folder
+gearImages = {}
+for folder, _, files in os.walk('assets/gear'):
+    for file in files:
+        if file.endswith('.png'):
+            directory = os.path.basename(os.path.normpath(folder))
+            if directory not in gearImages:
+                gearImages[directory] = 0
+            gearImages[directory] += 1
+with open('assets/gear.json', 'r') as f:
+    gearJson = json.load(f)
+
+
 class Dungeon:
     def __init__(self, owner, level, seed, crystal):
         self.owner = owner
@@ -67,6 +80,25 @@ class Dungeon:
         return f"owner: {self.owner}, level: {self.level}, seed: {self.seed}, crystal: {str(self.crystal)}"
     def __repr__(self):
         return self.__str__()
+
+    def rollGear(self, tier, extraDifficulty=0):
+        itemType = random.choice(list(gearImages.keys()))
+        itemType = "helmets"
+        statRolls = 1 + random.randint(0, 2) + random.randint(0, 1)*extraDifficulty + random.randint(0, 2)*tier
+        power = int(3 * 1.4**self.level * (1 + 0.22*tier) * (1 + 0.18*extraDifficulty) * (1 + 0.12 * random.randint(-1, 6)))
+        item = {"type": itemType, "picture": random.randint(0, gearImages[itemType]-1)}
+        item["name"] = ""
+        if random.randint(0, 2): item["name"] = random.choice(gearJson["names"]["prefixes"]) + " "
+        item["name"] += gearJson["names"]["typeNames"][itemType]
+        if random.randint(0, 2): item["name"] += " of " + random.choice(gearJson["names"]["suffixes"])
+        item["power"] = power
+        for i in gearJson[itemType]["baseStat"]:
+            item[list(i.keys())[0]] = list(i.values())[0]
+        for _ in range(statRolls):
+            stat = random.choice(list(gearJson[itemType]["statPoints"].keys()))
+            if (value := int((random.random()/3 + 0.4) * gearJson[itemType]["statPoints"][stat] * power)) > 0:
+                item[stat] = max(value, item[stat] if stat in item else 0)
+        return item
 
     def tierRoll(tier, extraDifficulty=0):
         if extraDifficulty > 0:
@@ -89,11 +121,14 @@ class Dungeon:
         for i in range(random.randint(4,6 + level//5) + level//3):
             encounterType = random.choices(["puzzle", "fight", "trap", "hardFight"], weights=[1, 4, 1, 2])[0]
             tierRoll = Dungeon.tierRoll(tier)
+            loot = [self.rollGear(tierRoll)] if random.randint(0, 2) else []
             if encounterType == "puzzle" or encounterType == "trap":
                 rooms.append({"type": encounterType, "difficulty": tierRoll})
             else:
+                loot.append(self.rollGear(tierRoll))
                 if encounterType == "hardFight":
                     tierRoll = Dungeon.tierRoll(tier, 3)
+                    if random.randint(0, 2): loot.append(self.rollGear(tierRoll, 1))
                 monsterType = random.choices(list(crystal.keys()), weights=list(crystal.values()))[0]
                 p = list(crystalMonsters[monsterType]["monsters"][["tier1", "tier2", "tier3"][tierRoll]].keys())
                 w = list(crystalMonsters[monsterType]["monsters"][["tier1", "tier2", "tier3"][tierRoll]].values())
@@ -103,12 +138,24 @@ class Dungeon:
                     if random.randint(1, 100) <= m["chance"]:
                         mAppend = monsterJson[m["name"]].copy()
                         del mAppend["spawnPattern"]
+                        del mAppend["specialDrops"]
                         monsters.append(mAppend)
 
                 rooms.append({"type": "fight", "difficulty": tierRoll, "monster": monsters})
 
             
         return rooms
+
+
+# dungeon = Dungeon("test", 1, random.random(), {"Fire": 10})
+
+# print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
+# print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
+# print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
+# print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
+# print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
+# raise
+
 
 # legacy code, was necessary but IDK anymore and i'm too scared to touch it
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
@@ -163,7 +210,6 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         elif self.path == '/set_held_crystals':
             data = json.loads(post_data)
             self.set_held_crystals(str(data['heldCrystals']), data['session'])
-            self.send_json_response(200, {'success': True})
         
         elif self.path == '/craft_crystals':
             data = json.loads(post_data)
@@ -252,10 +298,14 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         cursor.execute('UPDATE basicPlayerData SET held_crystals = %s WHERE username = %s', (held_crystals, sessions[session].username))
         DB_CONN.commit()
         cursor.close()
+        self.send_json_response(200, {'success': True})
 
     def handle_crystal_craft(self, data):
         crystalSeed = random.randint(0, 2**32 - 1)
         total_crystal_count = sum(data['crystalCounts'].values())
+        if total_crystal_count % 100 != 0: 
+            self.send_json_response(200, {'success': False, 'error': 'Not enough crystals'})
+            return
         crystalPercents = {k: 100*round(v/total_crystal_count, 2) for k, v in data['crystalCounts'].items() if v > 0}
         dungeonString = str({"crystalPercents": crystalPercents, "crystalSeed": crystalSeed})
         print(dungeonString)
@@ -263,16 +313,16 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         cursor.execute('UPDATE basicPlayerData SET current_dungeon = %s WHERE username = %s', (dungeonString, sessions[data['session']].username))
         DB_CONN.commit()
         cursor.close()
+        self.send_json_response(200, {'success': True})
 
     def get_dungeon(self, data):
-
         username = sessions[data['session']].username
         cursor = DB_CONN.cursor()
-        cursor.execute('SELECT current_dungeon FROM basicPlayerData WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM basicPlayerData WHERE username = %s', (username,))
         tempPlayerData = cursor.fetchone()
         cursor.close()
-        dungeon = Dungeon(username, tempPlayerData[0]['level'], tempPlayerData[0]['crystalSeed'], tempPlayerData[0]['crystalPercents'])
-        print(dungeon.roomLayout)
+        crystal = json.loads(tempPlayerData[4].replace("'", "\""))
+        dungeon = Dungeon(username, tempPlayerData[1], crystal['crystalSeed'], crystal['crystalPercents'])
         self.send_json_response(200, dungeon.roomLayout)
 
     def send_json_response(self, status_code, data):
@@ -307,7 +357,7 @@ def start_inactivity_check(timeout):
         player_data_cursor = DB_CONN.cursor()
         player_data_cursor.execute(f"DELETE FROM basicPlayerData WHERE username LIKE 'Guest%' AND username NOT IN ({placeholders})", active_sessions)
         DB_CONN.commit()
-    
+
 
 with ThreadedHTTPServer(("", HTTP_PORT), CustomRequestHandler) as httpd:
     print(f"HTTP server serving at port {HTTP_PORT}")

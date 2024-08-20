@@ -179,7 +179,7 @@
                 for (let i = 0; i <= data.level / 5; i++) {
                     crystalLevelSelect.options[i] = new Option("Level " + (i + 1), i);
                 }
-                let crystalNames = crystalData.crystals.map(crystal => crystal.name);
+                let crystalNames = crystalData.crystalNames;
                 for (let i = 0; i < crystalData.unlocks[parseInt(Math.min(data.level, 20) / 5)]; i++) {
                     let crystalDiv = document.createElement("div");
                     let plus = document.createElement("button");
@@ -254,7 +254,7 @@
                     count += parseInt(element.value);
                 });
                 let amountNeeded = parseInt(document.getElementById("crystalLevelSelect").value);
-                amountNeeded = 100 * (4 ** amountNeeded);
+                amountNeeded = 100 * (2 ** amountNeeded);
                 document.getElementById("crystalCraftAmount").textContent = count + "/" + amountNeeded + " crystals";
 
                 if (count >= amountNeeded) {
@@ -315,15 +315,16 @@
                             count += parseInt(element.value);
                         });
                         let amountNeeded = parseInt(document.getElementById("crystalLevelSelect").value);
-                        amountNeeded = 100 * (4 ** amountNeeded);
+                        amountNeeded = 100 * (2 ** amountNeeded);
                         if (count >= amountNeeded) {
-                            let names = crystalData.crystals.map(crystal => crystal.name);
+                            let names = crystalData.crystalNames;
                             let object = {};
                             for (let i = 0; i < crystalArray.length; i++) {
                                 object[names[i]] = parseInt(crystalArray[i].value);
                             }
                             postTimeout = Date.now();
                             fetch('/craft_crystals', { method: 'POST', body: JSON.stringify({ 'crystalCounts': object, 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+                                console.log(data);
                                 if (data.success) {
                                     let iframe = window.parent.document.getElementById("gameArea");
                                     iframe.src = "/pages/dungeonGameArea.html";

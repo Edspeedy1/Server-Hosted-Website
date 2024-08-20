@@ -1,18 +1,19 @@
 {
     "unlocks": [3, 5, 8, 12],
+    "crystalNames": ["Fire", "Water", "Nature", "Earth", "Air", "Light", "Dark", "Storm", "Void", "Chaos", "Mind", "Spirit"],
     "crystals": {
         "Fire": {
             "weakness": ["Water", "Light", "Chaos", "Storm", "Void"],
             "strength": ["Nature", "Air", "Dark", "Mind"],
-            "monsters2": {
+            "monsters": {
                 "tier1": {"skeleton":2, "imp": 1},
                 "tier2": {"demon": 1, "salamander": 1},
                 "tier3": {"phoenix": 1}
             },
-            "monsters": {
+            "monsters2": {
                 "tier1": {"skeleton": 7, "imp": 5, "ghoul": 4, "goblin": 6, "ogre": 2, "orc": 3, "ant": 4, "piranha": 1, "snake":2, "mummy": 2, "nightmare": 1},
                 "tier2": {"demon": 4, "chupacabra": 2, "salamander": 3, "chimera": 2, "fire elemental": 2, "hellhound": 3, "minotor": 3, "giant scorpion": 2, "kitsune": 1, "sphinx": 2, "iron golem": 2},
-                "tier3": {"phoenix": 3, "fire dragon": 8, "gold dragon": 1, "manticore": 4, "titan": 4, "t-rex": 2, "spinosaurus": 1}
+                "tier3": {"phoenix": 3, "kirin": 1, "fire dragon": 8, "gold dragon": 1, "manticore": 4, "titan": 4, "t-rex": 2, "spinosaurus": 1}
             }
         },
         "Water": {
@@ -74,44 +75,44 @@
             "strength": ["Fire", "Water", "Earth"],
             "monsters":{
                 "tier1": {"thunder imp": 2, "electric eel": 3, "harpy": 2,"steampunk": 1, "stingray": 1, "rat": 1, "lightning bug": 3, "will o wisp": 2, "psudodragon":1, "jellyfish":2},
-                "tier2": {"storm hawk": 4, "storm elemental": 3, "thunder drake": 2, "couatl": 1, "crystal wolf": 1, "storm giant": 2, "iron golem": 1, "thunder mage": 1},
-                "tier3": {"storm dragon": 7, "cockatrice": 3, "laviathan": 5, "t-rex": 1, "griffin":3, "beholder": 2}
+                "tier2": {"storm hawk": 4, "storm elemental": 3, "thunder drake": 2, "couatl": 1, "crystal wolf": 1, "storm giant": 2, "iron golem": 1},
+                "tier3": {"storm dragon": 7, "kirin": 4, "cockatrice": 3, "laviathan": 5, "t-rex": 1, "griffin":3, "beholder": 2}
             }
         },
         "Void": {
             "weakness": ["Spirit", "Chaos", "Mind"],
             "strength": ["Fire", "Water", "Nature", "Chaos"],
             "monsters":{
-                "tier1": {"ghoul": 4,"centipede": 3, "crab": 1, "skeleton": 1},
-                "tier2": {"dodomeki": 2, "abomination": 1, "cyclops": 2, "drake": 3, "gargoyle": 3, "giant scorpion": 2},
-                "tier3": {"basilisk": 3,"beholder": 1}
+                "tier1": {"ghoul": 4,"centipede": 3, "crab": 1, "skeleton": 2, "voidling": 5, "shadow beast": 2, "nightmare": 2, "mimic": 2},
+                "tier2": {"dodomeki": 2, "abomination": 1, "cyclops": 2, "drake": 3, "gargoyle": 3, "giant scorpion": 2, "shaggoth": 1},
+                "tier3": {"basilisk": 3,"beholder": 3, "gorgon": 2, "gold dragon": 1, "cockatrice": 1, "dracolich": 2, "abyssal demon": 3}
             }
         },
         "Chaos": {   
             "weakness": ["Earth", "Spirit", "Void"],
             "strength": ["Fire", "Water", "Nature", "Void"],
             "monsters":{
-                "tier1": {"crawling horror": 1},
-                "tier2": {"dodomeki": 1, "chupacabra": 2, "flesh mound": 1, "black ooze": 2,"necromancer": 1},
-                "tier3": {}
+                "tier1": {"crawling horror": 3, "ghoul": 1, "octopoid": 2},
+                "tier2": {"dodomeki": 1, "chupacabra": 2, "flesh mound": 3, "black ooze": 2,"necromancer": 1, "shaggoth": 3, "demon": 1},
+                "tier3": {"seraphim": 3}
             }
         },
         "Mind": {
             "weakness": ["Chaos", "Fire", "Earth"],
             "strength": ["Nature", "Air", "Void"],
             "monsters":{
-                "tier1": {"goblin": 1},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"yithian": 2, "cultist": 3},
+                "tier2": {"greater yithian": 2, "sphinx": 1},
+                "tier3": {"beholder": 3, "gorgon": 3}
             }
         },
         "Spirit": {
             "weakness": ["Water", "Earth"],
             "strength": ["Air", "Void", "Chaos", "Storm"],
             "monsters":{
-                "tier1": {"mummy":3,"ghost": 4},
-                "tier2": {},
-                "tier3": {}
+                "tier1": {"mummy":3, "ghost": 4, "ghoul": 2, "giant moth": 2, "spirit": 4},
+                "tier2": {"necromancer": 2, "shadow": 1, "kitsune": 3},
+                "tier3": {"lich": 5, "siren": 1, "dracolich": 4, "phoenix": 1}
             }
         }
     }

@@ -14,6 +14,11 @@ CrystalButton.addEventListener("click", () => {
     gameArea.src = "/pages/crystalGameArea.html";
 })
 
+InventoryButton.addEventListener("click", () => {
+    gameArea.src = "/pages/inventoryGameArea.html";
+})
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const iframe = gameArea;
 

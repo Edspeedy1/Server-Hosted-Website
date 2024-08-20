@@ -79,7 +79,8 @@
             background-color: var(--col3);
         }
 
-        .player, .enemy {
+        .player,
+        .enemy {
             display: grid;
             grid-template-rows: 1fr 1fr;
             align-items: center;
@@ -91,12 +92,14 @@
             background-color: var(--col3);
             overflow: hidden;
         }
+
         .enemy {
             width: calc(85% - 60px);
             margin-left: 60px;
         }
 
-        .player div, .enemy div {
+        .player div,
+        .enemy div {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -112,13 +115,13 @@
             width: 0;
         }
 
-        .playerLabel{
+        .playerLabel {
             margin: 0;
             margin-top: -58px;
             margin-bottom: 58px;
             padding: 0;
         }
-        
+
         .enemyLabel {
             margin: 0;
             padding: 0;
@@ -127,7 +130,7 @@
         }
 
         .enemyPic {
-            align-self:baseline;
+            align-self: baseline;
             margin-top: -80px;
             margin-bottom: 20px;
             margin-left: 20px;
@@ -135,8 +138,14 @@
             width: 60px;
             height: 60px;
         }
+
         #exampleMonster {
             display: none;
+        }
+
+        .enemyClass {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -151,29 +160,12 @@
                     <div id="attackBar"></div>
                 </div>
                 <p class="playerLabel">Player 1</p>
-                <div class="player">
-                    <div id="healthBar"></div>
-                    <div id="attackBar"></div>
-                </div>
-                <p class="playerLabel">Player 1</p>
             </div>
             <div id="vsImg">
-                <img src="../assets/pictures/vsIcon.png" alt="">
+                <img src="../assets/defaults/vsIcon.png" alt="vs">
             </div>
             <div id="enemyParty">
                 <label for="enemyParty">Enemy Party</label>
-                <div class="enemy">
-                    <div id="healthBar"></div>
-                    <div id="attackBar"></div>
-                </div>
-                <p class="enemyLabel">skeleton</p>
-                <img class="enemyPic" src="../assets/pictures/ghoul.png"></img>
-                <div class="enemy">
-                    <div id="healthBar"></div>
-                    <div id="attackBar"></div>
-                </div>
-                <p class="enemyLabel">imp</p>
-                <img class="enemyPic" src="../assets/pictures/salamander.png"></img>
             </div>
         </div>
         <div id="abilities">
@@ -183,16 +175,82 @@
             <label for="inventory"> Inventory</label>
         </div>
     </div>
-    <div id="exampleMonster">
-        <label for="enemyParty">Enemy Party</label>
+    <div id="exampleMonster" class="enemyClass">
         <div class="enemy">
             <div id="healthBar"></div>
             <div id="attackBar"></div>
+            <script id="dataScript" type="application/json"></script>
         </div>
         <p class="enemyLabel">Enemy 1</p>
-        <img class="enemyPic" src="../assets/vsIcon.png"></img>
+        <img class="enemyPic" src=""></img>
     </div>
     <script>
+        const enemyParty = document.getElementById("enemyParty");
+        const exampleMonster = document.getElementById("exampleMonster");
+        const parser = new DOMParser();
+        var dungeonData;
+        fetch('/get_dungeon', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+            dungeonData = { "data": data, "room": 0 };
+            console.log(dungeonData);
+            loadNextRoom();
+        });
 
-    </SCript>
+        function speedToSeconds(speed) {
+            return 150 / speed;
+        }
+
+        function loadNextRoom() {
+            const partyLabel = document.getElementById("enemyPartyLabel");
+            dungeonData.room++;
+            let room = dungeonData.data[dungeonData.room];
+            if (room.type == "fight") {
+                for (let i = 0; i < room.monster.length; i++) {
+                    let newMonster = exampleMonster.cloneNode(true);
+                    newMonster.id = room.monster[i].name;
+                    newMonster.querySelector("img").id = room.monster[0].name + "Monster";
+                    newMonster.querySelector("img").src = "../assets/monsters/" + room.monster[i].name + ".png";
+                    newMonster.querySelector("p").textContent = room.monster[i].name;
+                    newMonster.querySelector("script").textContent = JSON.stringify(room.monster[i]);
+                    room.monster[i].stats["maxHealth"] = room.monster[i].stats["health"];
+                    let healthBar = newMonster.querySelector("#healthBar")
+                    let attackBar = newMonster.querySelector("#attackBar")
+                    let attackFunction = () => {
+                        console.log("health: " + room.monster[i].stats["health"]);
+                        room.monster[i].stats["health"] -= 10;
+                        healthBar.style.width = room.monster[i].stats["health"] / room.monster[i].stats["maxHealth"] * 100 + "%";
+                        if (room.monster[i].stats["health"] > 0) {attackTimer(speedToSeconds(room.monster[i].stats["speed"]), attackBar, attackFunction);}
+                    }
+                    attackTimer(speedToSeconds(room.monster[i].stats["speed"]), attackBar, attackFunction);
+                    Array.from(newMonster.children).forEach(element => {
+                        enemyParty.appendChild(element);
+                    })
+                }
+            }
+
+        }
+
+        function attackTimer(durationInSeconds, element, functionToRun) {
+            const totalDuration = durationInSeconds * 1000;
+            element.style.transition = `width 0.1ms linear`;
+            element.style.width = '0%';
+
+            setTimeout(function() {element.style.width = '100%'; element.style.transition = `width ${totalDuration}ms linear`;}, 20);
+            setTimeout(function() {element.style.transition = 'none'; element.style.width = '0%';}, totalDuration);
+            setTimeout(functionToRun, totalDuration);
+
+            // TODO: use animate() function
+
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+    </script>
 </body>
