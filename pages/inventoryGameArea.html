@@ -53,12 +53,16 @@
         }
         
         .equipment-item {
+            image-rendering: pixelated;
+            background-size: cover;
+            background-repeat: no-repeat;
             margin: 10px;
             width: 110px;
             height: 110px;
         }
 
         #inventoryTop {
+            align-content: flex-start;
             display: flex;
             flex-wrap: wrap;
             overflow-y: auto;
@@ -132,20 +136,20 @@
             <div id="equipmentTop">
                 <div class="grid-container">
                     <div id="equipmentColumn1" class="equipmentColumn3">
-                        <div class="grid-item receptacle" data-itemType="Amulet">Amulet</div>
-                        <div class="grid-item receptacle" data-itemType="Hand">LHand</div>
-                        <div class="grid-item receptacle" data-itemType="Ring">LRing</div>
+                        <div class="grid-item receptacle" data-itemtype="Amulet">Amulet</div>
+                        <div class="grid-item receptacle" data-itemtype="Hand">LHand</div>
+                        <div class="grid-item receptacle" data-itemtype="Ring">LRing</div>
                     </div>
                     <div id="equipmentColumn2" class="equipmentColumn4">
-                        <div class="grid-item receptacle" data-itemType="Helmet" style="background-image: url('../assets/defaults/helmet.png');"></div>
-                        <div class="grid-item receptacle" data-itemType="Chest" style="background-image: url('../assets/defaults/chestplate.png');"></div>
-                        <div class="grid-item receptacle" data-itemType="Waist" style="background-image: url('../assets/defaults/waist.png');"></div>
-                        <div class="grid-item receptacle" data-itemType="Boots" style="background-image: url('../assets/defaults/boots.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="helmets" style="background-image: url('../assets/defaults/helmets.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Chestplate" style="background-image: url('../assets/defaults/chestplates.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Waist" style="background-image: url('../assets/defaults/waists.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="boots" style="background-image: url('../assets/defaults/boots.png');"></div>
                     </div>
                     <div id="equipmentColumn3" class="equipmentColumn3">
-                        <div class="grid-item receptacle" data-itemType="Gloves" style="background-image: url('../assets/defaults/gloves.png');"></div>
-                        <div class="grid-item receptacle" data-itemType="Hand" style="background-image: url('../assets/defaults/sword.png');"></div>
-                        <div class="grid-item receptacle" data-itemType="Ring">RRing</div>
+                        <div class="grid-item receptacle" data-itemtype="gloves" style="background-image: url('../assets/defaults/gloves.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Hand" style="background-image: url('../assets/defaults/swords.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Ring">RRing</div>
                     </div>
                 </div>
             </div>
@@ -156,16 +160,12 @@
                 <!-- add selector -->
             </div>
             <div id="inventoryTop" class="container">
-                <div id="1" class="equipment-item" draggable="true" data-itemType="Helmet" style="background-color: red;">item</div>
-                <div id="3" class="equipment-item" draggable="true" data-itemType="Hand" style="background-color: green;">item</div>
-                <div id="2" class="equipment-item" draggable="true" data-itemType="Chest" style="background-color: blue;">item</div>
-                
             </div>
             <div id="inventoryBottom"></div>
         </div>
     </div>
     <script>
-        const blocks = document.querySelectorAll('.equipment-item');
+        const blocks = Array.from(document.querySelectorAll('.equipment-item'));
         const receptacles = document.querySelectorAll('.receptacle');
         const container = document.querySelector('.container');
 
@@ -208,22 +208,21 @@
             e.preventDefault();
             let target = e.target;
             // If the drop target is a block inside a receptacle, set the target to the receptacle
-            if (target.classList.contains('block')) {
+            if (target.classList.contains('equipment-item')) {
                 target = target.parentNode;
             }
             const blockId = e.dataTransfer.getData('block-id');
             const block = document.getElementById(blockId);
-            const currentBlockInReceptacle = target.querySelector('.block');
-
-            console.log(target.classList,e.target.dataset, block.dataset );
-
+            const currentBlockInReceptacle = target.querySelector('.equipment-item');
+            
             if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype)) {
+                target.style.backgroundImage = 'none';
                 if (currentBlockInReceptacle && currentBlockInReceptacle !== block) {
-                    originalParent.appendChild(currentBlockInReceptacle);
+                    container.appendChild(currentBlockInReceptacle);
                 }
                 target.appendChild(block);
             } else {
-                originalParent.appendChild(block);
+                container.appendChild(block);
             }
         }
 
@@ -234,10 +233,54 @@
 
             // Check if the block was originally in a receptacle
             if (originalParent.classList.contains('receptacle')) {
-                originalParent.innerHTML = ''; // Empty the receptacle
+                originalParent.innerHTML = '';
+                originalParent.style.backgroundImage = 'url(../assets/defaults/' + block.dataset.itemtype + '.png)';
             }
 
             container.appendChild(block);
+        }
+
+        function makeGearItem(itemData, idCount) {
+            let div = document.createElement('div');
+            div.id = idCount;
+            div.classList.add('equipment-item');
+            div.dataset.itemData = JSON.stringify(itemData);
+            div.draggable = true;
+            div.dataset.itemtype = itemData.type;
+            div.style.backgroundImage = `url('../assets/gear/${itemData.type}/${itemData.picture}.png')`;
+            return div;
+        }
+
+        fetch('/get_gear', { method: 'POST', body: JSON.stringify({"session":getCookie("session")}) }).then(response => response.json()).then(data => {
+            let idCount = 0;
+            let parent = document.getElementById("inventoryTop");
+            data.forEach(item => {
+                let newGearItem = makeGearItem(item, idCount++);
+                parent.appendChild(newGearItem);
+                blocks.push(newGearItem);
+                newGearItem.addEventListener('dragstart', dragStart);
+                newGearItem.addEventListener('dragend', dragEnd);
+            });
+        });
+        fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({"session":getCookie("session")}) }).then(response => response.json()).then(data => {
+            const playerLevel = data.level;
+            console.log(playerLevel);
+        });
+
+        function updatePlayerStats() {
+            let playerStats = {mana: 100, health: 20, attack: 20, defense: 20, speed: 20};
+
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
         }
 
     </script>
