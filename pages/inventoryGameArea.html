@@ -83,7 +83,6 @@
             justify-items: center;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
             width: 100%;
             height: 100%;
             max-width: 1200px;
@@ -114,7 +113,8 @@
             grid-template-rows: 1fr 1fr 1fr 1fr;
         }
         .equipmentColumn4, .equipmentColumn3 {
-            padding: -10px;
+            margin-left: -2px;
+            margin-right: -2px;
             display: grid;
             align-items: center;
             justify-items: center;
@@ -244,7 +244,7 @@
             let div = document.createElement('div');
             div.id = idCount;
             div.classList.add('equipment-item');
-            div.dataset.itemData = JSON.stringify(itemData);
+            div.dataset.itemdata = JSON.stringify(itemData);
             div.draggable = true;
             div.dataset.itemtype = itemData.type;
             div.style.backgroundImage = `url('../assets/gear/${itemData.type}/${itemData.picture}.png')`;
@@ -269,7 +269,8 @@
 
         function updatePlayerStats() {
             let playerStats = {mana: 100, health: 20, attack: 20, defense: 20, speed: 20};
-
+            // TODO
+            
         }
 
         function getCookie(name) {

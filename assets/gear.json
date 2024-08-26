@@ -29,9 +29,9 @@
             "intellect": 0.5,
             "wisdom": 0.5
         },
-        "baseStat": [
-            {"defense":1}
-        ]
+        "baseStat": {
+            "defense":1
+        }
     },
     "gloves": {
         "statPoints": {
@@ -40,9 +40,9 @@
             "defense": 0.4,
             "speed": 2
         },
-        "baseStat": [
-            {"attack": 1}
-        ]
+        "baseStat": {
+            "attack": 1
+        }
     },
     "waists": {
         "statPoints": {
@@ -51,9 +51,9 @@
             "defense": 0.5,
             "speed": 0.5
         },
-        "baseStat": [
-            {"defense": 1}
-        ]
+        "baseStat": {
+            "defense": 1
+        }
     },
     "chestplates": {
         "statPoints": {
@@ -62,10 +62,10 @@
             "defense": 1.8,
             "speed": 0
         },
-        "baseStat": [
-            {"defense":1.5},
-            {"health":1}
-        ]
+        "baseStat": {
+            "defense": 1.5,
+            "health": 1
+        }
     },
     "boots": {
         "statPoints": {
@@ -74,48 +74,76 @@
             "defense": 0.7,
             "speed": 1.8
         },
-        "baseStat": [
-            {"defense":0.3},
-            {"speed":1}
-        ]
+        "baseStat": {
+            "defense": 0.3,
+            "speed": 1
+        }
     },
     "swords": {
         "statPoints": {
             "attack": 1.3,
-            "swingSpeed": 0.6
+            "swingSpeed": 0.2
         },
-        "baseStat": [
-            {"attack": 1},
-            {"swingSpeed": 1}
-        ]
+        "baseStat": {
+            "attack": 1,
+            "swingSpeed": 1
+        }
     },
     "axes": {
         "statPoints": {
             "attack": 1.3,
             "swingSpeed": 0.6
         },
-        "baseStat": [
-            {"attack": 1},
-            {"swingSpeed": 1}
-        ]
+        "baseStat": {
+            "attack": 1,
+            "swingSpeed": 1
+        }
     },
     "bows": {
         "statPoints": {
             "attack": 1.3,
-            "swingSpeed": 0.6
+            "swingSpeed": 0.2
         },
-        "baseStat": [
-            {"attack": 1},
-            {"swingSpeed": 1}
-        ]
+        "baseStat": {
+            "attack": 1,
+            "swingSpeed": 1
+        }
     },
     "shields": {
-        "defense": 0
+        "statPoints": {
+            "defense": 1.5
+        },
+        "baseStat": {
+            "defense": 1
+        }
     },
     "rings": {
-        "attack": 0
+        "statPoints": {
+            "attack": 1.5
+        },
+        "baseStat": {
+            "attack": 1
+        }
     },
     "amulets": {
-        "attack": 0
+        "statPoints": {
+            "attack": 1.5
+        },
+        "baseStat": {
+            "attack": 1
+        }
+    },
+    "staffs": {
+        "statPoints": {
+            "intellect": 1.5,
+            "attack": 0.9,
+            "wisdom": 0.9,
+            "swingSpeed": 0.2
+        },
+        "baseStat": {
+            "intellect": 1,
+            "attack": 1,
+            "swingSpeed": 1
+        }
     }
 }

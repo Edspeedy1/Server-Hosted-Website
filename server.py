@@ -6,7 +6,7 @@ import threading
 import random
 import json
 import bcrypt
-import pymssql
+import mysql.connector as mysql
 from dotenv import load_dotenv
 # logging for debug messages on server console
 import logging
@@ -19,20 +19,11 @@ HTTP_PORT = int(os.getenv('PORT', 8026))
 
 print("starting server")
 
-server = os.getenv('DB_SERVER')
+serverConnection = os.getenv('DB_SERVER')
 user = os.getenv('DB_USERNAME')
 password = os.getenv('DB_PASSWORD')
 database = os.getenv('DB_DATABASE')
-
-# Establishing the connection
-DB_CONN = pymssql.connect(
-    server=server,
-    user=user,
-    password=password,
-    database=database
-)
-
-print("connected to database")
+port = int(os.getenv('DB_PORT'))
 
 # class for keeping track of active sessions
 class ConnectedClient:
@@ -86,12 +77,17 @@ class Dungeon:
         item["name"] += gearJson["names"]["typeNames"][itemType]
         if random.randint(0, 2): item["name"] += " of " + random.choice(gearJson["names"]["suffixes"])
         item["power"] = power
-        for i in gearJson[itemType]["baseStat"]:
-            item[list(i.keys())[0]] = list(i.values())[0]
+        for i in gearJson[itemType]["baseStat"].keys():
+            item[i] = gearJson[itemType]["baseStat"][i]
         for _ in range(statRolls):
             stat = random.choice(list(gearJson[itemType]["statPoints"].keys()))
-            if (value := int((random.random()/3 + 0.4) * gearJson[itemType]["statPoints"][stat] * power)) > 0:
-                item[stat] = max(value, item[stat] if stat in item else 0)
+            randRoll = (random.random()/3 + 0.4) * gearJson[itemType]["statPoints"][stat] * power
+            if stat in item:
+                item[stat] += randRoll
+                item[stat] = round(item[stat], 2)
+            else:
+                item[stat] = round(randRoll, 2)
+
         return item
 
     def tierRoll(tier, extraDifficulty=0):
@@ -140,10 +136,11 @@ class Dungeon:
             
         return rooms
 
-dungeon = Dungeon("test", 1, random.random(), {"Fire": 10})
+# dungeon = Dungeon("test", 10, random.random(), {"Fire": 10})
 
-#print((list(map(lambda x: print(x, end=" ") if x[0] not in ["type", "picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(0).items()])))) and "")
-[print(dungeon.rollGear(0)) for _ in range(10)]
+# [print((list(map(lambda x: print(x, end=" ") if x[0] not in ["picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(1).items()])))) and "") for _ in range(20)]
+# [print(dungeon.rollGear(0)) for _ in range(10)]
+
 
 # legacy code, was necessary but IDK anymore and i'm too scared to touch it
 class ThreadedHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
@@ -155,6 +152,7 @@ sessions = {}
 # the meat and potatoes of the server
 class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
     def __init__(self, request, client_address, server):
+        self.DB_CONN = mysql.connect(host=serverConnection,port=port,user=user,password=password,database=database)
         super().__init__(request, client_address, server)
 
     def end_headers(self):
@@ -213,19 +211,19 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
 
     def get_gear(self, data):
         username = sessions[data['session']].username
-        gear = self.send_SQL_query('SELECT equipment FROM playerEquipment WHERE username = %s', (username,), DB_CONN, get=True, fetchAll=True)
+        gear = self.send_SQL_query('SELECT equipment FROM playerEquipment WHERE username = %s', (username,), get=True, fetchAll=True)
         self.send_json_response(200, list([json.loads(x[0]) for x in gear]))
 
     def get_basic_user_data(self, username):
-        tempPlayerData = self.send_SQL_query('SELECT * FROM basicPlayerData where username = %s', (username,), DB_CONN, get=True, fetchAll=False)
-        playerData = {'username':tempPlayerData[0], 'level':tempPlayerData[1], 'gold':tempPlayerData[2], 'heldCrystals':json.loads(tempPlayerData[3])}
+        tempPlayerData = self.send_SQL_query('SELECT * FROM basicPlayerData where username = %s', (username,), get=True, fetchAll=False)
+        playerData = {'username':tempPlayerData[0], 'level':tempPlayerData[1], 'gold':tempPlayerData[2], 'heldCrystals':list(int(x) for x in tempPlayerData[4].replace("[", "").replace("]", "").split(","))}
         self.send_json_response(200, playerData)
 
     def upload_message(self, username, text):
-        self.send_SQL_query('INSERT INTO messages (username, message, timestamp) VALUES (%s, %s, %s)', (username, text, int(time.time())), DB_CONN)
+        self.send_SQL_query('INSERT INTO messages (username, message, timestamp) VALUES (%s, %s, %s)', (username, text, int(time.time())))
 
     def get_messages(self):
-        tempMessages = self.send_SQL_query('SELECT TOP 50 * FROM messages ORDER BY timestamp DESC', (), DB_CONN, get=True, fetchAll=True)[::-1]
+        tempMessages = self.send_SQL_query('SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50', (), get=True, fetchAll=True)[::-1]
         messages = [{'username': x[1], 'message': x[2], 'timestamp': x[3]} for x in tempMessages]
         self.send_json_response(200, {'messages': messages})
 
@@ -233,7 +231,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         logger.info("Logging in as " + username)
         hashedPassword = bcrypt.hashpw((password).encode('utf-8'), bcrypt.gensalt())
         # Check if username already exists
-        cursor = DB_CONN.cursor()
+        cursor = self.DB_CONN.cursor()
         try:
             cursor.execute('SELECT * FROM loginInfo WHERE username = %s', (username,))
             usernamePass = cursor.fetchone()
@@ -248,10 +246,11 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                     self.send_json_response(200, {'success': True, "session": sessionID})
                     return 
             else: # new account creation
+                print("making new account")
                 cursor.execute('INSERT INTO loginInfo (username, password) VALUES (%s, %s)', (username, hashedPassword))
-                DB_CONN.commit()
-                # create a new row in the player_data table
-                self.send_SQL_query('INSERT INTO basicPlayerData (username, level, gold, held_crystals) VALUES (%s, 1, 0, %s)', (username, str([0,0,0])), DB_CONN)
+                self.DB_CONN.commit()
+                self.send_SQL_query('INSERT INTO basicPlayerData (username, level, gold, current_dungeon, held_crystals) VALUES (%s, 1, 0, %s, "[0,0,0]")', (username, '{}'))
+                self.send_SQL_query('INSERT INTO playerEquipment (username, equipment) VALUES (%s, %s)', (username, '{}'))
                 # create a new session
                 sessionID = random.randbytes(32).hex()
                 sessions[str(sessionID)] = ConnectedClient(username, sessionID)
@@ -277,7 +276,7 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
                 self.send_json_response(200, {'error': 'Invalid session'})
 
     def set_held_crystals(self, held_crystals, session):
-        self.send_SQL_query('UPDATE basicPlayerData SET held_crystals = %s WHERE username = %s', (held_crystals, sessions[session].username), DB_CONN)
+        self.send_SQL_query('UPDATE basicPlayerData SET held_crystals = %s WHERE username = %s', (held_crystals, sessions[session].username))
         self.send_json_response(200, {'success': True})
 
     def handle_crystal_craft(self, data):
@@ -287,15 +286,19 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
             self.send_json_response(200, {'success': False, 'error': 'Not enough crystals'})
             return
         crystalPercents = {k: 100*round(v/total_crystal_count, 2) for k, v in data['crystalCounts'].items() if v > 0}
-        dungeonString = str({"crystalPercents": crystalPercents, "crystalSeed": crystalSeed})
-        self.send_SQL_query('UPDATE basicPlayerData SET current_dungeon = %s WHERE username = %s', (dungeonString, sessions[data['session']].username), DB_CONN)
+        crystalLevel = 0
+        while total_crystal_count >= 100:
+            total_crystal_count /= 2
+            crystalLevel += 1
+        dungeonString = str({"crystalPercents": crystalPercents, "crystalSeed": crystalSeed, "crystalLevel": crystalLevel})
+        self.send_SQL_query('UPDATE basicPlayerData SET current_dungeon = %s WHERE username = %s', (dungeonString, sessions[data['session']].username))
         self.send_json_response(200, {'success': True})
 
     def get_dungeon(self, data):
         username = sessions[data['session']].username
-        tempPlayerData = self.send_SQL_query('SELECT current_dungeon FROM basicPlayerData WHERE username = %s', (username,), DB_CONN, get=True, fetchAll=False)
-        crystal = json.loads(tempPlayerData[4].replace("'", "\""))
-        dungeon = Dungeon(username, tempPlayerData[1], crystal['crystalSeed'], crystal['crystalPercents'])
+        tempPlayerData = self.send_SQL_query('SELECT current_dungeon FROM basicPlayerData WHERE username = %s', (username,), get=True, fetchAll=False)
+        crystal = json.loads(tempPlayerData[0].replace("'", "\""))
+        dungeon = Dungeon(username, crystal['crystalLevel'], crystal['crystalSeed'], crystal['crystalPercents'])
         self.send_json_response(200, dungeon.roomLayout)
 
     def send_json_response(self, status_code, data):
@@ -304,27 +307,23 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         self.end_headers()
         self.wfile.write(json.dumps(data).encode('utf-8'))
 
-    def send_SQL_query(self, query, params, db, get=False, fetchAll=True):
+    def send_SQL_query(self, query, params, get=False, fetchAll=True):
         try:
-            cursor = db.cursor()
+            cursor = self.DB_CONN.cursor()
             cursor.execute(query, params)
             if get:
                 if fetchAll:
                     return cursor.fetchall()
                 else:
                     return cursor.fetchone()
-        except Exception as e:
-            print("Error: ", e)
-            global DB_CONN
-            DB_CONN = pymssql.connect(server=server,user=user,password=password,database=database)
-            raise e
         finally:
             if not get:
-                db.commit()
+                self.DB_CONN.commit()
             cursor.close()
 
 
 def start_inactivity_check(timeout):
+    inactivity_DB_CONN = mysql.connect(host=serverConnection,port=port,user=user,password=password,database=database)
     while True:
         for _ in range(100):
             # every minute check for inactive sessions
@@ -342,10 +341,10 @@ def start_inactivity_check(timeout):
         # only once an hour check and delete guest accounts
         active_sessions = tuple(map(lambda x: x.username, list(sessions.values())))
         placeholders = ', '.join('%s' for _ in active_sessions)
-        cursor = DB_CONN.cursor()
+        cursor = inactivity_DB_CONN.cursor()
         cursor.execute(f"DELETE FROM loginInfo WHERE username LIKE 'Guest%' AND username NOT IN ({placeholders})", active_sessions)
         cursor.execute(f"DELETE FROM basicPlayerData WHERE username LIKE 'Guest%' AND username NOT IN ({placeholders})", active_sessions)
-        DB_CONN.commit()
+        inactivity_DB_CONN.commit()
 
 
 with ThreadedHTTPServer(("", HTTP_PORT), CustomRequestHandler) as httpd:
