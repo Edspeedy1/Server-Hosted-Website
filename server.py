@@ -131,7 +131,7 @@ class Dungeon:
                         del mAppend["specialDrops"]
                         monsters.append(mAppend)
 
-                rooms.append({"type": "fight", "difficulty": tierRoll, "monster": monsters})
+                rooms.append({"type": "fight", "difficulty": tierRoll, "monster": monsters, "loot": loot})
 
             
         return rooms
@@ -208,10 +208,23 @@ class CustomRequestHandler(RangeHTTPServer.RangeRequestHandler):
         elif self.path == '/get_gear':
             data = json.loads(post_data)
             self.get_gear(data)
+        
+        elif self.path == '/got_loot':
+            data = json.loads(post_data)
+            self.got_loot(data)
+
+    def got_loot(self, data):
+        username = sessions[data['session']].username
+        loot = data['loot']
+        for x in loot:
+            self.send_SQL_query('INSERT INTO playerEquipment (username, equipment) VALUES (%s, %s)', (username, json.dumps(x)))
+        print(loot)
+        self.send_json_response(200, {'success': True})
 
     def get_gear(self, data):
         username = sessions[data['session']].username
         gear = self.send_SQL_query('SELECT equipment FROM playerEquipment WHERE username = %s', (username,), get=True, fetchAll=True)
+        print(gear)
         self.send_json_response(200, list([json.loads(x[0]) for x in gear]))
 
     def get_basic_user_data(self, username):

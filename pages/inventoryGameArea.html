@@ -136,14 +136,14 @@
             <div id="equipmentTop">
                 <div class="grid-container">
                     <div id="equipmentColumn1" class="equipmentColumn3">
-                        <div class="grid-item receptacle" data-itemtype="Amulet">Amulet</div>
-                        <div class="grid-item receptacle" data-itemtype="Hand">LHand</div>
+                        <div class="grid-item receptacle" data-itemtype="amulets">Amulet</div>
+                        <div class="grid-item receptacle" data-itemtype="Hand" style="background-image: url('../assets/defaults/swords.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="Ring">LRing</div>
                     </div>
                     <div id="equipmentColumn2" class="equipmentColumn4">
                         <div class="grid-item receptacle" data-itemtype="helmets" style="background-image: url('../assets/defaults/helmets.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="Chestplate" style="background-image: url('../assets/defaults/chestplates.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="Waist" style="background-image: url('../assets/defaults/waists.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="chestplates" style="background-image: url('../assets/defaults/chestplates.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="waists" style="background-image: url('../assets/defaults/waists.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="boots" style="background-image: url('../assets/defaults/boots.png');"></div>
                     </div>
                     <div id="equipmentColumn3" class="equipmentColumn3">
@@ -214,8 +214,8 @@
             const blockId = e.dataTransfer.getData('block-id');
             const block = document.getElementById(blockId);
             const currentBlockInReceptacle = target.querySelector('.equipment-item');
-            
-            if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype)) {
+
+            if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype || (e.target.dataset.itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs"].includes(block.dataset.itemtype)))) {
                 target.style.backgroundImage = 'none';
                 if (currentBlockInReceptacle && currentBlockInReceptacle !== block) {
                     container.appendChild(currentBlockInReceptacle);
@@ -248,6 +248,7 @@
             div.draggable = true;
             div.dataset.itemtype = itemData.type;
             div.style.backgroundImage = `url('../assets/gear/${itemData.type}/${itemData.picture}.png')`;
+            // context menue
             return div;
         }
 
@@ -255,13 +256,17 @@
             let idCount = 0;
             let parent = document.getElementById("inventoryTop");
             data.forEach(item => {
-                let newGearItem = makeGearItem(item, idCount++);
-                parent.appendChild(newGearItem);
-                blocks.push(newGearItem);
-                newGearItem.addEventListener('dragstart', dragStart);
-                newGearItem.addEventListener('dragend', dragEnd);
+                if (item !== null) {
+                    console.log(item);
+                    let newGearItem = makeGearItem(item, idCount++);
+                    parent.appendChild(newGearItem);
+                    blocks.push(newGearItem);
+                    newGearItem.addEventListener('dragstart', dragStart);
+                    newGearItem.addEventListener('dragend', dragEnd);
+                };
             });
         });
+        
         fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({"session":getCookie("session")}) }).then(response => response.json()).then(data => {
             const playerLevel = data.level;
             console.log(playerLevel);

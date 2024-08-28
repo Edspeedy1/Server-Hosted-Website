@@ -80,7 +80,7 @@
         }
 
         .player,
-        .enemyStats {
+        .enemy {
             display: grid;
             grid-template-rows: 1fr 1fr;
             align-items: center;
@@ -92,12 +92,8 @@
             background-color: var(--col3);
             overflow: hidden;
         }
+
         .enemy {
-            display: flex;
-            width: 85%;
-            height: 60px;
-        }
-        .enemyStats {
             width: calc(85% - 60px);
             margin-left: 60px;
         }
@@ -116,27 +112,29 @@
 
         #attackBar {
             background-color: var(--col4);
-            width: 50%;
+            width: 0;
         }
 
         .playerLabel {
             margin: 0;
-            position: absolute;
+            margin-top: -58px;
+            margin-bottom: 58px;
             padding: 0;
-            left: 20%;
-            transform: translateY(-75%);
         }
 
         .enemyLabel {
             margin: 0;
-            position: absolute;
             padding: 0;
-            left: 77%;
-            transform: translateY(-75%);
+            margin-left: 60px;
+            transform: translateY(-58px);
         }
 
         .enemyPic {
-            margin: 3px 20px 0 10px;
+            align-self: baseline;
+            margin-top: -80px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            padding: 0;
             width: 60px;
             height: 60px;
         }
@@ -160,22 +158,14 @@
                 <div class="player">
                     <div id="healthBar"></div>
                     <div id="attackBar"></div>
-                    <p class="playerLabel">Player 1</p>
                 </div>
+                <p class="playerLabel">Player 1</p>
             </div>
             <div id="vsImg">
                 <img src="../assets/defaults/vsIcon.png" alt="vs">
             </div>
             <div id="enemyParty">
                 <label for="enemyParty">Enemy Party</label>
-                <div class="enemy">
-                    <img class="enemyPic" src="../assets/monsters/slime.png"></img>
-                    <div class="enemyStats">
-                        <div id="healthBar"></div>
-                        <div id="attackBar"></div>
-                        <p class="enemyLabel">Enemy 1</p>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="abilities">
@@ -187,20 +177,18 @@
     </div>
     <div id="exampleMonster" class="enemyClass">
         <div class="enemy">
-            <img class="enemyPic" src="../assets/monsters/slime.png"></img>
-            <div class="enemyStats">
-                <div id="healthBar"></div>
-                <div id="attackBar"></div>
-                <p class="enemyLabel">Enemy 1</p>
-            </div>
+            <div id="healthBar"></div>
+            <div id="attackBar"></div>
+            <script id="dataScript" type="application/json"></script>
         </div>
+        <p class="enemyLabel">Enemy 1</p>
+        <img class="enemyPic" src=""></img>
     </div>
     <script>
         const enemyParty = document.getElementById("enemyParty");
         const exampleMonster = document.getElementById("exampleMonster");
         const playerHealthBar = document.getElementsByClassName("player")[0].children[0];
         const playerAttackBar = document.getElementsByClassName("player")[0].children[1];
-        var dungeonData;
         
         const parser = new DOMParser();
         var dungeonData;
@@ -222,17 +210,85 @@
             playerHealthBar.defence = 10;
         }
 
-        function enemySpeedToSeconds(speed) {
-            return 250 / speed;
+        function speedToSeconds(speed) {
+            return 150 / speed;
         }
 
         function loadNextRoom() {
+            const partyLabel = document.getElementById("enemyPartyLabel");
+            dungeonData.room++;
+            let room = dungeonData.data[dungeonData.room];
+            if (room.type == "fight") {
+                for (let i = 0; i < room.monster.length; i++) {
+                    let newMonster = exampleMonster.cloneNode(true);
+                    newMonster.id = room.monster[i].name;
+                    newMonster.querySelector("img").id = room.monster[0].name + "Monster";
+                    newMonster.querySelector("img").src = "../assets/monsters/" + room.monster[i].name + ".png";
+                    newMonster.querySelector("p").textContent = room.monster[i].name;
+                    newMonster.querySelector("script").textContent = JSON.stringify(room.monster[i]);
+                    room.monster[i].stats["maxHealth"] = room.monster[i].stats["health"];
+                    let healthBar = newMonster.querySelector("#healthBar")
+                    let attackBar = newMonster.querySelector("#attackBar")
+                    let attackFunction = () => {
+                        // room.monster[i].stats["health"] -= 10;
+                        // healthBar.style.width = room.monster[i].stats["health"] / room.monster[i].stats["maxHealth"] * 100 + "%";
+                        playerHealthBar.health -= 10;
+                        playerHealthBar.style.width = playerHealthBar.health / playerHealthBar.maxHealth * 100 + "%";
+                        if (room.monster[i].stats["health"] > 0) {attackTimer(speedToSeconds(room.monster[i].stats["speed"]), attackBar, attackFunction);}
+                    }
+                    attackTimer(speedToSeconds(room.monster[i].stats["speed"]), attackBar, attackFunction);
+                    Array.from(newMonster.children).forEach(element => {
+                        enemyParty.appendChild(element);
+                    })
+                }
+                //make the player attack
+                let playerAttackFunction = () => {
+                    let enemyHealth = document.getElementsByClassName("enemy")[0].children[0];
+                    room.monster[0].stats["health"] -= 90;
+                    enemyHealth.style.width = room.monster[0].stats["health"] / room.monster[0].stats["maxHealth"] * 100 + "%";
+                    if (room.monster[0].stats["health"] <= 0) {
+                        room.monster.pop();
+                        document.getElementsByClassName("enemy")[0].remove();
+                    }
+                    if (room.monster.length == 0) {
+                        console.log("got loot");
+                        fetch("/got_loot", { method: "POST", body: JSON.stringify({ "session": getCookie("session"), "loot": room.loot }) });
+                        loadNextRoom();
+                    }
+                    attackTimer(5, playerAttackBar, playerAttackFunction);
+                }
+                attackTimer(5, playerAttackBar, () => {
+                    playerAttackFunction();
+                })
+            }
+            if (room.type == "trap") {
+                let newMonster = exampleMonster.cloneNode(true);
+                newMonster.id = "trap";
+                newMonster.querySelector("img").remove();
+                newMonster.querySelector("p").textContent = "Trap";
+                attackTimer(5, newMonster.querySelector("#attackBar"), () => {
+                    Array.from(enemyParty.children).forEach(element => {
+                        if (element.classList.contains("enemy") || element.classList.contains("enemyLabel")) {element.remove();}
+                    })
+                    loadNextRoom();
+                })
+                Array.from(newMonster.children).forEach(element => {
+                    enemyParty.appendChild(element);
+                })
+            }
         }
 
-        function attackFunction() {
-            let enemyParty = document.getElementsByClassName("enemy");
-            let playerParty = document.getElementsByClassName("player");
-            // ...
+        function attackTimer(durationInSeconds, element, functionToRun) {
+            const totalDuration = durationInSeconds * 1000;
+            element.style.transition = `width 0.1ms linear`;
+            element.style.width = '0%';
+
+            setTimeout(function() {element.style.width = '100%'; element.style.transition = `width ${totalDuration}ms linear`;}, 20);
+            setTimeout(function() {element.style.transition = 'none'; element.style.width = '0%';}, totalDuration);
+            setTimeout(functionToRun, totalDuration);
+
+            // TODO: use animate() function
+
         }
 
         function getCookie(name) {
