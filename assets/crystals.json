@@ -85,7 +85,7 @@
             "monsters":{
                 "tier1": {"ghoul": 4,"centipede": 3, "crab": 1, "skeleton": 2, "voidling": 5, "shadow beast": 2, "nightmare": 2, "mimic": 2},
                 "tier2": {"dodomeki": 2, "abomination": 1, "cyclops": 2, "drake": 3, "gargoyle": 3, "giant scorpion": 2, "shaggoth": 1},
-                "tier3": {"basilisk": 3,"beholder": 3, "gorgon": 2, "gold dragon": 1, "cockatrice": 1, "dracolich": 2, "abyssal demon": 3}
+                "tier3": {"basilisk": 3,"beholder": 3, "gorgon": 2, "gold dragon": 1, "cockatrice": 1, "dracolich": 2, "abyssal demon": 3, "void dragon": 1}
             }
         },
         "Chaos": {   
@@ -112,7 +112,7 @@
             "monsters":{
                 "tier1": {"mummy":3, "ghost": 4, "ghoul": 2, "giant moth": 2, "spirit": 4},
                 "tier2": {"necromancer": 2, "shadow": 1, "kitsune": 3},
-                "tier3": {"lich": 5, "siren": 1, "dracolich": 4, "phoenix": 1}
+                "tier3": {"lich": 5, "siren": 1, "dracolich": 4, "phoenix": 1, "void dragon": 1}
             }
         }
     }

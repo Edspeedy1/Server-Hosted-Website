@@ -93,6 +93,7 @@
             overflow: hidden;
         }
         .enemy {
+            margin: 5px;
             display: flex;
             width: 85%;
             height: 60px;
@@ -116,7 +117,7 @@
 
         #attackBar {
             background-color: var(--col4);
-            width: 50%;
+            width: 0%;
         }
 
         .playerLabel {
@@ -168,14 +169,6 @@
             </div>
             <div id="enemyParty">
                 <label for="enemyParty">Enemy Party</label>
-                <div class="enemy">
-                    <img class="enemyPic" src="../assets/monsters/slime.png"></img>
-                    <div class="enemyStats">
-                        <div id="healthBar"></div>
-                        <div id="attackBar"></div>
-                        <p class="enemyLabel">Enemy 1</p>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="abilities">
@@ -213,6 +206,9 @@
         });
 
         function loadPlayerStats() {
+            fetch('/get_equipped_gear', {method: 'POST'}).then(response => response.json()).then(data => {
+                console.log("equipped", data);
+            });
             playerHealthBar.health = 100;
             playerHealthBar.maxHealth = 100;
             playerAttackBar.timer = 5000;
@@ -227,6 +223,18 @@
         }
 
         function loadNextRoom() {
+            dungeonData.room += 1;
+            let monsters = dungeonData.data[dungeonData.room].monster;
+
+            for (let i = 0; i < monsters.length; i++) {
+                let newMonster = exampleMonster.children[0].cloneNode(true);
+                newMonster.id = monsters[i].name;
+                newMonster.querySelector("img").id = "Monster" + i;
+                newMonster.querySelector("img").src = "../assets/monsters/" + monsters[i].name + ".png";
+                newMonster.querySelector("p").textContent = monsters[i].name;
+                newMonster.querySelector("#healthBar").data = monsters[i].stats;
+                enemyParty.appendChild(newMonster);
+            }
         }
 
         function attackFunction() {

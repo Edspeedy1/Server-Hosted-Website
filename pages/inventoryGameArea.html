@@ -45,14 +45,19 @@
             width: 95%;
             height: 95%;
         }
-        
+
         #statsBottom {
+            background-color: var(--col3);
             border: var(--col2) 3px solid;
-            width: 95%;
-            height: 95%;
+            width: calc(95% - 20px);
+            height: calc(95% - 20px);
+            padding: 10px;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
-        
+
         .equipment-item {
+            background-color: var(--col1);
             image-rendering: pixelated;
             background-size: cover;
             background-repeat: no-repeat;
@@ -62,17 +67,19 @@
         }
 
         #inventoryTop {
+            background-color: var(--col3);
             align-content: flex-start;
             display: flex;
             flex-wrap: wrap;
-            overflow-y: auto;
+            overflow-y: scroll;
             overflow-x: hidden;
             border: var(--col2) 3px solid;
             width: 95%;
-            height: 100%;
+            height: 63vh;
         }
 
         #inventoryBottom {
+            background-color: var(--col3);
             margin-top: -6px;
             border: var(--col2) 3px solid;
             width: 95%;
@@ -101,18 +108,24 @@
             height: 120px;
             width: 120px;
         }
+
         .grid-item .equipment-item {
+            background-color: var(--col3);
             width: 120px;
             height: 120px;
             margin: 0;
         }
+
         .equipmentColumn3 {
             grid-template-rows: 1fr 1fr 1fr;
         }
+
         .equipmentColumn4 {
             grid-template-rows: 1fr 1fr 1fr 1fr;
         }
-        .equipmentColumn4, .equipmentColumn3 {
+
+        .equipmentColumn4,
+        .equipmentColumn3 {
             margin-left: -2px;
             margin-right: -2px;
             display: grid;
@@ -121,8 +134,16 @@
             height: 100%;
             width: 100%;
         }
+
         #navBar {
             width: 95%;
+        }
+
+        .rightClickMenu {
+            position: absolute;
+            border: var(--col2) 3px solid;
+            background-color: var(--col3);
+            padding: 5px;
         }
     </style>
 </head>
@@ -136,19 +157,27 @@
             <div id="equipmentTop">
                 <div class="grid-container">
                     <div id="equipmentColumn1" class="equipmentColumn3">
-                        <div class="grid-item receptacle" data-itemtype="amulets">Amulet</div>
-                        <div class="grid-item receptacle" data-itemtype="Hand" style="background-image: url('../assets/defaults/swords.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="amulets"
+                            style="background-image: url('../assets/defaults/amulets.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Hand"
+                            style="background-image: url('../assets/defaults/swords.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="Ring">LRing</div>
                     </div>
                     <div id="equipmentColumn2" class="equipmentColumn4">
-                        <div class="grid-item receptacle" data-itemtype="helmets" style="background-image: url('../assets/defaults/helmets.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="chestplates" style="background-image: url('../assets/defaults/chestplates.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="waists" style="background-image: url('../assets/defaults/waists.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="boots" style="background-image: url('../assets/defaults/boots.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="helmets"
+                            style="background-image: url('../assets/defaults/helmets.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="chestplates"
+                            style="background-image: url('../assets/defaults/chestplates.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="waists"
+                            style="background-image: url('../assets/defaults/waists.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="boots"
+                            style="background-image: url('../assets/defaults/boots.png');"></div>
                     </div>
                     <div id="equipmentColumn3" class="equipmentColumn3">
-                        <div class="grid-item receptacle" data-itemtype="gloves" style="background-image: url('../assets/defaults/gloves.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="Hand" style="background-image: url('../assets/defaults/swords.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="gloves"
+                            style="background-image: url('../assets/defaults/gloves.png');"></div>
+                        <div class="grid-item receptacle" data-itemtype="Hand"
+                            style="background-image: url('../assets/defaults/swords.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="Ring">RRing</div>
                     </div>
                 </div>
@@ -157,7 +186,23 @@
         </div>
         <div id="inventoryRight">
             <div id="navBar">
-                <!-- add selector -->
+                <label for="itemtypeSelect">Item Type:</label>
+                <select name="itemtype" id="itemtypeSelect">
+                    <option value="all">All</option>
+                    <option value="amulets">Amulets</option>
+                    <option value="boots">Boots</option>
+                    <option value="chestplates">Chestplates</option>
+                    <option value="helmets">Helmets</option>
+                    <option value="gloves">Gloves</option>
+                    <option value="waists">Waists</option>
+                    <option value="Hand">Hand</option>
+                    <option value="Ring">Ring</option>
+                </select>
+                <label for="sortTypeSelect">Sort:</label>
+                <select name="sort" id="sortTypeSelect">
+                    <option value="time">Time Added</option>
+                    <option value="power">Power</option>
+                </select>
             </div>
             <div id="inventoryTop" class="container">
             </div>
@@ -168,6 +213,7 @@
         const blocks = Array.from(document.querySelectorAll('.equipment-item'));
         const receptacles = document.querySelectorAll('.receptacle');
         const container = document.querySelector('.container');
+        var menues = [];
 
         blocks.forEach(block => {
             block.addEventListener('dragstart', dragStart);
@@ -189,6 +235,7 @@
         function dragStart(e) {
             e.dataTransfer.setData('block-id', e.target.id);
             originalParent = e.target.parentNode;
+            removeMenus();
         }
 
         function dragEnd(e) {
@@ -218,12 +265,16 @@
             if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype || (e.target.dataset.itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs"].includes(block.dataset.itemtype)))) {
                 target.style.backgroundImage = 'none';
                 if (currentBlockInReceptacle && currentBlockInReceptacle !== block) {
+                    currentBlockInReceptacle.dataset.equipped = 0;
                     container.appendChild(currentBlockInReceptacle);
                 }
+                if (originalParent.classList.contains('receptacle')) {
+                    originalParent.style.backgroundImage = 'url(../assets/defaults/' + block.dataset.itemtype + '.png)';
+                }
+                block.dataset.equipped = 1;
                 target.appendChild(block);
-            } else {
-                container.appendChild(block);
             }
+            updateEquippedGear();
         }
 
         function dropToContainer(e) {
@@ -237,7 +288,10 @@
                 originalParent.style.backgroundImage = 'url(../assets/defaults/' + block.dataset.itemtype + '.png)';
             }
 
+            block.dataset.equipped = 0;
             container.appendChild(block);
+
+            updateEquippedGear();
         }
 
         function makeGearItem(itemData, idCount) {
@@ -248,34 +302,128 @@
             div.draggable = true;
             div.dataset.itemtype = itemData.type;
             div.style.backgroundImage = `url('../assets/gear/${itemData.type}/${itemData.picture}.png')`;
-            // context menue
+
+            div.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                removeMenus();
+                // make an absolute positioned menu
+                let menu = document.createElement('div');
+                menu.classList.add('rightClickMenu');
+                menu.innerHTML = `<div class="menu-item"></div>`;
+
+                for (let stat in itemData) {
+                    if (stat !== "name" && stat !== "type" && stat !== "picture" && stat !== "power") {
+                        menu.innerHTML += `<div class="menu-item">${stat}: ${itemData[stat]}</div>`;
+                    }
+                }
+
+
+                menu.style.top = `${e.clientY}px`;
+                menu.style.left = `${e.clientX}px`;
+                document.body.appendChild(menu);
+
+                menues.push(menu);
+            });
+
             return div;
         }
 
-        fetch('/get_gear', { method: 'POST', body: JSON.stringify({"session":getCookie("session")}) }).then(response => response.json()).then(data => {
+        function removeMenus() {
+            menues.forEach(menu => {
+                document.body.removeChild(menu);
+            })
+            menues = [];
+        }
+
+        fetch('/get_gear', { method: 'POST', body: JSON.stringify({ "session": getCookie("session") }) }).then(response => response.json()).then(data => {
             let idCount = 0;
             let parent = document.getElementById("inventoryTop");
+
+            // TODO: if gear is equipped, make it appear in the inventory as such
+
             data.forEach(item => {
                 if (item !== null) {
-                    console.log(item);
-                    let newGearItem = makeGearItem(item, idCount++);
-                    parent.appendChild(newGearItem);
+                    // console.log(item);
+                    let newGearItem = makeGearItem(item[1], idCount++);
+                    newGearItem.dataset.itemid = item[0];
+                    newGearItem.dataset.equipped = item[2];
+                    if (newGearItem.dataset.equipped === "1") {
+                        console.log("equipping", item);
+                        let equipSlots = document.querySelectorAll('.receptacle');
+                        let placed = false;
+                        equipSlots.forEach(slot => {
+                            //  and slot isnt already occupied
+                            if (!placed && slot.querySelector('.equipment-item') === null && (slot.dataset.itemtype === newGearItem.dataset.itemtype || (slot.dataset.itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs"].includes(newGearItem.dataset.itemtype)))) {
+                                slot.appendChild(newGearItem);
+                                placed = true;
+                            }
+                        })
+                        if (!placed) {
+                            parent.appendChild(newGearItem);
+                        }
+                    } else {
+                        parent.appendChild(newGearItem);
+                    }
                     blocks.push(newGearItem);
                     newGearItem.addEventListener('dragstart', dragStart);
                     newGearItem.addEventListener('dragend', dragEnd);
                 };
             });
+
+            updatePlayerStats();
         });
-        
-        fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({"session":getCookie("session")}) }).then(response => response.json()).then(data => {
+
+        fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ "session": getCookie("session") }) }).then(response => response.json()).then(data => {
             const playerLevel = data.level;
             console.log(playerLevel);
         });
 
+        function updateEquippedGear() {
+            let equipped = [];
+            for (let i = 0; i < blocks.length; i++) {
+                if (blocks[i].dataset.equipped === "1") {
+                    equipped.push(blocks[i].dataset.itemid);
+                }
+            }
+            fetch(
+                '/equip_gear',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(
+                        {
+                            'session': getCookie("session"),
+                            'equipped': JSON.stringify(equipped)
+                        }
+                    )
+                }
+            )
+            updatePlayerStats();
+        }
+
         function updatePlayerStats() {
-            let playerStats = {mana: 100, health: 20, attack: 20, defense: 20, speed: 20};
-            // TODO
-            
+            let playerStats = { mana: 100, health: 20, attack: 20, defense: 20, speed: 20, swingSpeed: 5 };
+            // go through all gear receptacles and add up their stats
+            for (let i = 0; i < blocks.length; i++) {
+                if (blocks[i].dataset.equipped === "1") {
+                    let itemData = JSON.parse(blocks[i].dataset.itemdata);
+                    let exclude = ["name", "type", "picture", "power"];
+                    // itterate through each stat
+                    for (let stat in itemData) {
+                        if (!exclude.includes(stat)) {
+                            if (playerStats[stat] !== undefined) {
+                                playerStats[stat] += itemData[stat];
+                            } else {
+                                playerStats[stat] = itemData[stat];
+                            }
+                        }
+                    }
+                }
+            }
+            let playerStatsDiv = document.getElementById("statsBottom");
+            playerStatsDiv.innerHTML = "";
+            for (let stat in playerStats) {
+                playerStatsDiv.innerHTML += stat + ": " + Math.round(playerStats[stat] * 100, 2) / 100 + "<br>";
+            }
         }
 
         function getCookie(name) {
@@ -289,6 +437,51 @@
             return null;
         }
 
+        document.addEventListener('click', removeMenus);
+
+        document.getElementById("itemtypeSelect").addEventListener('change', () => {
+            let itemtype = document.getElementById("itemtypeSelect").value;
+            let items = document.getElementsByClassName('equipment-item');
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].dataset.itemtype === itemtype || itemtype === 'all' || (itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs"].includes(items[i].dataset.itemtype))) {
+                    items[i].style.display = "block";
+                } else if (items[i].dataset.equipped !== "1") {
+                    items[i].style.display = "none";
+                }
+            }
+        });
+
+        var sortFlag = false;
+        setTimeout(()=>{
+            const observer = new MutationObserver((mutations) => {
+                for (let mutation of mutations) {
+                    if (mutation.type === 'childList' && mutation.addedNodes.length > 0 && !sortFlag) {
+                        sortFlag = true;
+                        sortContainer();
+                    }
+                }
+            });
+            observer.observe(document.querySelector('.container'), { childList: true });
+        }, 200);
+
+        function sortContainer() {
+            sortFlag = true;
+            let container = document.querySelector('.container');
+            let itemsArray = Array.from(container.querySelectorAll('.equipment-item'));
+            let sortType = document.getElementById("sortTypeSelect").value;
+            console.log();
+            itemsArray.sort(function (a, b) { return a.dataset.itemid.localeCompare(b.dataset.itemid)});
+            if (sortType === "power") {
+                itemsArray.sort(function (a, b) { return JSON.parse(a.dataset.itemdata).power - JSON.parse(b.dataset.itemdata).power});
+            }
+            container.innerHTML = "";
+            for (let i = 0; i < itemsArray.length; i++) {
+                container.appendChild(itemsArray[i]);
+            }
+            setTimeout(()=>{sortFlag = false;}, 100); 
+        }
+        setTimeout(sortContainer, 200);
+        document.getElementById("sortTypeSelect").addEventListener('change', sortContainer);
     </script>
 </body>
 

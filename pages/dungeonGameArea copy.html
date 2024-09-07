@@ -201,6 +201,9 @@
         });
 
         function loadPlayerStats() {
+            fetch('/get_equipped_gear', {method: 'POST'}).then(response => response.json()).then(data => {
+                console.log("equipped", data);
+            })
             playerHealthBar.health = 100;
             playerHealthBar.maxHealth = 100;
             playerAttackBar.timer = 5000;

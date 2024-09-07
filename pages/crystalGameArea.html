@@ -156,8 +156,8 @@
                 </button>
                 <p id="crystalCraftAmount">0/0 crystals</p>
                 <div style="display: flex; justify-content: space-between;">
-                    <label for="heldCrystals">Held Crystals</label>
-                    <label for="heldCrystals" id="moveLabelLeft">Used To Craft</label>
+                    <label>Held Crystals</label>
+                    <label id="moveLabelLeft">Used To Craft</label>
                 </div>
                 <div id="heldCrystals">
                 </div>
@@ -173,7 +173,7 @@
                 crystalData = data;
             });
 
-            fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+            setTimeout(function () { fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
                 let crystalLevelSelect = document.getElementById("crystalLevelSelect");
                 let heldCrystals = document.getElementById("heldCrystals");
                 for (let i = 0; i <= data.level / 5; i++) {
@@ -233,7 +233,8 @@
                     rightSide.appendChild(crystalMineButton);
                 };
                 checkCrystalCount();
-            });
+            })}, 20);
+
             function arraysEqual(arr1, arr2) {
                 return JSON.stringify(arr1) === JSON.stringify(arr2);
             }
