@@ -195,6 +195,21 @@
         const playerAttackBar = document.getElementsByClassName("player")[0].children[1];
         var dungeonData;
         
+        function Entity(tagetParty, name, health, attack, attackSpeed, defence) {
+            this.tagetParty = tagetParty;
+            this.name = name;
+            this.health = health;
+            this.attack = attack;
+            this.attackSpeed = attackSpeed;
+            this.defence = defence;
+            this.takeDamage = function (damage) {
+                this.health -= damage/(this.defence**0.5);
+            }
+            this.doDamage = function (damage) {
+                
+            }
+        }
+
         const parser = new DOMParser();
         var dungeonData;
         loadPlayerStats();

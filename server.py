@@ -199,7 +199,6 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200, SESS_COOKIE_NAME)
         
         elif self.path == '/get_basic_user_data':
-            data = json.loads(post_data)
             self.get_basic_user_data(username)
         
         elif self.path == '/set_held_crystals':
@@ -214,8 +213,7 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.get_dungeon(username)
         
         elif self.path == '/get_gear':
-            data = json.loads(post_data)
-            self.get_gear(data, username)
+            self.get_gear(username)
         
         elif self.path == '/got_loot':
             data = json.loads(post_data)
@@ -246,7 +244,7 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_SQL_query('INSERT INTO playerEquipment (username, equipment) VALUES (%s, %s)', (username, json.dumps(loot)))
         self.send_json_response(200, {'success': True})
 
-    def get_gear(self, data, username):
+    def get_gear(self, username):
         gear = self.send_SQL_query('SELECT id, equipment, equipped FROM playerEquipment WHERE username = %s', (username,), get=True, fetchAll=True)
         print(gear)
         self.send_json_response(200, list([(x[0], json.loads(x[1]), x[2]) for x in gear]))

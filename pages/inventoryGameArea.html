@@ -144,6 +144,10 @@
             border: var(--col2) 3px solid;
             background-color: var(--col3);
             padding: 5px;
+            color: var(--textColor);
+        }
+        .rightClickMenu h3{
+            margin: 3px;
         }
     </style>
 </head>
@@ -308,8 +312,12 @@
                 removeMenus();
                 // make an absolute positioned menu
                 let menu = document.createElement('div');
-                menu.classList.add('rightClickMenu');
+                let name = document.createElement('h3');
                 menu.innerHTML = `<div class="menu-item"></div>`;
+                name.innerHTML = itemData.name;
+                menu.classList.add('rightClickMenu');
+                menu.appendChild(name);
+                menu.addEventListener('contextmenu', () => {e.preventDefault()})
 
                 for (let stat in itemData) {
                     if (stat !== "name" && stat !== "type" && stat !== "picture" && stat !== "power") {
@@ -318,9 +326,9 @@
                 }
 
 
-                menu.style.top = `${e.clientY}px`;
-                menu.style.left = `${e.clientX}px`;
-                document.body.appendChild(menu);
+                menu.style.top = `${e.clientY +1}px`;
+                menu.style.left = `${e.clientX+1}px`;
+                document.getElementById("inventoryRight").appendChild(menu);
 
                 menues.push(menu);
             });
@@ -330,12 +338,12 @@
 
         function removeMenus() {
             menues.forEach(menu => {
-                document.body.removeChild(menu);
+                document.getElementById("inventoryRight").removeChild(menu);
             })
             menues = [];
         }
 
-        fetch('/get_gear', { method: 'POST', body: JSON.stringify({ "session": getCookie("session") }) }).then(response => response.json()).then(data => {
+        fetch('/get_gear', { method: 'POST' }).then(response => response.json()).then(data => {
             let idCount = 0;
             let parent = document.getElementById("inventoryTop");
 
@@ -373,7 +381,7 @@
             updatePlayerStats();
         });
 
-        fetch('/get_basic_user_data', { method: 'POST', body: JSON.stringify({ "session": getCookie("session") }) }).then(response => response.json()).then(data => {
+        fetch('/get_basic_user_data', { method: 'POST' }).then(response => response.json()).then(data => {
             const playerLevel = data.level;
             console.log(playerLevel);
         });
@@ -391,7 +399,6 @@
                     method: 'POST',
                     body: JSON.stringify(
                         {
-                            'session': getCookie("session"),
                             'equipped': JSON.stringify(equipped)
                         }
                     )
@@ -426,18 +433,12 @@
             }
         }
 
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
         document.addEventListener('click', removeMenus);
+        // if the cursor moves outside of #inventoryTop, remove the menus
+        document.getElementById("inventoryRight").addEventListener('mouseleave', (e) => {
+            removeMenus();
+        });
+        document.getElementById("inventoryTop").addEventListener('contextmenu', (e) => {e.preventDefault()});
 
         document.getElementById("itemtypeSelect").addEventListener('change', () => {
             let itemtype = document.getElementById("itemtypeSelect").value;
