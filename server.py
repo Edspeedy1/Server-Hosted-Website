@@ -72,10 +72,12 @@ class Dungeon:
         return ((random.random()/5) + 0.9) * power * scale
 
     def rollGear(self, tier, extraDifficulty=0):
+        itemElement = random.choices(list(self.crystal.keys()), weights=list(self.crystal.values()))[0]
+        print(itemElement)
         itemType = random.choice(list(gearImages.keys()))
         statRolls = random.randint(1, 2) + random.randint(0, 1)*extraDifficulty + random.randint(0, 2)*tier
         power = int(3 * 1.4**self.level * (1 + 0.08*tier) * (1 + 0.05*extraDifficulty) * (0.85 + (0.01 * random.randint(-15, 45))))
-        item = {"type": itemType, "picture": random.randint(0, gearImages[itemType]-1)}
+        item = {"type": itemType, "picture": random.randint(0, gearImages[itemType]-1), "element": itemElement}
         # make the name
         item["name"] = ""
         if not random.randint(0, 2): item["name"] = random.choice(gearJson["names"]["prefixes"]) + " "
@@ -144,7 +146,7 @@ class Dungeon:
             
         return rooms
 
-dungeon = Dungeon("test", 10, random.random(), {"Fire": 10})
+# dungeon = Dungeon("test", 10, random.random(), {"Fire": 10})
 
 
 # [print((list(map(lambda x: print(x, end=" ") if x[0] not in ["picture", "name"] else (), list([(key, value) for key, value in dungeon.rollGear(1).items()])))) and "") for _ in range(20)]
@@ -240,6 +242,7 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_json_response(200, {'success': True})
 
     def got_loot(self, data, username):
+        print(data)
         for loot in data['loot']:
             self.send_SQL_query('INSERT INTO playerEquipment (username, equipment) VALUES (%s, %s)', (username, json.dumps(loot)))
         self.send_json_response(200, {'success': True})

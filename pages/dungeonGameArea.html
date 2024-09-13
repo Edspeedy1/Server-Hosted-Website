@@ -82,7 +82,6 @@
         .player,
         .enemyStats {
             display: grid;
-            grid-template-rows: 1fr 1fr;
             align-items: center;
             border-radius: 20px;
             width: 85%;
@@ -92,17 +91,22 @@
             background-color: var(--col3);
             overflow: hidden;
         }
+        
         .enemy {
+            grid-template-rows: 1fr 1fr;
             margin: 5px;
             display: flex;
             width: 85%;
             height: 60px;
         }
+
         .enemyStats {
             width: calc(85% - 60px);
             margin-left: 60px;
         }
-
+        .player{
+            grid-template-rows: 1fr 1fr 1fr;
+        }
         .player div,
         .enemy div {
             margin: 0;
@@ -115,7 +119,7 @@
             width: 100%;
         }
 
-        #attackBar {
+        #attackBarL, #attackBarR {
             background-color: var(--col4);
             width: 0%;
         }
@@ -160,7 +164,8 @@
                 <label for="yourParty">Your Party</label>
                 <div class="player">
                     <div id="healthBar"></div>
-                    <div id="attackBar"></div>
+                    <div id="attackBarL"></div>
+                    <div id="attackBarR"></div>
                     <p class="playerLabel">Player 1</p>
                 </div>
             </div>
@@ -191,82 +196,230 @@
     <script>
         const enemyParty = document.getElementById("enemyParty");
         const exampleMonster = document.getElementById("exampleMonster");
-        const playerHealthBar = document.getElementsByClassName("player")[0].children[0];
-        const playerAttackBar = document.getElementsByClassName("player")[0].children[1];
+        const playerHealthBar = document.getElementById("healthBar");
+        const playerAttackBarL = document.getElementById("attackBarL");
+        const playerAttackBarR = document.getElementById("attackBarR");
         var dungeonData;
-        
-        function Entity(tagetParty, name, health, attack, attackSpeed, defence) {
+        var EnemyArray = [];
+        const playerArray = [];
+        const player = loadPlayerStats();
+        playerArray.push(player);
+
+        function Enemy(name, stats, types, abilities, attackBar, healthBar) {
+            this.name = name;
+            this.health = stats.health;
+            this.maxHealth = stats.health;
+            this.attack = stats.attack;
+            this.attackSpeed = enemySpeedToSeconds(stats.speed);
+            this.defence = stats.defense;
+            this.types = types;
+            this.abilities = abilities;
+            this.atackBar = attackBar;
+            this.healthBar = healthBar;
+            this.attackStartTime = 0;
+            this.attackTimer;
+            this.startAttack = () => {
+                console.log("start attack");
+                this.attackStartTime = Date.now();
+                this.atackBar.animate(
+                    [{ width: '0%' }, { width: '100%' }],
+                    { duration: this.attackSpeed * 1000,    easing: 'linear',  fill: 'forwards' }
+                );
+                this.attackTimer = setTimeout(() => {
+                    this.doDamage();
+                    if (this.health > 0) {
+                        this.startAttack();
+                    }
+                }, this.attackSpeed * 1000);
+            }
+            this.takeDamage = (damage, elements) => {
+                console.log(damage, elements);
+                let multiplier = 1;
+                for (let i = 0; i < elements.length; i++) {
+                    for (let j = 0; j < this.types.length; j++) {
+                        if (elements[i] === this.types[j]) {
+                            multiplier *= 0.9;
+                        } else if (typeAdvantages[this.types[j]]["weak"].includes(elements[i])) {
+                            multiplier *= 1.4;
+                        } else if (typeAdvantages[this.types[j]]["strong"].includes(elements[i])) {
+                            multiplier /= 1.4;
+                        }
+                    }
+                }
+                this.health -= parseInt(multiplier * damage / (this.defence ** 0.1));
+                this.healthBar.style.width = `${Math.max(0, this.health) / this.maxHealth * 100}%`;
+                if (this.health <= 0) {
+                    this.kill();
+                }
+                return parseInt(multiplier * damage / (this.defence ** 0.1));
+            }
+            this.doDamage = () => {
+                console.log(playerArray)
+                let target = playerArray[Math.floor(Math.random() * playerArray.length)];
+                target.takeDamage(this.attack, this.types);
+            }
+            this.kill = () => {
+                console.log("killed ", this.name);
+                clearTimeout(this.attackTimer);
+                this.atackBar.style.display = "none";
+                // remove from party
+                EnemyArray = EnemyArray.filter((enemy) => enemy.name !== this.name);
+                console.log(EnemyArray);
+                // loop through enemy party and look for data matching this
+                for (let i = 0; i < enemyParty.children.length; i++) {
+                    if (enemyParty.children[i].data === this) {
+                        enemyParty.removeChild(enemyParty.children[i]);
+                        break;
+                    }
+                }
+                // check if party is empty
+                if (EnemyArray.length === 0) {
+                    console.log("win");
+                    enemyParty.children
+                    clearTimeout(player.attackTimerL);
+                    clearTimeout(player.attackTimerR);
+                    // give loot
+                    if (dungeonData.data[dungeonData.room].loot) fetch("/got_loot", { method: "POST", body: JSON.stringify({"loot": dungeonData.data[dungeonData.room].loot }) });
+                    // next room
+                    loadNextRoom();
+                }
+            }
+            this.startAttack();
+
+            return this;
+        }
+
+        function Player(tagetParty, name, stats, types, abilities, attackBarL, attackBarR, healthBar) {
             this.tagetParty = tagetParty;
             this.name = name;
-            this.health = health;
-            this.attack = attack;
-            this.attackSpeed = attackSpeed;
-            this.defence = defence;
-            this.takeDamage = function (damage) {
-                this.health -= damage/(this.defence**0.5);
+            this.health = stats.health;
+            this.maxHealth = stats.health;
+            this.attackL = stats.attackL;
+            this.attackR = stats.attackR;
+            this.attackSpeedL = stats.attackSpeedL;
+            this.attackSpeedR = stats.attackSpeedR;
+            this.defence = stats.defense;
+            this.types = types;
+            this.abilities = abilities;
+            this.attackBarL = attackBarL;
+            this.attackBarR = attackBarR;
+            this.healthBar = healthBar;
+            this.attackStartTimeL = 0;
+            this.attackStartTimeR = 0;
+            this.attackTimerL;
+            this.attackTimerR;
+
+            this.startAttackL = () => {
+                this.attackStartTimeL = Date.now();
+                this.attackBarL.animate(
+                    [{ width: '0%' }, { width: '100%' }],
+                    { duration: this.attackSpeedL * 1000,    easing: 'linear',  fill: 'forwards' }
+                );
+                this.attackTimerL = setTimeout(() => {
+                    this.doDamage("left");
+                    this.startAttackL();
+                }, this.attackSpeedL * 1000);
             }
-            this.doDamage = function (damage) {
-                
+            this.startAttackR = () => {
+                this.attackStartTimeR = Date.now();
+                this.attackBarR.animate(
+                    [{ width: '0%' }, { width: '100%' }],
+                    { duration: this.attackSpeedR * 1000,    easing: 'linear',  fill: 'forwards' }
+                );
+                this.attackTimerR = setTimeout(() => {
+                    this.doDamage("right");
+                    this.startAttackR();
+                }, this.attackSpeedR * 1000);
             }
+            this.takeDamage = (damage, elements) => {
+                console.log("Player has been hit", damage, elements);
+                let multiplier = 1;
+                for (let i = 0; i < elements.length; i++) {
+                    for (let j = 0; j < this.types.length; j++) {
+                        if (elements[i] === this.types[j]) {
+                            multiplier *= 0.9;
+                        } else if (typeAdvantages[this.types[j]]["weak"].includes(elements[i])) {
+                            multiplier *= 1.4;
+                        } else if (typeAdvantages[this.types[j]]["strong"].includes(elements[i])) {
+                            multiplier /= 1.4;
+                        }
+                    }
+                }
+                console.log(this.health, this.maxHealth);
+                this.health -= parseInt(multiplier * damage / (this.defence ** 0.1));
+                this.healthBar.style.width = `${this.health / this.maxHealth * 100}%`;
+                return parseInt(multiplier * damage / (this.defence ** 0.1));
+            }
+            this.doDamage = (side) => {
+                let target = this.tagetParty[Math.floor(Math.random() * this.tagetParty.length)];
+                if (side === "left") {
+                    target.takeDamage(this.attackL * 10, this.types);
+                } else if (side === "right") {
+                    target.takeDamage(this.attackR * 10, this.types);
+                }
+            }
+            return this;
+        }
+
+        const typeAdvantages = {
+            "Fire": { "strong": ["Nature", "Air", "Dark", "Mind"], "weak": ["Water", "Light", "Chaos", "Storm", "Void"] },
+            "Water": { "strong": ["Fire", "Earth", "Light", "Spirit"], "weak": ["Storm", "Nature", "Dark", "Void", "Chaos"] },
+            "Earth": { "strong": [], "weak": [] },
+            "Air": { "strong": [], "weak": [] },
+            "Light": { "strong": [], "weak": [] },
+            "Dark": { "strong": [], "weak": [] },
+            "Storm": { "strong": [], "weak": [] },
+            "Void": { "strong": [], "weak": [] },
+            "Chaos": { "strong": [], "weak": [] },
+            "Mind": { "strong": [], "weak": [] },
+            "Spirit": { "strong": [], "weak": [] },
         }
 
         const parser = new DOMParser();
         var dungeonData;
-        loadPlayerStats();
+        // loadPlayerStats();
 
-        fetch('/get_dungeon', { method: 'POST', body: JSON.stringify({ 'session': getCookie("session") }) }).then(response => response.json()).then(data => {
+        fetch('/get_dungeon', { method: 'POST' }).then(response => response.json()).then(data => {
             dungeonData = { "data": data, "room": 0 };
             console.log(dungeonData);
             loadNextRoom();
         });
 
         function loadPlayerStats() {
-            fetch('/get_equipped_gear', {method: 'POST'}).then(response => response.json()).then(data => {
+            fetch('/get_equipped_gear', { method: 'POST' }).then(response => response.json()).then(data => {
                 console.log("equipped", data);
             });
-            playerHealthBar.health = 100;
-            playerHealthBar.maxHealth = 100;
-            playerAttackBar.timer = 5000;
-            playerAttackBar.attack = 10;
-            playerHealthBar.int = 10;
-            playerHealthBar.speed = 10;
-            playerHealthBar.defence = 10;
+
+            let player = Player(EnemyArray, "Player", { "health": 100,"defense": 10, "attackL": 4.5, "attackR": 2.2, "attackSpeedL": 2.1, "attackSpeedR": 1.2}, [], [], playerAttackBarL, playerAttackBarR, playerHealthBar);
+            return player;
         }
 
         function enemySpeedToSeconds(speed) {
             return 250 / speed;
         }
-
+        
         function loadNextRoom() {
             dungeonData.room += 1;
-            let monsters = dungeonData.data[dungeonData.room].monster;
+            let room = dungeonData.data[dungeonData.room];
+            if (room.type == "fight") {
+                let monsters = dungeonData.data[dungeonData.room].monster;
 
-            for (let i = 0; i < monsters.length; i++) {
-                let newMonster = exampleMonster.children[0].cloneNode(true);
-                newMonster.id = monsters[i].name;
-                newMonster.querySelector("img").id = "Monster" + i;
-                newMonster.querySelector("img").src = "../assets/monsters/" + monsters[i].name + ".png";
-                newMonster.querySelector("p").textContent = monsters[i].name;
-                newMonster.querySelector("#healthBar").data = monsters[i].stats;
-                enemyParty.appendChild(newMonster);
+                for (let i = 0; i < monsters.length; i++) {
+                    let newMonster = exampleMonster.children[0].cloneNode(true);
+                    newMonster.id = monsters[i].name;
+                    newMonster.querySelector("img").id = "Monster" + i;
+                    newMonster.querySelector("img").src = "../assets/monsters/" + monsters[i].name + ".png";
+                    newMonster.querySelector("p").textContent = monsters[i].name;
+                    newMonster.querySelector("#healthBar").data = monsters[i].stats;
+                    newMonster.data = new Enemy(monsters[i].name, monsters[i].stats, monsters[i].type, monsters[i].abilities, newMonster.querySelector("#attackBar"), newMonster.querySelector("#healthBar"));
+                    enemyParty.appendChild(newMonster);
+                    EnemyArray.push(newMonster.data);
+                    console.log(newMonster, newMonster.data);
+                }
+                player.startAttackL();
+                player.startAttackR();
             }
         }
 
-        function attackFunction() {
-            let enemyParty = document.getElementsByClassName("enemy");
-            let playerParty = document.getElementsByClassName("player");
-            // ...
-        }
-
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
     </script>
 </body>

@@ -36,8 +36,6 @@ joinButton.addEventListener("click", () => {
     .then(data => {
         if (data.success) {
             console.log(data.session);
-            setCookie("session", data.session, 0.5);
-            setCookie("username", usernameInput.value, 0.5);
             window.location.href = `./game?theme=${themeSelect.value}`;
         } else {
             alert("Incorrect username or password");
@@ -82,14 +80,4 @@ function makeid(length) {
       counter += 1;
     }
     return result;
-}
-
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/; Secure;";
 }

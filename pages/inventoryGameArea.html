@@ -165,7 +165,8 @@
                             style="background-image: url('../assets/defaults/amulets.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="Hand"
                             style="background-image: url('../assets/defaults/swords.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="Ring">LRing</div>
+                        <div class="grid-item receptacle" data-itemtype="rings" 
+                            style="background-image: url('../assets/defaults/rings.png');"></div>
                     </div>
                     <div id="equipmentColumn2" class="equipmentColumn4">
                         <div class="grid-item receptacle" data-itemtype="helmets"
@@ -182,7 +183,8 @@
                             style="background-image: url('../assets/defaults/gloves.png');"></div>
                         <div class="grid-item receptacle" data-itemtype="Hand"
                             style="background-image: url('../assets/defaults/swords.png');"></div>
-                        <div class="grid-item receptacle" data-itemtype="Ring">RRing</div>
+                        <div class="grid-item receptacle" data-itemtype="rings" 
+                            style="background-image: url('../assets/defaults/rings.png');"></div>
                     </div>
                 </div>
             </div>
@@ -266,8 +268,9 @@
             const block = document.getElementById(blockId);
             const currentBlockInReceptacle = target.querySelector('.equipment-item');
 
-            if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype || (e.target.dataset.itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs"].includes(block.dataset.itemtype)))) {
+            if (target.classList.contains('receptacle') && (e.target.dataset.itemtype === block.dataset.itemtype || (e.target.dataset.itemtype === 'Hand' && ["swords", "axes", "shields", "bows", "staffs", "daggers"].includes(block.dataset.itemtype)) || (["swords", "axes", "shields", "bows", "staffs", "daggers"].includes(e.target.dataset.itemtype) && ["swords", "axes", "shields", "bows", "staffs", "daggers"].includes(block.dataset.itemtype)))) {
                 target.style.backgroundImage = 'none';
+
                 if (currentBlockInReceptacle && currentBlockInReceptacle !== block) {
                     currentBlockInReceptacle.dataset.equipped = 0;
                     container.appendChild(currentBlockInReceptacle);
@@ -434,10 +437,6 @@
         }
 
         document.addEventListener('click', removeMenus);
-        // if the cursor moves outside of #inventoryTop, remove the menus
-        document.getElementById("inventoryRight").addEventListener('mouseleave', (e) => {
-            removeMenus();
-        });
         document.getElementById("inventoryTop").addEventListener('contextmenu', (e) => {e.preventDefault()});
 
         document.getElementById("itemtypeSelect").addEventListener('change', () => {

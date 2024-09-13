@@ -12,14 +12,25 @@ if (colorTheme) {
         document.documentElement.style.setProperty('--col2', '#000000'); // border
         document.documentElement.style.setProperty('--col3', '#595959'); // mid background
         document.documentElement.style.setProperty('--col4', '#979798'); // top background
-    }
-    if (colorTheme == "inverse") {
+    } else if (colorTheme == "inverse") {
         document.documentElement.style.setProperty('--textColor', '#ffffff');
         document.documentElement.style.setProperty('--col1', '#000000');
         document.documentElement.style.setProperty('--col2', '#ffffff');
         document.documentElement.style.setProperty('--col3', '#5f5f5f');
         document.documentElement.style.setProperty('--col4', '#a3a3a3');
-    }
+    } else if (colorTheme == "ocean") {
+        document.documentElement.style.setProperty('--textColor', '#ffffff');
+        document.documentElement.style.setProperty('--col1', '#05033b');
+        document.documentElement.style.setProperty('--col2', '#000208');
+        document.documentElement.style.setProperty('--col3', '#4f6e8e');
+        document.documentElement.style.setProperty('--col4', '#364650');
+    } else if (colorTheme == "mcdonald") {
+        document.documentElement.style.setProperty('--textColor', '#000000');
+        document.documentElement.style.setProperty('--col1', '#ad0c00');
+        document.documentElement.style.setProperty('--col2', '#ffd30f');
+        document.documentElement.style.setProperty('--col3', '#ff6b61');
+        document.documentElement.style.setProperty('--col4', '#f7ffad');
+    } 
 }
 
 // send message
