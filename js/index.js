@@ -60,8 +60,6 @@ guestButton.addEventListener("click", () => {
     }).then(response => response.json())
     .then(data => {
         if (data.success) {
-            setCookie("session", data.session, 0.5);
-            setCookie("username", "Guest" + "_" + makeid(3), 0.5);
             window.location.href = `./game?theme=${themeSelect.value}`;
         } else {
             alert("Incorrect username or password");
