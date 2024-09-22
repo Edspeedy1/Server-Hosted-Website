@@ -264,7 +264,11 @@
                 this.atackBar.style.display = "none";
                 // remove from party
                 EnemyArray = EnemyArray.filter((enemy) => enemy.name !== this.name);
-                console.log(EnemyArray);
+                for (let i = 0; i < playerArray.length; i++) {
+                    playerArray[i].tagetParty = playerArray[i].tagetParty.filter((enemy) => enemy.name !== this.name);
+                }
+                console.log("Enemy Array: ", EnemyArray);
+                console.log("Player Enemy Array: ", playerArray[0].tagetParty);
                 // loop through enemy party and look for data matching this
                 for (let i = 0; i < enemyParty.children.length; i++) {
                     if (enemyParty.children[i].data === this) {
@@ -272,6 +276,7 @@
                         break;
                     }
                 }
+
                 // check if party is empty
                 if (EnemyArray.length === 0) {
                     console.log("win");
@@ -352,6 +357,7 @@
             }
             this.doDamage = (side) => {
                 let target = this.tagetParty[Math.floor(Math.random() * this.tagetParty.length)];
+                console.log(target);
                 if (side === "left") {
                     target.takeDamage(this.attackL * 10, this.types);
                 } else if (side === "right") {
@@ -411,8 +417,11 @@
                     newMonster.querySelector("img").src = "../assets/monsters/" + monsters[i].name + ".png";
                     newMonster.querySelector("p").textContent = monsters[i].name;
                     newMonster.querySelector("#healthBar").data = monsters[i].stats;
-                    newMonster.data = new Enemy(monsters[i].name, monsters[i].stats, monsters[i].type, monsters[i].abilities, newMonster.querySelector("#attackBar"), newMonster.querySelector("#healthBar"));
+                    newMonster.data = new Enemy(monsters[i].name + i, monsters[i].stats, monsters[i].type, monsters[i].abilities, newMonster.querySelector("#attackBar"), newMonster.querySelector("#healthBar"));
                     enemyParty.appendChild(newMonster);
+                    for (let j = 0; j < playerArray.length; j++) {
+                        playerArray[j].tagetParty.push(newMonster.data);
+                    }
                     EnemyArray.push(newMonster.data);
                     console.log(newMonster, newMonster.data);
                 }
