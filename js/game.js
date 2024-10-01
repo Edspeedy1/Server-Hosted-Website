@@ -44,7 +44,6 @@ sendButton.addEventListener("click", () => {
     fetch('/upload_message', {
         method: 'POST',
         body: JSON.stringify({
-            'session': getCookie("session"),
             'text': messageInput.value,
         })
     })
@@ -58,7 +57,7 @@ sendButton.addEventListener("click", () => {
     })
     updateChatWindow([{
         'message': messageInput.value,
-        'username': getCookie("username"),
+        'username': getLocalStorage("username"),
         'timestamp': parseInt(Date.now() / 1000 - 1),
         'temp': true
     }]);
@@ -137,6 +136,10 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+function getLocalStorage(key) {
+    return localStorage.getItem(key);
 }
 
 fetchNewMessages();

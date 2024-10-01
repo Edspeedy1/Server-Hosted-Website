@@ -26,6 +26,9 @@ joinButton.addEventListener("click", () => {
         return;
     }
 
+    // set localStorage username
+    localStorage.setItem("username", usernameInput.value);
+
     fetch('/login', {
         method: 'POST',
         body: JSON.stringify({
@@ -51,10 +54,12 @@ passwordInput.addEventListener("keyup", (event) => {
 })
 
 guestButton.addEventListener("click", () => {
+    const username = "Guest" + "_" + makeid(3);
+    localStorage.setItem("username", username);
     fetch('/login', {
         method: 'POST',
         body: JSON.stringify({
-            'username': "Guest" + "_" + makeid(3),
+            'username': username,
             'password': ""
         })
     }).then(response => response.json())
