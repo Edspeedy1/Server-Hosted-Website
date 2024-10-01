@@ -387,7 +387,7 @@ with http.server.HTTPServer(('', HTTP_PORT), CustomRequestHandler) as httpd:
     print(f"HTTP server serving at port {HTTP_PORT}")
     
     # Start inactivity check in a separate thread
-    inactivity_thread = threading.Thread(target=start_inactivity_check, args=(3600,))
+    inactivity_thread = threading.Thread(target=start_inactivity_check, args=(500,))
     inactivity_thread.daemon = True
     inactivity_thread.start()
 
